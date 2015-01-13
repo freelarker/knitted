@@ -107,7 +107,6 @@ public class UnitsSelectGUI : MonoBehaviour {
 		Global.Instance.CurrentMission.Key = EMissionKey.PlanetA_Test1;
 		Global.Instance.CurrentMission.SelectedSoldiers = new ArrayRO<BaseSoldier>(soldiers);
 
-		//TODO: load scene
-		Debug.LogWarning("Fight is still not ready");
+		Application.LoadLevel("Fight");
 	}
 }

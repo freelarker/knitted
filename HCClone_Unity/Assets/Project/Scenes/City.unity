@@ -640,7 +640,7 @@ MonoBehaviour:
   _btnNext: {fileID: 1674333821}
   _btnPref: {fileID: 1906888586}
   _btnHire: {fileID: 1460981369}
-  _btnFight: {fileID: 0}
+  _btnFight: {fileID: 137810853}
 --- !u!1 &445439687
 GameObject:
   m_ObjectHideFlags: 0

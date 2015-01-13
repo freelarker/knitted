@@ -21,9 +21,30 @@ $RECYCLE.BIN/
 # Operating System Files
 # =========================
 
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
+
+#==========================
 # OSX
 # =========================
-
 .DS_Store
 .AppleDouble
 .LSOverride

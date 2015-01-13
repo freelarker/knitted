@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &196294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 496294}
+  - 114: {fileID: 11496294}
+  m_Layer: 0
+  m_Name: UnitsData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &496294
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11496294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32abf7a4b745d949aa752d6fdc56806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxUnitsHeroCanHire: 4
+  _heroEquipmentSlots: 
+  _soldierEquipmentSlots: 
+  _heroesData:
+  - _key: 1
+    _baseHealth: 50
+    _baseDamage: 10
+    _baseDamageRange: 1
+    _baseDamageSpeed: 1
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _baseAggroCrystals: 10
+    _baseLeadership: 20
+    _baseAggroCrystalsPerAttack: 0
+    _availableItemTypes: []
+  - _key: 2
+    _baseHealth: 25
+    _baseDamage: 15
+    _baseDamageRange: 6
+    _baseDamageSpeed: 1.35000002
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _baseAggroCrystals: 10
+    _baseLeadership: 17
+    _baseAggroCrystalsPerAttack: 0
+    _availableItemTypes: []
+  _soldiersData:
+  - _key: 1000001
+    _baseHealth: 50
+    _baseDamage: 10
+    _baseDamageRange: 0
+    _baseDamageSpeed: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _leadershipCost: 5
+    _creditsCost: 0
+  - _key: 1000002
+    _baseHealth: 30
+    _baseDamage: 3
+    _baseDamageRange: 0
+    _baseDamageSpeed: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _leadershipCost: 10
+    _creditsCost: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 196294}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

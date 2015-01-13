@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24D3A8CD-0E19-C736-0B54-50CDC40BC7A9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace></RootNamespace>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\EventSystem\MainScripts\EnumConverterCreator.cs" />
+    <Compile Include="Assets\EventSystem\MainScripts\EventManager.cs" />
+    <Compile Include="Assets\EventSystem\MainScripts\EventManagerExceptions.cs" />
+    <Compile Include="Assets\EventSystem\MainScripts\EventManagerRepository.cs" />
+    <Compile Include="Assets\EventSystem\MainScripts\EventManagerRepositoryCleaner.cs" />
+    <Compile Include="Assets\EventSystem\MainScripts\OpenChannelEventArgs.cs" />
+    <Compile Include="Assets\EventSystem\Samples\EventSystemTester.cs" />
+    <Compile Include="Assets\EventSystem\Samples\EventsAggregator.cs" />
+    <Compile Include="Assets\EventSystem\Samples\SampleEventEnum.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\AI.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\GridPlayer.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\GridPlayer2D.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\Lines.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\SearchPlayerAI.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\SetGrid.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\SimpleAI.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\SimpleAI2D.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\TDEnemy.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\TDManager.cs" />
+    <Compile Include="Assets\Pathfinding\Scenes\Scripts\WaypointPlayer.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\DynamicMapUpdate.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\DynamicTDGridObject.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\Node.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\NodeSearch.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\Pathfinder.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\Pathfinder2D.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\Pathfinding.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\Pathfinding2D.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\QueuePath.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\WaypointListNode.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\WaypointNode.cs" />
+    <Compile Include="Assets\Pathfinding\Scripts\WaypointPathfinder.cs" />
+    <Compile Include="Assets\Project\Code\Core\Global.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\BaseItem.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\EquipmentSlots.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\ItemKeys.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\ItemSlot.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\ItemSlotData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\UnitInventory.cs" />
+    <Compile Include="Assets\Project\Code\Core\Missions\MissionInfo.cs" />
+    <Compile Include="Assets\Project\Code\Core\Missions\MissionKey.cs" />
+    <Compile Include="Assets\Project\Code\Core\Network\NetworkManager.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerHeroes.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerResources.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerStatistics.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerStoryProgress.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerTown.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseHero.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseSoldier.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseUnit.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\UnitKeys.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseHeroData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseSoldierData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseUnitData.cs" />
+    <Compile Include="Assets\Project\Code\Events\EventsAggregator.cs" />
+    <Compile Include="Assets\Project\Code\Events\ItemEvents.cs" />
+    <Compile Include="Assets\Project\Code\Events\NetworkEvents.cs" />
+    <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\ItemsData.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\UnitsData.cs" />
+    <Compile Include="Assets\Project\Code\_Common\ArrayRO.cs" />
+    <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourResourceSingleton.cs" />
+    <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
+    <Compile Include="Assets\Project\_TestingStuff\UnitSelect\UnitsSelectGUI.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
+</Project>

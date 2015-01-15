@@ -13,6 +13,11 @@ public class EditorMenu : MonoBehaviour {
 		Selection.activeObject = InstantiateSingletonPrefab<UnitsData>();
 	}
 
+	[MenuItem("HCClone/Config/Missions config")]
+	public static void InstantiateMissionsConfig() {
+		Selection.activeObject = InstantiateSingletonPrefab<MissionsData>();
+	}
+
 	private static GameObject InstantiateSingletonPrefab<T>() where T : MonoBehaviour {
 		GameObject goData = null;
 		T data = (T)FindObjectOfType(typeof(T));

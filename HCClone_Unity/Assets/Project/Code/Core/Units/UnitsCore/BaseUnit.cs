@@ -9,18 +9,55 @@ public abstract class BaseUnit {
 	}
 
 	public int Health { get; set; }	//health amount after all upgrades applied
+	
 	public int Damage { get; set; }	//damage amount after all upgrades applied
-	public float DamageRange { get; set; }	//damage range after all upgrades applied
-	public float DamageSpeed { get; set; }	//damage speed after all upgrades applied
-
-	public int AggroCrystalsForDeathToEnemy { get; private set; }	//amount of aggro crystals unit gives to enemies after death
-	public int AggroCrystalsForDeathToAlly { get; private set; }	//amount of aggro crystals unit gives to allies after death
+	public float AttackRange { get; set; }	//damage range after all upgrades applied
+	public float AttackSpeed { get; set; }	//damage speed after all upgrades applied
 
 	public UnitInventory Inventory { get; private set; }
+
+	public uint DamageTaken { get; private set; }
+	public bool IsDead { get { return DamageTaken >= Health; } }
 
 	public BaseUnit(BaseUnitData data) {
 		_data = data;
 		Inventory = new UnitInventory(CreateSlotsData(), OnEquipmentUpdate);
+
+		RecalculateParams();
+	}
+
+	public void ApplyDamage(uint damageAmount) {
+		if (IsDead) {
+			return;
+		}
+
+		DamageTaken += damageAmount;
+		
+		if (IsDead) {
+			//TODO: broadcast death
+		} else {
+			//TODO: broadcast hit
+		}
+	}
+
+	public void ApplyHeal(uint healAmount, bool revive) {
+		bool preHealDeadState = IsDead;
+
+		if (IsDead && !revive) {
+			return;
+		}
+
+		DamageTaken -= healAmount;
+		
+		if (preHealDeadState && !IsDead) {
+			//TODO: broadcast revive
+		} else {
+			//TODO: broadcast heal
+		}
+	}
+
+	public void ResetDamageTaken() {
+		DamageTaken = 0;
 	}
 
 	protected virtual Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
@@ -35,8 +72,8 @@ public abstract class BaseUnit {
 	protected virtual void RecalculateParams() {
 		Health = _data.BaseHealth;
 		Damage = _data.BaseDamage;
-		DamageRange = _data.BaseDamageRange;
-		DamageSpeed = _data.BaseDamageSpeed;
+		AttackRange = _data.BaseAttackRange;
+		AttackSpeed = _data.BaseAttackSpeed;
 
 		ArrayRO<EUnitEqupmentSlot> equipmentSlots = UnitsData.Instance.GetUnitEquipmentSlots(this);
 		BaseItem itemData = null;
@@ -45,8 +82,8 @@ public abstract class BaseUnit {
 			if (itemData != null) {
 				Health += itemData.ModHealth;
 				Damage += itemData.ModDamage;
-				DamageRange += itemData.ModDamageRange;
-				DamageSpeed += itemData.ModDamageSpeed;
+				AttackRange += itemData.ModDamageRange;
+				AttackSpeed += itemData.ModDamageSpeed;
 			}
 		}
 

@@ -51,6 +51,12 @@ public class BaseItem {
 		get { return _levelRequirement; }
 	}
 
+	[SerializeField]
+	protected string _prefabName = string.Empty;
+	public string PrefabName {
+		get { return _prefabName; }
+	}
+
 	public BaseItem() {	}
 
 	public BaseItem(EItemKey key, EItemType type, EUnitEqupmentSlot slot) {

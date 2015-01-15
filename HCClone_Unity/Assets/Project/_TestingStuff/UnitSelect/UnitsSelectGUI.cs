@@ -104,7 +104,8 @@ public class UnitsSelectGUI : MonoBehaviour {
 			soldiers[i] = new BaseSoldier(UnitsData.Instance.GetSoldierData(_hiredUnits[i]));
 		}
 
-		Global.Instance.CurrentMission.Key = EMissionKey.PlanetA_Test1;
+		Global.Instance.CurrentMission.PlanetKey = EPlanetKey.PlanetA;
+		Global.Instance.CurrentMission.MissionKey = EMissionKey.PlanetA_Test1;
 		Global.Instance.CurrentMission.SelectedSoldiers = new ArrayRO<BaseSoldier>(soldiers);
 
 		Application.LoadLevel("Fight");

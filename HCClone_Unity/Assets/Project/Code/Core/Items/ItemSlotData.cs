@@ -12,7 +12,13 @@ public class ItemSlotConfig  {
 	private EItemType[] _availableItemTypes = new EItemType[0];
 	private ArrayRO<EItemType> _availableItemTypesRO = null;
 	public ArrayRO<EItemType> AvailableItemTypes {
-		get { return _availableItemTypesRO; }
+		get {
+			if (_availableItemTypesRO == null) {
+				_availableItemTypesRO = new ArrayRO<EItemType>(_availableItemTypes);
+				_availableItemTypes = null;
+			}
+			return _availableItemTypesRO;
+		}
 	}
 
 	public ItemSlotConfig() {

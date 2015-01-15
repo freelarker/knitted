@@ -42,15 +42,15 @@ public class SearchPlayerAI : Pathfinding
 
     void Start()
     {   
-		if (gameObject.tag == "Right")
+		if (gameObject.tag == "UnitEnemy")
 		{
-			_enemies = GameObject.FindGameObjectsWithTag ("Left");
+			_enemies = GameObject.FindGameObjectsWithTag ("UnitAlly");
 			_myLine = GameObject.FindGameObjectWithTag("LineRight").transform;
 			_directionToCenter.x = -1f;
 		} 
 		else 
 		{
-			_enemies = GameObject.FindGameObjectsWithTag ("Right");
+			_enemies = GameObject.FindGameObjectsWithTag("UnitEnemy");
 			_myLine = GameObject.FindGameObjectWithTag("LineLeft").transform;
 			_directionToCenter.x = 1f;
 		}

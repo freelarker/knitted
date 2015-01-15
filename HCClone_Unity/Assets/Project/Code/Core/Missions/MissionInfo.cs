@@ -1,9 +1,13 @@
 ﻿public class MissionInfo {
-	public EMissionKey Key { get; set; }
+	public EPlanetKey PlanetKey { get; set; }
+	public EMissionKey MissionKey { get; set; }
+
 	public ArrayRO<BaseSoldier> SelectedSoldiers { get; set; }
 
 	public void Clear() {
-		Key = EMissionKey.None;
+		PlanetKey = EPlanetKey.None;
+		MissionKey = EMissionKey.None;
+
 		SelectedSoldiers = null;
 	}
 }

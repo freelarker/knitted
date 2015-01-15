@@ -3,16 +3,10 @@
 --- !u!78 &1
 TagManager:
   tags:
-  - 
-  - Right
-  - Left
+  - UnitAlly
+  - UnitEnemy
   - LineLeft
   - LineRight
-  - 
-  - Waypoint
-  - WPPathfinder
-  - Enemy
-  - Obst
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

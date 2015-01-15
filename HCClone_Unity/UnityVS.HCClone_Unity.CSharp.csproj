@@ -83,6 +83,9 @@
     <Compile Include="Assets\Pathfinding\Scripts\WaypointListNode.cs" />
     <Compile Include="Assets\Pathfinding\Scripts\WaypointNode.cs" />
     <Compile Include="Assets\Pathfinding\Scripts\WaypointPathfinder.cs" />
+    <Compile Include="Assets\Project\Code\Core\Fight\FightGraphics.cs" />
+    <Compile Include="Assets\Project\Code\Core\Fight\FightManager.cs" />
+    <Compile Include="Assets\Project\Code\Core\GameConstants.cs" />
     <Compile Include="Assets\Project\Code\Core\Global.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\BaseItem.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\EquipmentSlots.cs" />
@@ -90,8 +93,12 @@
     <Compile Include="Assets\Project\Code\Core\Items\ItemSlot.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\ItemSlotData.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\UnitInventory.cs" />
+    <Compile Include="Assets\Project\Code\Core\Missions\MissionData.cs" />
     <Compile Include="Assets\Project\Code\Core\Missions\MissionInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Missions\MissionKey.cs" />
+    <Compile Include="Assets\Project\Code\Core\Missions\MissionMapData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Missions\PlanetData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Missions\PlanetKey.cs" />
     <Compile Include="Assets\Project\Code\Core\Network\NetworkManager.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerData.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerHeroes.cs" />
@@ -110,8 +117,11 @@
     <Compile Include="Assets\Project\Code\Events\ItemEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\NetworkEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
-    <Compile Include="Assets\Project\Code\UnityScripts\ItemsData.cs" />
-    <Compile Include="Assets\Project\Code\UnityScripts\UnitsData.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\ItemsData.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\MissionsData.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\UnitsData.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitPathfinding.cs" />
     <Compile Include="Assets\Project\Code\_Common\ArrayRO.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourResourceSingleton.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />

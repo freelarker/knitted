@@ -23,35 +23,49 @@ public class UnitsData : MonoBehaviourResourceSingleton<UnitsData> {
 	[SerializeField]
 	private BaseSoldierData[] _soldiersData = new BaseSoldierData[0];
 
-	public UnitsData() {
-		_heroEquipmentSlotsRO = new ArrayRO<EUnitEqupmentSlot>(_heroEquipmentSlots);
-		_heroEquipmentSlots = null;
-		_soldierEquipmentSlotsRO = new ArrayRO<EUnitEqupmentSlot>(_soldierEquipmentSlots);
-		_soldierEquipmentSlots = null;
-	}
-
 	public ArrayRO<EUnitEqupmentSlot> GetUnitEquipmentSlots(BaseUnit unit) {
+		if (_heroEquipmentSlotsRO == null) {
+			_heroEquipmentSlotsRO = new ArrayRO<EUnitEqupmentSlot>(_heroEquipmentSlots);
+			_heroEquipmentSlots = null;
+		}
+		if (_soldierEquipmentSlotsRO == null) {
+			_soldierEquipmentSlotsRO = new ArrayRO<EUnitEqupmentSlot>(_soldierEquipmentSlots);
+			_soldierEquipmentSlots = null;
+		}
+
 		if (unit is BaseHero) {
 			return _heroEquipmentSlotsRO;
 		}
 		return _soldierEquipmentSlotsRO;
 	}
 
-	public BaseHeroData GetHeroData(EUnitKey key) {
+	public BaseHeroData GetHeroData(EUnitKey unitKey) {
 		for (int i = 0; i < _heroesData.Length; i++) {
-			if (_heroesData[i].Key == key) {
+			if (_heroesData[i].Key == unitKey) {
 				return _heroesData[i];
 			}
 		}
 		return null;
 	}
 
-	public BaseSoldierData GetSoldierData(EUnitKey key) {
+	public BaseSoldierData GetSoldierData(EUnitKey unitKey) {
 		for (int i = 0; i < _soldiersData.Length; i++) {
-			if (_soldiersData[i].Key == key) {
+			if (_soldiersData[i].Key == unitKey) {
 				return _soldiersData[i];
 			}
 		}
 		return null;
+	}
+
+	public BaseUnitData GetUnitData(EUnitKey unitKey) {
+		BaseUnitData bud = null;
+
+		bud = GetHeroData(unitKey);
+		if (bud != null) {
+			return bud;
+		}
+
+		bud = GetSoldierData(unitKey);
+		return bud;
 	}
 }

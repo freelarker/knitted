@@ -24,11 +24,12 @@ public class  BaseHeroData : BaseUnitData {
 	protected ItemSlotConfig[] _availableItemTypes = new ItemSlotConfig[0];
 	protected ArrayRO<ItemSlotConfig> _availableItemTypesRO = null;
 	public ArrayRO<ItemSlotConfig> AvailableItemTypes {
-		get { return _availableItemTypesRO; }
-	}
-
-	public BaseHeroData() {
-		_availableItemTypesRO = new ArrayRO<ItemSlotConfig>(_availableItemTypes);
-		_availableItemTypes = null;
+		get {
+			if (_availableItemTypesRO == null) {
+				_availableItemTypesRO = new ArrayRO<ItemSlotConfig>(_availableItemTypes);
+				_availableItemTypes = null;
+			}
+			return _availableItemTypesRO;
+		}
 	}
 }

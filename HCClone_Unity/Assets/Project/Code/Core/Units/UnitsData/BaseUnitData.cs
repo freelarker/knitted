@@ -21,15 +21,15 @@ public abstract class BaseUnitData {
 	}
 
 	[SerializeField]
-	protected float _baseDamageRange = 1;	//base damage range (without upgrades)
-	public float BaseDamageRange {
-		get { return _baseDamageRange; }
+	protected float _baseAttackRange = 1;	//base attack range (without upgrades)
+	public float BaseAttackRange {
+		get { return _baseAttackRange; }
 	}
 
 	[SerializeField]
-	protected float _baseDamageSpeed = 1;	//base damage speed (without upgrades)
-	public float BaseDamageSpeed {
-		get { return _baseDamageSpeed; }
+	protected float _baseAttackSpeed = 1;	//base attack speed (without upgrades)
+	public float BaseAttackSpeed {
+		get { return _baseAttackSpeed; }
 	}
 
 	[SerializeField]
@@ -42,5 +42,11 @@ public abstract class BaseUnitData {
 	protected float _aggroCrystalsForDeathToAlly = 0;	//amount of aggro crystals unit gives to allies after death
 	public float AggroCrystalsForDeathToAlly {
 		get { return _aggroCrystalsForDeathToAlly; }
+	}
+
+	[SerializeField]
+	protected string _prefabName = string.Empty;
+	public string PrefabName {
+		get { return _prefabName; }
 	}
 }

@@ -51,14 +51,12 @@ public class FightGraphics {
 		//instantiate soldiers
 		for (int i = 0; i < playerSoldiersList.Length; i++) {
 			bub = (GameObject.Instantiate(_unitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
-			bub.Setup(new BaseSoldier(UnitsData.Instance.GetSoldierData(playerSoldiersList[i].Data.Key)), GameConstants.Tags.UNIT_ALLY);	//TODO: get BaseSoldier from city
 			unitsList[i] = bub;
 		}
 
 		//instantiate player
 		BaseHero playerHero = Global.Instance.Player.Heroes.Current;
 		bub = (GameObject.Instantiate(_unitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
-		bub.Setup(playerHero, GameConstants.Tags.UNIT_ALLY);
 		unitsList[unitsList.Length - 1] = bub;
 
 		//save

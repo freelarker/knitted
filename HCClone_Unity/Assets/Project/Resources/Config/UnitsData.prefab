@@ -46,8 +46,8 @@ MonoBehaviour:
   - _key: 1
     _baseHealth: 50
     _baseDamage: 10
-    _baseDamageRange: 4
-    _baseDamageSpeed: 1
+    _baseAttackRange: 1
+    _baseAttackSpeed: 1
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: 
@@ -56,10 +56,10 @@ MonoBehaviour:
     _baseAggroCrystalsPerAttack: 0
     _availableItemTypes: []
   - _key: 2
-    _baseHealth: 25
+    _baseHealth: 100
     _baseDamage: 15
-    _baseDamageRange: 6
-    _baseDamageSpeed: 1.35000002
+    _baseAttackRange: 3
+    _baseAttackSpeed: 1
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: HeroSniper
@@ -71,8 +71,8 @@ MonoBehaviour:
   - _key: 1000001
     _baseHealth: 50
     _baseDamage: 10
-    _baseDamageRange: 0
-    _baseDamageSpeed: 0
+    _baseAttackRange: 1
+    _baseAttackSpeed: 1
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: UnitTrooper
@@ -81,8 +81,8 @@ MonoBehaviour:
   - _key: 1000002
     _baseHealth: 30
     _baseDamage: 3
-    _baseDamageRange: 0
-    _baseDamageSpeed: 0
+    _baseAttackRange: 1
+    _baseAttackSpeed: 1
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: UnitMedic

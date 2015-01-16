@@ -430,13 +430,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tilesize: .25
-  MaxFalldownHeight: 3.5
-  ClimbLimit: .5
+  MaxFalldownHeight: 1
+  ClimbLimit: 2
   HeuristicAggression: 0
   HighestPoint: 10
   LowestPoint: -10
-  MapStartPosition: {x: -10, y: -5}
-  MapEndPosition: {x: 10, y: 5}
+  MapStartPosition: {x: -15, y: -5}
+  MapEndPosition: {x: 15, y: 5}
   DisallowedTags: []
   IgnoreTags:
   - UnitAlly
@@ -482,7 +482,7 @@ Transform:
   m_GameObject: {fileID: 1559945536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 9.99999996e-13, z: 10}
+  m_LocalScale: {x: 30, y: 9.99999996e-13, z: 10}
   m_Children: []
   m_Father: {fileID: 1351422663}
   m_RootOrder: 6
@@ -587,6 +587,14 @@ Prefab:
     - target: {fileID: 11400000, guid: efdf155e29b063e48a1a315326175481, type: 2}
       propertyPath: IgnoreTags.Array.data[1]
       value: UnitEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: efdf155e29b063e48a1a315326175481, type: 2}
+      propertyPath: MapStartPosition.x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: efdf155e29b063e48a1a315326175481, type: 2}
+      propertyPath: MapEndPosition.x
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efdf155e29b063e48a1a315326175481, type: 2}

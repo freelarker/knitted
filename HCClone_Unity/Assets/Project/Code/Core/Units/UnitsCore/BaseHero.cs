@@ -57,7 +57,7 @@ public class BaseHero : BaseUnit {
 		// - recalculate aggro crystals after level-ups
 		// - recalculate leadership after level-ups
 
-		//TODO: broadcast message
+		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}
 
 	protected void AddExperience(int expAmount) {

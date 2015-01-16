@@ -33,4 +33,8 @@ public class PlayerData {
 	public void Save() {
 		Global.Instance.Network.SavePlayerData(this);
 	}
+
+	~PlayerData() {
+		EventsAggregator.Network.RemoveListener(ENetworkEvent.PlayerDataLoadSuccess, OnLoadSuccess);
+	}
 }

@@ -83,8 +83,6 @@
     <Compile Include="Assets\Pathfinding\Scripts\WaypointListNode.cs" />
     <Compile Include="Assets\Pathfinding\Scripts\WaypointNode.cs" />
     <Compile Include="Assets\Pathfinding\Scripts\WaypointPathfinder.cs" />
-    <Compile Include="Assets\Project\Code\Core\Fight\FightGraphics.cs" />
-    <Compile Include="Assets\Project\Code\Core\Fight\FightManager.cs" />
     <Compile Include="Assets\Project\Code\Core\GameConstants.cs" />
     <Compile Include="Assets\Project\Code\Core\Global.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\BaseItem.cs" />
@@ -114,9 +112,13 @@
     <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseSoldierData.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseUnitData.cs" />
     <Compile Include="Assets\Project\Code\Events\EventsAggregator.cs" />
+    <Compile Include="Assets\Project\Code\Events\FightEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\ItemEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\NetworkEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
+    <Compile Include="Assets\Project\Code\Events\UnitEvents.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightGraphics.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightManager.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\ItemsData.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\MissionsData.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\UnitsData.cs" />

@@ -16,7 +16,7 @@ public abstract class BaseUnit {
 
 	public UnitInventory Inventory { get; private set; }
 
-	public uint DamageTaken { get; private set; }
+	public int DamageTaken { get; private set; }
 	public bool IsDead { get { return DamageTaken >= Health; } }
 
 	public BaseUnit(BaseUnitData data) {
@@ -26,21 +26,27 @@ public abstract class BaseUnit {
 		RecalculateParams();
 	}
 
-	public void ApplyDamage(uint damageAmount) {
-		if (IsDead) {
+	public void ApplyDamage(int damageAmount) {
+		if (IsDead || damageAmount <= 0) {
 			return;
 		}
 
 		DamageTaken += damageAmount;
 		
 		if (IsDead) {
-			//TODO: broadcast death
+			//broadcast death
+			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.DeathCame, this);
 		} else {
-			//TODO: broadcast hit
+			//broadcast hit
+			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.HitReceived, this);
 		}
 	}
 
-	public void ApplyHeal(uint healAmount, bool revive) {
+	public void ApplyHeal(int healAmount, bool revive) {
+		if (healAmount <= 0) {
+			return;
+		}
+
 		bool preHealDeadState = IsDead;
 
 		if (IsDead && !revive) {
@@ -50,9 +56,11 @@ public abstract class BaseUnit {
 		DamageTaken -= healAmount;
 		
 		if (preHealDeadState && !IsDead) {
-			//TODO: broadcast revive
+			//broadcast revive
+			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.ReviveCame, this);
 		} else {
-			//TODO: broadcast heal
+			//broadcast heal
+			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.HitReceived, this);
 		}
 	}
 
@@ -87,12 +95,12 @@ public abstract class BaseUnit {
 			}
 		}
 
-		//TODO: broadcast message
+		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}
 
 	protected virtual void OnEquipmentUpdate(EUnitEqupmentSlot slot, EItemKey oldItem, EItemKey newItem) {
 		RecalculateParams();
 
-		//TODO: broadcast message
+		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.InventoryUpdate, this);
 	}
 }

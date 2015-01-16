@@ -1,37 +1,62 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UnitPathfinding : Pathfinding {
+	private enum EUnitMovementState {
+		None,
+		MoveToPrepPoint,
+		MoveToAttackPoint,
+		WatchEnemy,
+		NoEnemy
+	}
+
 	private int _searchesPerSecond = 3;
 	private float _minDistanceToTargetUnit = 1f;
 	private float _speed = 1f;
-
-	private bool _appearedOnScreen = false;
 
 	private Vector3 _targetPosition = Vector3.zero;
 	private Transform _nearestTarget = null;
 
 	private Transform _cachedTransform;
+	private WaitForSeconds _cachedWaitForSeconds;
 
-	public void Awake() {
-		_cachedTransform = transform;
-		enabled = false;
+	private Dictionary<EUnitMovementState, Action> _movementStateActions = new Dictionary<EUnitMovementState, Action>();
+	private EUnitMovementState _currentState = EUnitMovementState.None;
+	private EUnitMovementState CurrentState {
+		set {
+			_currentState = value;
+			Update();
+		}
 	}
 
-	public void FixedUpdate() {
-		if (!_appearedOnScreen) {
-			MoveToPreparationPoint();
-		} else {
-			MoveToAttackPoint();
-			if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
-				OnAttackPointReached();
-			}
+	private Action _onTargetReached;
+
+	public void Awake() {
+		_movementStateActions.Add(EUnitMovementState.MoveToPrepPoint, MoveToPreparationPoint);
+		_movementStateActions.Add(EUnitMovementState.MoveToAttackPoint, MoveToAttackPoint);
+		_movementStateActions.Add(EUnitMovementState.WatchEnemy, WatchEnemy);
+
+		_cachedTransform = transform;
+		_cachedWaitForSeconds = new WaitForSeconds(1f / _searchesPerSecond);
+	}
+
+	public void Update() {
+		if (_currentState != EUnitMovementState.None && _currentState != EUnitMovementState.NoEnemy) {
+			_movementStateActions[_currentState]();
 		}
+	}
+
+	public void Reset() {
+		_nearestTarget = null;
+		_onTargetReached = null;
+		StopAllCoroutines();
 	}
 
 	private IEnumerator FindPathTimer() {
 		FindPath(_cachedTransform.position, _targetPosition);
-		yield return new WaitForSeconds((float)(1.0f / _searchesPerSecond));
+		yield return _cachedWaitForSeconds;
 		StartCoroutine(FindPathTimer());
 	}
 
@@ -41,6 +66,10 @@ public class UnitPathfinding : Pathfinding {
 		float distance = Mathf.Infinity;
 		Vector3 position = transform.position;
 		for (int i = 0; i < possibleTargets.Length; i++) {
+			if (possibleTargets[i].UnitData.IsDead) {
+				continue;
+			}
+
 			Vector3 diff = possibleTargets[i].transform.position - position;
 			float curDistance = diff.sqrMagnitude;
 			if (curDistance < distance) {
@@ -58,20 +87,31 @@ public class UnitPathfinding : Pathfinding {
 	}
 
 	#region movement
-	public void MoveToUnit(BaseUnitBehaviour self, ArrayRO<BaseUnitBehaviour> possibleTargets) {
+	public void MoveToTarget(BaseUnitBehaviour self, ArrayRO<BaseUnitBehaviour> possibleTargets, Action<BaseUnitBehaviour> onTargetFound, Action onTargetReached) {
+		Reset();
+
 		_minDistanceToTargetUnit = self.UnitData.AttackRange;
+		_onTargetReached = onTargetReached;
 
 		FindNearestTarget(possibleTargets);
+		if (_nearestTarget == null) {
+			Reset();
+			CurrentState = EUnitMovementState.NoEnemy;
+			return;
+		}
+		onTargetFound(_nearestTarget.gameObject.GetComponent<BaseUnitBehaviour>());
 
 		//setup path to appear on screen
-		if (!_appearedOnScreen) {
+		if (_currentState == EUnitMovementState.None) {
 			_targetPosition.z = transform.position.z;
 			_targetPosition.x = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.AllyStartLine.position.x : FightManager.Instance.EnemyStartLine.position.x;
 
 			FindPath(_cachedTransform.position, _targetPosition);
-		}
 
-		enabled = true;
+			CurrentState = EUnitMovementState.MoveToPrepPoint;
+		} else {
+			OnPreparationPointReached();
+		}
 	}
 
 	private void MoveToPreparationPoint() {
@@ -81,7 +121,7 @@ public class UnitPathfinding : Pathfinding {
 	}
 
 	private void OnPreparationPointReached() {
-		_appearedOnScreen = true;
+		CurrentState = EUnitMovementState.MoveToAttackPoint;
 
 		//start searching path to moving target unit
 		StartCoroutine(FindPathTimer());
@@ -92,17 +132,24 @@ public class UnitPathfinding : Pathfinding {
 		_targetPosition = _nearestTarget.position;
 
 		PerformMovement(_minDistanceToTargetUnit);
+
+		if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
+			OnAttackPointReached();
+		}
 	}
 
 	private void OnAttackPointReached() {
+		Action onTargetReached = _onTargetReached;
+		_onTargetReached = null;
+		StopAllCoroutines();
+
+		CurrentState = EUnitMovementState.WatchEnemy;
+
+		onTargetReached();
+	}
+
+	private void WatchEnemy() {
 		_cachedTransform.LookAt(_nearestTarget.transform);
-
-		//clear data
-		_nearestTarget = null;
-
-		//TODO: broadcast message
-
-		enabled = false;
 	}
 
 	private bool PerformMovement(float minDistance = 0.4f) {

@@ -22,17 +22,19 @@ public class FightManager : MonoBehaviour {
 		get { return _enemyStartLine; }
 	}
 
-	private FightGraphics _fightGraphics = new FightGraphics();
+	private FightGraphics _graphics = new FightGraphics();
+	private FightLogger _logger = new FightLogger();
+
 	private float _unitsZDistance = 1f;
 
 	private MissionData _currentMissionData = null;
 	private int _currentMapIndex = 0;
 
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
-		get { return _fightGraphics.AllyUnits; }
+		get { return _graphics.AllyUnits; }
 	}
 	public ArrayRO<BaseUnitBehaviour> EnemyUnits {
-		get { return _fightGraphics.EnemyUnits; }
+		get { return _graphics.EnemyUnits; }
 	}
 
 	private int _alliesCount = 0;
@@ -41,6 +43,7 @@ public class FightManager : MonoBehaviour {
 	public void Awake() {
 		_instance = this;
 
+		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 		EventsAggregator.Fight.AddListener(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.AddListener(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
@@ -58,6 +61,7 @@ public class FightManager : MonoBehaviour {
 	}
 
 	public void OnDestroy() {
+		EventsAggregator.Fight.RemoveListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
@@ -65,40 +69,40 @@ public class FightManager : MonoBehaviour {
 	#region map start
 	public void LoadMap() {
 		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
-		_fightGraphics.Load(mapData);
+		_graphics.Load(mapData);
 		InitializeUnits(mapData);
 	}
 
 	private void InitializeUnits(MissionMapData mapData) {
-		_alliesCount = _fightGraphics.AllyUnits.Length;
-		_enemiesCount = _fightGraphics.EnemyUnits.Length;
+		_alliesCount = _graphics.AllyUnits.Length;
+		_enemiesCount = _graphics.EnemyUnits.Length;
 
 		InitializeUnitsData(mapData);
 		InitializeUnitsPositions();
 		
 		//WARNING! temp
-		for (int i = 0; i < _fightGraphics.AllyUnits.Length; i++) {
-			_fightGraphics.AllyUnits[i].Run();
+		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
+			_graphics.AllyUnits[i].Run();
 		}
 
-		for (int i = 0; i < _fightGraphics.EnemyUnits.Length; i++) {
-			_fightGraphics.EnemyUnits[i].Run();
+		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
+			_graphics.EnemyUnits[i].Run();
 		}
 	}
 
 	private void InitializeUnitsData(MissionMapData mapData) {
-		_fightGraphics.AllyUnits[_fightGraphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY);
+		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
-			_fightGraphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY);	//TODO: get BaseSoldier from city
+			_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY);	//TODO: get BaseSoldier from city
 		}
 
 		BaseUnitData bud = null;
 		for (int i = 0; i < mapData.Units.Length; i++) {
 			bud = UnitsData.Instance.GetUnitData(mapData.Units[i]);
 			if (bud is BaseHeroData) {
-				_fightGraphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy hero inventory
+				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy hero inventory
 			} else {
-				_fightGraphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy soldier upgrades
+				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy soldier upgrades
 			}
 		}
 	}
@@ -107,18 +111,18 @@ public class FightManager : MonoBehaviour {
 		Transform unitTransform;
 
 		float zPosition = 0f;
-		for (int i = 0; i < _fightGraphics.AllyUnits.Length; i++) {
+		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
 
-			unitTransform = _fightGraphics.AllyUnits[i].transform;
+			unitTransform = _graphics.AllyUnits[i].transform;
 			unitTransform.parent = _allyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsData.Instance.UnitsXPositionStartOffset - _fightGraphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i);
+			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsData.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i);
 			//TODO: position units by Z
 		}
 
-		for (int i = 0; i < _fightGraphics.EnemyUnits.Length; i++) {
-			unitTransform = _fightGraphics.EnemyUnits[i].transform;
+		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
+			unitTransform = _graphics.EnemyUnits[i].transform;
 			unitTransform.parent = _enemyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsData.Instance.UnitsXPositionStartOffset + _fightGraphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * 2);
+			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsData.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * 2);
 			//TODO: position units by Z
 		}
 	}
@@ -171,6 +175,11 @@ public class FightManager : MonoBehaviour {
 	#endregion
 
 	#region listeners
+	private void OnUnitAttack(BaseUnitBehaviour attacker, BaseUnitBehaviour target) {
+		_logger.LogDamage(attacker, target);
+		target.UnitData.ApplyDamage(attacker.UnitData.Damage);
+	}
+
 	private void OnAllyDeath() {
 		_alliesCount--;
 		if (_alliesCount <= 0) {

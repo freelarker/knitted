@@ -32,13 +32,14 @@ public class BaseHero : BaseUnit {
 	}
 
 	protected override Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
+		BaseHeroData heroData = base._data as BaseHeroData;
 		Dictionary<EUnitEqupmentSlot, EItemType[]> slotsData = new Dictionary<EUnitEqupmentSlot, EItemType[]>();
 		ArrayRO<EUnitEqupmentSlot> availableSlots = UnitsData.Instance.GetUnitEquipmentSlots(this);
 		for (int i = 0; i < availableSlots.Length; i++) {
 			slotsData.Add(availableSlots[i], new EItemType[0]);
-			for (int j = 0; j < _data.AvailableItemTypes.Length; j++) {
-				if (_data.AvailableItemTypes[j].SlotKey == availableSlots[i]) {
-					slotsData[availableSlots[i]] = _data.AvailableItemTypes[j].AvailableItemTypes.DataCopy;
+			for (int j = 0; j < heroData.AvailableItemTypes.Length; j++) {
+				if (heroData.AvailableItemTypes[j].SlotKey == availableSlots[i]) {
+					slotsData[availableSlots[i]] = heroData.AvailableItemTypes[j].AvailableItemTypes.DataCopy;
 					break;
 				}
 			}

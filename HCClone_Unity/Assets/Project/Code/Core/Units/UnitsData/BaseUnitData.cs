@@ -15,6 +15,12 @@ public abstract class BaseUnitData {
 	}
 
 	[SerializeField]
+	protected int _baseArmor = 0;	//base armor amount (without upgrades)
+	public int BaseArmor {
+		get { return _baseArmor; }
+	}
+
+	[SerializeField]
 	protected int _baseDamage = 0;	//base damage amount (without upgrades)
 	public int BaseDamage {
 		get { return _baseDamage; }
@@ -30,6 +36,12 @@ public abstract class BaseUnitData {
 	protected float _baseAttackSpeed = 1;	//base attack speed (without upgrades)
 	public float BaseAttackSpeed {
 		get { return _baseAttackSpeed; }
+	}
+
+	[SerializeField]
+	protected int _baseCritChance = 0;	//base critical hit chance (without upgrades)
+	public int BaseCritChance {
+		get { return _baseCritChance; }
 	}
 
 	[SerializeField]

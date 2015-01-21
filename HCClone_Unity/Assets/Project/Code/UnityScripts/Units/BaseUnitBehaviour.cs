@@ -11,6 +11,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private BaseUnitBehaviour _targetUnit;
+	private bool _isAlly = false;
+	public bool IsAlly {
+		get { return _isAlly; }
+	}
 
 	private WaitForSeconds _cachedWaitForSeconds;
 
@@ -29,13 +33,14 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	public void Setup(BaseUnit unitData, string tag) {
 		_unitData = unitData;
 		gameObject.tag = tag;
+		_isAlly = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY);
 
 		_cachedWaitForSeconds = new WaitForSeconds(1f / unitData.AttackSpeed);
 	}
 
 	public void Run() {
 		//WARNING! temp
-		_unitPathfinder.MoveToTarget(this, gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.EnemyUnits : FightManager.Instance.AllyUnits, OnTargetFound, OnTargetReached);
+		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.Instance.EnemyUnits : FightManager.Instance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	#region unit controller
@@ -50,11 +55,13 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 	private void OnTargetDeath() {
 		StopAllCoroutines();
-		_unitPathfinder.MoveToTarget(this, gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.EnemyUnits : FightManager.Instance.AllyUnits, OnTargetFound, OnTargetReached);
+		_targetUnit = null;
+		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.Instance.EnemyUnits : FightManager.Instance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	private void OnSelfDeath() {
 		StopAllCoroutines();
+		_targetUnit = null;
 		_unitPathfinder.Reset();
 
 		EventsAggregator.Fight.Broadcast(gameObject.tag == GameConstants.Tags.UNIT_ALLY ? EFightEvent.AllyDeath : EFightEvent.EnemyDeath);
@@ -68,11 +75,12 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private IEnumerator AttackTarget() {
 		//TODO: play attack animation
 
-		Debug.Log(gameObject.tag + " unit " + UnitData.Data.Key + " attacks " + _targetUnit.UnitData.Data.Key + " for " + UnitData.Damage + " damage");	//temp info
-
-		_targetUnit.UnitData.ApplyDamage(_unitData.Damage);
+		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
 		yield return _cachedWaitForSeconds;
-		StartCoroutine(AttackTarget());
+
+		if (!_targetUnit.UnitData.IsDead) {
+			StartCoroutine(AttackTarget());
+		}
 	}
 	#endregion
 

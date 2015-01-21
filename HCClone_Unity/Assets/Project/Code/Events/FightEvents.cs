@@ -4,6 +4,8 @@
 	Pause,
 	Resume,
 
+	PerformAttack,
+
 	AllyDeath,
 	EnemyDeath,
 

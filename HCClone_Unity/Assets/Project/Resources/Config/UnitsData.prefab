@@ -40,14 +40,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxUnitsHeroCanHire: 4
-  _heroEquipmentSlots: 
-  _soldierEquipmentSlots: 
+  _heroEquipmentSlots: 0100000002000000
+  _soldierEquipmentSlots: 0100000002000000
   _heroesData:
   - _key: 1
     _baseHealth: 50
+    _baseArmor: 0
     _baseDamage: 10
     _baseAttackRange: 1
     _baseAttackSpeed: 1
+    _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: 
@@ -57,9 +59,11 @@ MonoBehaviour:
     _availableItemTypes: []
   - _key: 2
     _baseHealth: 100
+    _baseArmor: 0
     _baseDamage: 15
     _baseAttackRange: 3
     _baseAttackSpeed: 1
+    _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: HeroSniper
@@ -70,9 +74,11 @@ MonoBehaviour:
   _soldiersData:
   - _key: 1000001
     _baseHealth: 50
+    _baseArmor: 0
     _baseDamage: 10
     _baseAttackRange: 1
     _baseAttackSpeed: 1
+    _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: UnitTrooper
@@ -80,9 +86,11 @@ MonoBehaviour:
     _creditsCost: 0
   - _key: 1000002
     _baseHealth: 30
+    _baseArmor: 0
     _baseDamage: 3
     _baseAttackRange: 1
     _baseAttackSpeed: 1
+    _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _prefabName: UnitMedic

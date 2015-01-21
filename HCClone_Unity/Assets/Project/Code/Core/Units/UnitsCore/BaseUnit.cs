@@ -9,10 +9,12 @@ public abstract class BaseUnit {
 	}
 
 	public int Health { get; set; }	//health amount after all upgrades applied
+	public int Armor { get; set; }	//armor amount after all upgrades applied
 	
 	public int Damage { get; set; }	//damage amount after all upgrades applied
 	public float AttackRange { get; set; }	//damage range after all upgrades applied
 	public float AttackSpeed { get; set; }	//damage speed after all upgrades applied
+	public int CritChance { get; set; }	//critical hit chance after all upgrades applied
 
 	public UnitInventory Inventory { get; private set; }
 
@@ -79,9 +81,11 @@ public abstract class BaseUnit {
 
 	protected virtual void RecalculateParams() {
 		Health = _data.BaseHealth;
+		Armor = _data.BaseArmor;
 		Damage = _data.BaseDamage;
 		AttackRange = _data.BaseAttackRange;
 		AttackSpeed = _data.BaseAttackSpeed;
+		CritChance = _data.BaseCritChance;
 
 		ArrayRO<EUnitEqupmentSlot> equipmentSlots = UnitsData.Instance.GetUnitEquipmentSlots(this);
 		BaseItem itemData = null;
@@ -89,9 +93,11 @@ public abstract class BaseUnit {
 			itemData = ItemsData.Instance.GetItem(Inventory.GetItemInSlot(i));
 			if (itemData != null) {
 				Health += itemData.ModHealth;
+				Armor += itemData.ModArmor;
 				Damage += itemData.ModDamage;
 				AttackRange += itemData.ModDamageRange;
 				AttackSpeed += itemData.ModDamageSpeed;
+				CritChance += itemData.ModCritChance;
 			}
 		}
 

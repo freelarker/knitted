@@ -28,6 +28,12 @@ public class BaseItem {
 	}
 
 	[SerializeField]
+	protected int _modArmor = 0;
+	public int ModArmor {
+		get { return _modArmor; }
+	}
+
+	[SerializeField]
 	protected int _modDamage = 0;
 	public int ModDamage {
 		get { return _modDamage; }
@@ -46,6 +52,12 @@ public class BaseItem {
 	}
 
 	[SerializeField]
+	protected int _modCritChance = 0;
+	public int ModCritChance {
+		get { return _modCritChance; }
+	}
+
+	[SerializeField]
 	protected int _levelRequirement = 1;
 	public float LevelRequirement {
 		get { return _levelRequirement; }
@@ -55,6 +67,12 @@ public class BaseItem {
 	protected string _prefabName = string.Empty;
 	public string PrefabName {
 		get { return _prefabName; }
+	}
+
+	[SerializeField]
+	protected ItemPriceData _prices = new ItemPriceData();
+	public ItemPriceData Prices {
+		get { return _prices; }
 	}
 
 	public BaseItem() {	}

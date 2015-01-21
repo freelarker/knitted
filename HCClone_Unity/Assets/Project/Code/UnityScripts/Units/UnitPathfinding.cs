@@ -139,6 +139,8 @@ public class UnitPathfinding : Pathfinding {
 	}
 
 	private void OnAttackPointReached() {
+		Debug.LogWarning("=== OnAttackPointReached(): " + gameObject.tag + ", " + gameObject.name);
+
 		Action onTargetReached = _onTargetReached;
 		_onTargetReached = null;
 		StopAllCoroutines();

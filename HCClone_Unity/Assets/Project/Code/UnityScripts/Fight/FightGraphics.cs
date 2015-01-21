@@ -2,7 +2,8 @@
 using UnityEngine;
 
 public class FightGraphics {
-	private Dictionary<EUnitKey, BaseUnitBehaviour> _unitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
+	private Dictionary<EUnitKey, BaseUnitBehaviour> _allyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
+	private Dictionary<EUnitKey, BaseUnitBehaviour> _enemyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
 
 	private ArrayRO<BaseUnitBehaviour> _allyUnits = null;
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
@@ -14,19 +15,14 @@ public class FightGraphics {
 		get { return _enemyUnits; }
 	}
 
-	public BaseUnitBehaviour GetUnitController(EUnitKey unitKey) {
-		return _unitsGraphicsResources.ContainsKey(unitKey) ? _unitsGraphicsResources[unitKey] : null;
-	}
-
 	public void Load(MissionMapData mapData) {
 		LoadResources(mapData);
 		InstantiateGraphics(mapData);
 	}
 
-	public void Unload() {
-		//TODO: destroy all game objects
-
-		UnloadResources();
+	public void Unload(bool fullUnload) {
+		DestroyInstances(fullUnload);
+		UnloadResources(fullUnload);
 	}
 
 	#region instances management
@@ -41,6 +37,11 @@ public class FightGraphics {
 	}
 
 	private void InstantiateAllyUnits() {
+		//check if this is first map
+		if (_allyUnits != null) {
+			return;
+		}
+
 		//TODO: setup inventory
 
 		ArrayRO<BaseSoldier> playerSoldiersList = Global.Instance.CurrentMission.SelectedSoldiers;
@@ -50,14 +51,18 @@ public class FightGraphics {
 
 		//instantiate soldiers
 		for (int i = 0; i < playerSoldiersList.Length; i++) {
-			bub = (GameObject.Instantiate(_unitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
-			unitsList[i] = bub;
+			if (!playerSoldiersList[i].IsDead) {
+				bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
+				unitsList[i] = bub;
+			}
 		}
 
 		//instantiate player
 		BaseHero playerHero = Global.Instance.Player.Heroes.Current;
-		bub = (GameObject.Instantiate(_unitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
-		unitsList[unitsList.Length - 1] = bub;
+		if (!playerHero.IsDead) {
+			bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
+			unitsList[unitsList.Length - 1] = bub;
+		}
 
 		//save
 		_allyUnits = new ArrayRO<BaseUnitBehaviour>(unitsList);
@@ -74,7 +79,7 @@ public class FightGraphics {
 		//instantiate soldiers
 		for (int i = 0; i < mapData.Units.Length; i++) {
 			bud = UnitsData.Instance.GetUnitData(mapData.Units[i]);
-			bub = (GameObject.Instantiate(_unitsGraphicsResources[mapData.Units[i]].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
+			bub = (GameObject.Instantiate(_enemyUnitsGraphicsResources[mapData.Units[i]].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 
 			if (bud is BaseHeroData) {
 				bub.Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy hero
@@ -102,6 +107,11 @@ public class FightGraphics {
 	}
 
 	private void LoadAllyUnitsResources() {
+		//check if this is first map
+		if (_allyUnitsGraphicsResources.Count > 0) {
+			return;
+		}
+
 		ArrayRO<BaseSoldier> playerSoldiersList = Global.Instance.CurrentMission.SelectedSoldiers;
 
 		BaseUnitData bud = null;
@@ -109,14 +119,14 @@ public class FightGraphics {
 
 		//load unique soldiers
 		for (int i = 0; i < playerSoldiersList.Length; i++) {
-			if (_unitsGraphicsResources.ContainsKey(playerSoldiersList[i].Data.Key)) {
+			if (_allyUnitsGraphicsResources.ContainsKey(playerSoldiersList[i].Data.Key)) {
 				continue;
 			}
 
 			bud = UnitsData.Instance.GetSoldierData(playerSoldiersList[i].Data.Key);
 			if (bud != null && !bud.PrefabName.Equals(string.Empty)) {
 				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, bud.PrefabName));
-				_unitsGraphicsResources.Add(playerSoldiersList[i].Data.Key, bub);
+				_allyUnitsGraphicsResources.Add(playerSoldiersList[i].Data.Key, bub);
 			} else {
 				Debug.LogError("Can't load unit graphics: " + playerSoldiersList[i].Data.Key);
 			}
@@ -129,7 +139,7 @@ public class FightGraphics {
 		}
 
 		bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, playerHero.Data.PrefabName));
-		_unitsGraphicsResources.Add(playerHero.Data.Key, bub);
+		_allyUnitsGraphicsResources.Add(playerHero.Data.Key, bub);
 	}
 
 	private void LoadEnemyUnitsResources(MissionMapData mapData) {
@@ -138,24 +148,50 @@ public class FightGraphics {
 
 		//load unique units
 		for (int i = 0; i < mapData.Units.Length; i++) {
-			if (_unitsGraphicsResources.ContainsKey(mapData.Units[i])) {
+			if (_enemyUnitsGraphicsResources.ContainsKey(mapData.Units[i])) {
 				continue;
 			}
 
 			bud = UnitsData.Instance.GetUnitData(mapData.Units[i]);
 			if (bud != null && !bud.PrefabName.Equals(string.Empty)) {
 				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, bud.PrefabName));
-				_unitsGraphicsResources.Add(mapData.Units[i], bub);
+				_enemyUnitsGraphicsResources.Add(mapData.Units[i], bub);
 			} else {
 				Debug.LogError("Can't load unit graphics: " + mapData.Units[i]);
 			}
 		}
 	}
 
-	private void UnloadResources() {
-		//TODO: unload all graphics loaded
+	private void DestroyInstances(bool fullUnload) {
+		//destroy ally units
+		if (fullUnload && _allyUnits != null) {
+			for (int i = 0; i < _allyUnits.Length; i++) {
+				if (_allyUnits[i] != null) {
+					GameObject.Destroy(_allyUnits[i].gameObject);
+				}
+			}
+			_allyUnits = null;
+		}
 
-		_unitsGraphicsResources.Clear();
+		//destroy enemy units
+		if (_enemyUnits != null) {
+			for (int i = 0; i < _enemyUnits.Length; i++) {
+				if (_enemyUnits[i] != null) {
+					GameObject.Destroy(_enemyUnits[i].gameObject);
+				}
+			}
+			_enemyUnits = null;
+		}
+
+		//TODO: destroy background
+	}
+
+	private void UnloadResources(bool fullUnload) {
+		if (fullUnload) {
+			_allyUnitsGraphicsResources.Clear();
+		}
+		_enemyUnitsGraphicsResources.Clear();
+		//TODO: free background resources
 
 		Resources.UnloadUnusedAssets();
 	}

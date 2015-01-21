@@ -12,4 +12,9 @@ public class NetworkManager {
 		//TODO: save player resources, progress, heroes
 		EventsAggregator.Network.Broadcast(ENetworkEvent.PlayerDataSaveSuccess);
 	}
+
+	public void SendFightResults(string data) {
+		//TODO: send fight data and wait for server answer
+		EventsAggregator.Network.Broadcast<bool>(ENetworkEvent.FightDataCheckResponse, true);
+	}
 }

@@ -64,6 +64,12 @@ public class FightManager : MonoBehaviour {
 		EventsAggregator.Fight.RemoveListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.EnemyDeath, OnEnemyDeath);
+
+		EventsAggregator.Network.RemoveListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
+
+		_logger.Clear();
+		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
+		Global.Instance.CurrentMission.Clear();
 	}
 
 	#region map start
@@ -110,19 +116,18 @@ public class FightManager : MonoBehaviour {
 	private void InitializeUnitsPositions() {
 		Transform unitTransform;
 
-		float zPosition = 0f;
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
 
 			unitTransform = _graphics.AllyUnits[i].transform;
 			unitTransform.parent = _allyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsData.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i);
+			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsData.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i * _unitsZDistance);
 			//TODO: position units by Z
 		}
 
 		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
 			unitTransform = _graphics.EnemyUnits[i].transform;
 			unitTransform.parent = _enemyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsData.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * 2);
+			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsData.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
 			//TODO: position units by Z
 		}
 	}
@@ -142,8 +147,12 @@ public class FightManager : MonoBehaviour {
 	private void MapComlete() {
 		Debug.Log("Map complete");
 
+		_graphics.Unload(false);
+		_logger.Clear();
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
-		//NextMap();
+
+		EventsAggregator.Network.AddListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
+		Global.Instance.Network.SendFightResults(_logger.ToJSON());
 	}
 
 	private void MapFail() {
@@ -156,11 +165,19 @@ public class FightManager : MonoBehaviour {
 
 	#region mission results
 	private void MissionComplete() {
+		//TODO: show win screen, remove player resources, save progress
 
+		_graphics.Unload(true);
+
+		Debug.Log("Mission complete");
 	}
 
 	private void MissionFail() {
+		//TODO: show lose screen, remove player resources, save progress
 
+		_graphics.Unload(true);
+
+		Debug.Log("Mission fail");
 	}
 	#endregion
 
@@ -191,6 +208,16 @@ public class FightManager : MonoBehaviour {
 		_enemiesCount--;
 		if (_enemiesCount <= 0) {
 			MapComlete();
+		}
+	}
+
+	private void OnFightResultsCheckServerResponse(bool checkResult) {
+		EventsAggregator.Network.RemoveListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
+
+		if (checkResult) {
+			NextMap();
+		} else {
+			//TODO: cripped fight results - show message and return to city without saving fight results
 		}
 	}
 	#endregion

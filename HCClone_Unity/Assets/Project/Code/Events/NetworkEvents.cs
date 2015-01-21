@@ -7,5 +7,7 @@
 
 	PlayerDataSaveStart,
 	PlayerDataSaveSuccess,
-	PlayerDataSaveFail
+	PlayerDataSaveFail,
+
+	FightDataCheckResponse
 }

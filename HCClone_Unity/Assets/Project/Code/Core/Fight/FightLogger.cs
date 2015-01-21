@@ -35,6 +35,11 @@ public class FightLogger {
 		Debug.Log(attacker.gameObject.tag + " unit " + attacker.UnitData.Data.Key + " attacks " + target.UnitData.Data.Key + " for " + attacker.UnitData.Damage + " damage");
 	}
 
+	public string ToJSON() {
+		//TODO: format data for server
+		return string.Empty;
+	}
+
 	public void Clear() {
 		_alliesAttacks.Clear();
 		_enemyAttacks.Clear();

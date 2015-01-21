@@ -45,14 +45,14 @@ public abstract class BaseUnitData {
 	}
 
 	[SerializeField]
-	protected float _aggroCrystalsForDeathToEnemy = 0;	//amount of aggro crystals unit gives to enemies after death
-	public float AggroCrystalsForDeathToEnemy {
+	protected int _aggroCrystalsForDeathToEnemy = 0;	//amount of aggro crystals unit gives to enemies after death
+	public int AggroCrystalsForDeathToEnemy {
 		get { return _aggroCrystalsForDeathToEnemy; }
 	}
 
 	[SerializeField]
-	protected float _aggroCrystalsForDeathToAlly = 0;	//amount of aggro crystals unit gives to allies after death
-	public float AggroCrystalsForDeathToAlly {
+	protected int _aggroCrystalsForDeathToAlly = 0;	//amount of aggro crystals unit gives to allies after death
+	public int AggroCrystalsForDeathToAlly {
 		get { return _aggroCrystalsForDeathToAlly; }
 	}
 

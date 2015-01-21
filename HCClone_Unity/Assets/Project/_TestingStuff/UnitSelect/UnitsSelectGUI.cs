@@ -99,6 +99,15 @@ public class UnitsSelectGUI : MonoBehaviour {
 	}
 
 	private void StartFight() {
+		PlayerResources playerResources = Global.Instance.Player.Resources;
+		MissionData md = MissionsData.Instance.GetPlanet(EPlanetKey.PlanetA).GetMission(EMissionKey.PlanetA_Test1);
+		if (playerResources.Fuel < md.FuelWinCost || playerResources.Fuel < md.FuelLoseCost ||
+			playerResources.Credits < md.CreditsWinCost || playerResources.Credits < md.CreditsLoseCost ||
+			playerResources.Minerals < md.MineralsWinCost || playerResources.Minerals < md.MineralsLoseCost) {
+				Debug.LogWarning("Not enough resources");
+				return;
+		}
+
 		BaseSoldier[] soldiers = new BaseSoldier[_hiredUnits.Count];
 		for (int i = 0; i < soldiers.Length; i++) {
 			soldiers[i] = new BaseSoldier(UnitsData.Instance.GetSoldierData(_hiredUnits[i]));

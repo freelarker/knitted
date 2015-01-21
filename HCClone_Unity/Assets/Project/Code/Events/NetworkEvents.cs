@@ -9,5 +9,9 @@
 	PlayerDataSaveSuccess,
 	PlayerDataSaveFail,
 
+	MissionResultsSaveStart,
+	MissionResultsSaveSuccess,
+	MissionResultsSaveFail,
+
 	FightDataCheckResponse
 }

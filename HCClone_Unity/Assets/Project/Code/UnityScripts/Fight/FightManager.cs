@@ -166,16 +166,30 @@ public class FightManager : MonoBehaviour {
 	#region mission results
 	private void MissionComplete() {
 		//TODO: show win screen, remove player resources, save progress
+		Global.Instance.Network.SaveMissionSuccessResults();
+
+		Global.Instance.Player.Resources.Fuel += -_currentMissionData.FuelWinCost + _currentMissionData.RewardFuel;
+		Global.Instance.Player.Resources.Credits += -_currentMissionData.CreditsWinCost + _currentMissionData.RewardCredits;
+		Global.Instance.Player.Resources.Minerals += -_currentMissionData.MineralsWinCost + _currentMissionData.RewardMinerals;
 
 		_graphics.Unload(true);
+		_currentMissionData = null;
+		_currentMapIndex = 0;
 
 		Debug.Log("Mission complete");
 	}
 
 	private void MissionFail() {
 		//TODO: show lose screen, remove player resources, save progress
+		Global.Instance.Network.SaveMissionFailResults();
+
+		Global.Instance.Player.Resources.Fuel -= _currentMissionData.FuelLoseCost;
+		Global.Instance.Player.Resources.Credits -= _currentMissionData.CreditsLoseCost;
+		Global.Instance.Player.Resources.Minerals -= _currentMissionData.MineralsLoseCost;
 
 		_graphics.Unload(true);
+		_currentMissionData = null;
+		_currentMapIndex = 0;
 
 		Debug.Log("Mission fail");
 	}

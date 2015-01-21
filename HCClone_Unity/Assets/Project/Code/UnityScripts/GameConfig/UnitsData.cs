@@ -68,4 +68,8 @@ public class UnitsData : MonoBehaviourResourceSingleton<UnitsData> {
 		bud = GetSoldierData(unitKey);
 		return bud;
 	}
+
+	public bool IsHero(EUnitKey unitKey) {
+		return (int)unitKey > 0 && (int)unitKey < 1000000;
+	}
 }

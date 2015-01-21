@@ -64,7 +64,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_targetUnit = null;
 		_unitPathfinder.Reset();
 
-		EventsAggregator.Fight.Broadcast(gameObject.tag == GameConstants.Tags.UNIT_ALLY ? EFightEvent.AllyDeath : EFightEvent.EnemyDeath);
+		EventsAggregator.Fight.Broadcast<BaseUnit>(gameObject.tag == GameConstants.Tags.UNIT_ALLY ? EFightEvent.AllyDeath : EFightEvent.EnemyDeath, _unitData);
 
 		//WARNING! temp
 		GameObject.Destroy(gameObject);

@@ -1,10 +1,10 @@
 ﻿public class PlayerResources {
-	public int Ammo { get; set; }
+	public int Fuel { get; set; }
 	public int Credits { get; set; }
 	public int Minerals { get; set; }
 
-	public PlayerResources(int ammo, int credits, int minerals) {
-		Ammo = ammo;
+	public PlayerResources(int fuel, int credits, int minerals) {
+		Fuel = fuel;
 		Credits = credits;
 		Minerals = minerals;
 	}

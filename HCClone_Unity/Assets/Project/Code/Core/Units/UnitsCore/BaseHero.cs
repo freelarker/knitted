@@ -21,7 +21,14 @@ public class BaseHero : BaseUnit {
 
 	public int Leadership { get; private set; }	//hero leadership after all upgrades and level-ups
 	public int Experience { get; private set; }	//hero experience
-	public int AggroCrystals { get; private set; }	//aggro crystals amount after all upgrades and level-ups
+	private int _aggroCrystals = 0;	//aggro crystals amount after all upgrades and level-ups
+	public int AggroCrystals {
+		get { return _aggroCrystals; }
+		private set {
+			_aggroCrystals = value;
+			EventsAggregator.Units.Broadcast<int>(EUnitEvent.AggroCrystalsUpdate, _aggroCrystals);
+		}
+	}	
 
 	//TODO: each action will cost different amount of aggro
 	//public int AggroPerAction { get; private set; }
@@ -29,6 +36,14 @@ public class BaseHero : BaseUnit {
 	public BaseHero(BaseHeroData data, int experience) : base(data) {
 		_data = data;
 		AddExperience(experience);
+
+		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
+		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
+	}
+
+	~BaseHero() {
+		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
+		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
 
 	protected override Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
@@ -68,4 +83,18 @@ public class BaseHero : BaseUnit {
 			//TODO: check new level and level up if necessary
 		}
 	}
+
+	#region listeners
+	protected void OnAllyDeath(BaseUnit unit) {
+		if (unit == this) {
+			return;
+		}
+
+		AggroCrystals += unit.Data.AggroCrystalsForDeathToAlly;
+	}
+
+	protected void OnEnemyDeath(BaseUnit unit) {
+		AggroCrystals += unit.Data.AggroCrystalsForDeathToEnemy;
+	}
+	#endregion
 }

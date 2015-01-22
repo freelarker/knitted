@@ -12,7 +12,7 @@
 	ReviveTarget,
 	ReviveCame,
 
-	InventoryUpdate,
+	EquipmentUpdate,
 	RecalculateParams,
 	AggroCrystalsUpdate
 }

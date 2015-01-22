@@ -92,6 +92,7 @@
     <Compile Include="Assets\Project\Code\Core\Items\ItemPriceData.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\ItemSlot.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\ItemSlotData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\PlayerItem.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\UnitInventory.cs" />
     <Compile Include="Assets\Project\Code\Core\Missions\MissionData.cs" />
     <Compile Include="Assets\Project\Code\Core\Missions\MissionInfo.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Assets\Project\Code\Core\Network\NetworkManager.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerData.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerHeroes.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerResources.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStatistics.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStoryProgress.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitPathfinding.cs" />
     <Compile Include="Assets\Project\Code\_Common\ArrayRO.cs" />
+    <Compile Include="Assets\Project\Code\_Common\ListRO.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourResourceSingleton.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\FightGUI.cs" />

@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerData {
 	public PlayerResources Resources { get; private set; }
+	public PlayerInventory Inventory { get; private set; }
 	public PlayerHeroes Heroes { get; private set; }
 	public PlayerCity City { get; private set; }
 	public PlayerStoryProgress StoryProgress { get; private set; }
@@ -23,7 +24,8 @@ public class PlayerData {
 
 		//TODO: assign correct values
 		Resources = new PlayerResources(10, 2500, 100);
-		Heroes = new PlayerHeroes(new BaseHero(UnitsData.Instance.GetHeroData(EUnitKey.Hero_Sniper), 0));
+		Inventory = new PlayerInventory();
+		Heroes = new PlayerHeroes(new BaseHero[] { new BaseHero(UnitsData.Instance.GetHeroData(EUnitKey.Hero_Sniper), 0) }, 0);
 		City = new PlayerCity();
 		StoryProgress = new PlayerStoryProgress();
 		Statistics = new PlayerStatistics();

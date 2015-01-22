@@ -111,6 +111,6 @@ public abstract class BaseUnit {
 	protected virtual void OnEquipmentUpdate(EUnitEqupmentSlot slot, EItemKey oldItem, EItemKey newItem) {
 		RecalculateParams();
 
-		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.InventoryUpdate, this);
+		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.EquipmentUpdate, this);
 	}
 }

@@ -8,13 +8,14 @@ public abstract class BaseUnit {
 		get { return _data; }
 	}
 
-	public int Health { get; set; }	//health amount after all upgrades applied
-	public int Armor { get; set; }	//armor amount after all upgrades applied
+	public int Health { get; private set; }	//health amount after all upgrades applied
+	public int Armor { get; private set; }	//armor amount after all upgrades applied
+	public int ArmorDamageAbsorb { get; private set; }	//how much damage will be absorbed by armor all upgrades applied
 	
-	public int Damage { get; set; }	//damage amount after all upgrades applied
-	public float AttackRange { get; set; }	//damage range after all upgrades applied
-	public float AttackSpeed { get; set; }	//damage speed after all upgrades applied
-	public int CritChance { get; set; }	//critical hit chance after all upgrades applied
+	public int Damage { get; private set; }	//damage amount after all upgrades applied
+	public float AttackRange { get; private set; }	//damage range after all upgrades applied
+	public float AttackSpeed { get; private set; }	//damage speed after all upgrades applied
+	public int CritChance { get; private set; }	//critical hit chance after all upgrades applied
 
 	public UnitInventory Inventory { get; private set; }
 
@@ -29,6 +30,8 @@ public abstract class BaseUnit {
 	}
 
 	public void ApplyDamage(int damageAmount) {
+		damageAmount -= ArmorDamageAbsorb;
+
 		if (IsDead || damageAmount <= 0) {
 			return;
 		}
@@ -100,6 +103,7 @@ public abstract class BaseUnit {
 				CritChance += itemData.ModCritChance;
 			}
 		}
+		ArmorDamageAbsorb = Mathf.CeilToInt(UnitsData.Instance.DamageReducePerOneArmor * Armor);
 
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}

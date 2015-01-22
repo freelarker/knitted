@@ -11,6 +11,11 @@
 	}
 	#endregion
 
+	private static bool _isInitialized = false;
+	public static bool IsInitialized {
+		get { return _isInitialized; }
+	}
+
 	public NetworkManager Network { get; private set; }
 	public PlayerData Player { get; private set; }
 	public MissionInfo CurrentMission { get; private set; }
@@ -23,5 +28,7 @@
 
 	public void Initialize() {
 		Player.Load();
+
+		_isInitialized = true;
 	}
 }

@@ -119,6 +119,7 @@
     <Compile Include="Assets\Project\Code\Events\NetworkEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\UnitEvents.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightCamera.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightGraphics.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightManager.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\ItemsData.cs" />
@@ -129,7 +130,8 @@
     <Compile Include="Assets\Project\Code\_Common\ArrayRO.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourResourceSingleton.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
-    <Compile Include="Assets\Project\_TestingStuff\UnitSelect\UnitsSelectGUI.cs" />
+    <Compile Include="Assets\Project\_TestingStuff\FightTest\FightGUI.cs" />
+    <Compile Include="Assets\Project\_TestingStuff\FightTest\UnitsSelectGUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
 </Project>

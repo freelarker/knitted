@@ -40,12 +40,17 @@ public class FightManager : MonoBehaviour {
 	private int _alliesCount = 0;
 	private int _enemiesCount = 0;
 
+	private bool _isPaused = false;
+	public bool IsPaused {
+		get { return _isPaused; }
+	}
+
 	public void Awake() {
 		_instance = this;
 
 		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
-		EventsAggregator.Fight.AddListener(EFightEvent.AllyDeath, OnAllyDeath);
-		EventsAggregator.Fight.AddListener(EFightEvent.EnemyDeath, OnEnemyDeath);
+		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
+		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
 
 	public void Start() {
@@ -55,15 +60,21 @@ public class FightManager : MonoBehaviour {
 			return;
 		}
 
+		FightCamera.Adapt();
+
 		_currentMissionData = MissionsData.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
 
 		LoadMap();
 	}
 
 	public void OnDestroy() {
+		if (!Global.IsInitialized) {
+			return;
+		}
+
 		EventsAggregator.Fight.RemoveListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
-		EventsAggregator.Fight.RemoveListener(EFightEvent.AllyDeath, OnAllyDeath);
-		EventsAggregator.Fight.RemoveListener(EFightEvent.EnemyDeath, OnEnemyDeath);
+		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
+		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
 
 		EventsAggregator.Network.RemoveListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
 
@@ -197,11 +208,23 @@ public class FightManager : MonoBehaviour {
 
 	#region pause
 	public void Pause() {
+		_isPaused = true;
 		EventsAggregator.Fight.Broadcast(EFightEvent.Pause);
+		Time.timeScale = 0;
 	}
 
 	public void Resume() {
+		_isPaused = false;
 		EventsAggregator.Fight.Broadcast(EFightEvent.Resume);
+		Time.timeScale = 1;
+	}
+
+	public void TogglePause() {
+		if (!_isPaused) {
+			Pause();
+		} else {
+			Resume();
+		}
 	}
 	#endregion
 
@@ -211,14 +234,14 @@ public class FightManager : MonoBehaviour {
 		target.UnitData.ApplyDamage(attacker.UnitData.Damage);
 	}
 
-	private void OnAllyDeath() {
+	private void OnAllyDeath(BaseUnit unit) {
 		_alliesCount--;
 		if (_alliesCount <= 0) {
 			MapFail();
 		}
 	}
 
-	private void OnEnemyDeath() {
+	private void OnEnemyDeath(BaseUnit unit) {
 		_enemiesCount--;
 		if (_enemiesCount <= 0) {
 			MapComlete();

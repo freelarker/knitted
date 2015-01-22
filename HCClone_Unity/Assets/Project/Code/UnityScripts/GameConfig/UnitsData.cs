@@ -12,6 +12,12 @@ public class UnitsData : MonoBehaviourResourceSingleton<UnitsData> {
 	}
 
 	[SerializeField]
+	private float _damageReducePerOneArmor = 0f;
+	public float DamageReducePerOneArmor {
+		get { return _damageReducePerOneArmor; }
+	}
+
+	[SerializeField]
 	private EUnitEqupmentSlot[] _heroEquipmentSlots = new EUnitEqupmentSlot[0];
 	private ArrayRO<EUnitEqupmentSlot> _heroEquipmentSlotsRO = null;
 	[SerializeField]

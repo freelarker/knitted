@@ -178,6 +178,7 @@ public class FightManager : MonoBehaviour {
 	private void MissionComplete() {
 		//TODO: show win screen, remove player resources, save progress
 		Global.Instance.Network.SaveMissionSuccessResults();
+		Global.Instance.Player.StoryProgress.SaveProgress(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 
 		Global.Instance.Player.Resources.Fuel += -_currentMissionData.FuelWinCost + _currentMissionData.RewardFuel;
 		Global.Instance.Player.Resources.Credits += -_currentMissionData.CreditsWinCost + _currentMissionData.RewardCredits;

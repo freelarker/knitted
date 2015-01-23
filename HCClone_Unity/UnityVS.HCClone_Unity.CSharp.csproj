@@ -108,6 +108,7 @@
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStatistics.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStoryProgress.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerTown.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerVIP.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseHero.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseSoldier.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseUnit.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Assets\Project\Code\Events\FightEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\ItemEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\NetworkEvents.cs" />
+    <Compile Include="Assets\Project\Code\Events\PlayerEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\UnitEvents.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightCamera.cs" />

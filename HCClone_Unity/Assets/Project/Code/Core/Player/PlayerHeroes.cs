@@ -53,4 +53,19 @@ public class PlayerHeroes {
 			_currentHeroIndex = heroIndex;
 		}
 	}
+
+	public bool HaveHero(EUnitKey heroKey) {
+		return GetHero(heroKey) != null;
+	}
+
+	public BaseHero GetHero(EUnitKey heroKey) {
+		if (_heroes != null) {
+			for (int i = 0; i < _heroes.Length; i++) {
+				if (_heroes[i].Data.Key == heroKey) {
+					return _heroes[i];
+				}
+			}
+		}
+		return null;
+	}
 }

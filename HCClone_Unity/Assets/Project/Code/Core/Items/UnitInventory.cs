@@ -52,6 +52,16 @@ public class UnitInventory {
 		}
 	}
 
+	//unequip item
+	public void Unequip(EUnitEqupmentSlot itemSlot) {
+		for (int i = 0; i < _equipment.Length; i++) {
+			if (_equipment[i].SlotName == itemSlot) {
+				Equip(i, EItemKey.None);
+				break;
+			}
+		}
+	}
+
 	//get item key in slot
 	public EItemKey GetItemInSlot(int slotId) {
 		if (slotId < 0 || _equipment.Length - 1 < slotId) {

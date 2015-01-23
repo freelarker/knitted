@@ -258,7 +258,13 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
         OnListenerAdding(eventID, handler);
         eventHandlers[eventID] = (Action<T, U, V>)eventHandlers[eventID] + handler;
     }
- 
+
+	//Four parameters
+	public void AddListener<T, U, V, C>(TEventType eventName, Action<T, U, V, C> handler) {
+		int eventID = ConvertEnumToInt(eventName);
+		OnListenerAdding(eventID, handler);
+		eventHandlers[eventID] = (Action<T, U, V, C>)eventHandlers[eventID] + handler;
+	}
 	
 	//No parameters
     public void RemoveListener(TEventType eventName, Action handler) 
@@ -291,6 +297,13 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
         OnListenerRemoving(eventID, handler);
         eventHandlers[eventID] = (Action<T, U, V>)eventHandlers[eventID] - handler;
     }
+
+	//Four parameters
+	public void RemoveListener<T, U, V, C>(TEventType eventName, Action<T, U, V, C> handler) {
+		int eventID = ConvertEnumToInt(eventName);
+		OnListenerRemoving(eventID, handler);
+		eventHandlers[eventID] = (Action<T, U, V, C>)eventHandlers[eventID] - handler;
+	}
  
 	#if REQUIRE_LISTENER
     static public void OnBroadcasting(int eventID) 
@@ -399,7 +412,25 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
 			else { throw CreateBroadcastSignatureException(eventID); }
         }
     }
-	
+
+	//Four parameters
+	public void Broadcast<T, U, V, C>(TEventType eventName, T arg1, U arg2, V arg3, C arg4) {
+		int eventID = ConvertEnumToInt(eventName);
+		#if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
+				Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventName + "\"");
+		#endif
+
+		#if REQUIRE_LISTENER
+				OnBroadcasting(eventID);
+		#endif
+
+		Delegate tempDel = eventHandlers[eventID];
+		if (tempDel != null) {
+			Action<T, U, V, C> broadcastEvent = tempDel as Action<T, U, V, C>;
+
+			if (broadcastEvent != null) { broadcastEvent(arg1, arg2, arg3, arg4); } else { throw CreateBroadcastSignatureException(eventID); }
+		}
+	}
 	
 	
 	//Delayed Broadcast (using coroutines -- these must be called like so from a MonoBehaviour script : 
@@ -514,6 +545,29 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
         }
     }
 
+	//Four parameters
+	public IEnumerator Broadcast<T, U, V, C>(TEventType eventName, T arg1, U arg2, V arg3, C arg4, YieldInstruction[] delayInstrunctions) {
+		int eventID = ConvertEnumToInt(eventName);
+		#if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
+				Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventName + "\"");
+		#endif
+
+		#if REQUIRE_LISTENER
+				OnBroadcasting(eventID);
+		#endif
+
+		Delegate tempDel = eventHandlers[eventID];
+		if (tempDel != null) {
+			Action<T, U, V, C> broadcastEvent = tempDel as Action<T, U, V, C>;
+
+			if (broadcastEvent != null) {
+				foreach (YieldInstruction instruction in delayInstrunctions)
+					yield return instruction;
+				broadcastEvent(arg1, arg2, arg3, arg4);
+			} else { throw CreateBroadcastSignatureException(eventID); }
+		}
+	}
+
 
 
 	//Last Listener Broadcast
@@ -596,6 +650,26 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
 			Action<T, U, V> broadcastEvent = invocationList[invocationList.Length - 1] as Action<T, U, V>;
 
 			if (broadcastEvent != null) { broadcastEvent(arg1, arg2, arg3); } else { throw CreateBroadcastSignatureException(eventID); }
+		}
+	}
+
+	//Four parameters
+	public void BroadcastToLast<T, U, V, C>(TEventType eventName, T arg1, U arg2, V arg3, C arg4) {
+		int eventID = ConvertEnumToInt(eventName);
+		#if LOG_ALL_MESSAGES || LOG_BROADCAST_MESSAGE
+				Debug.Log("MESSENGER\t" + System.DateTime.Now.ToString("hh:mm:ss.fff") + "\t\t\tInvoking \t\"" + eventName + "\"");
+		#endif
+
+		#if REQUIRE_LISTENER
+				OnBroadcasting(eventID);
+		#endif
+
+		Delegate tempDel = eventHandlers[eventID];
+		if (tempDel != null) {
+			Delegate[] invocationList = tempDel.GetInvocationList();
+			Action<T, U, V, C> broadcastEvent = invocationList[invocationList.Length - 1] as Action<T, U, V, C>;
+
+			if (broadcastEvent != null) { broadcastEvent(arg1, arg2, arg3, arg4); } else { throw CreateBroadcastSignatureException(eventID); }
 		}
 	}
 }

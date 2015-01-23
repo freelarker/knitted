@@ -1,5 +1,6 @@
 ﻿public enum EUnitEqupmentSlot {
-	Other = 0,
-	Weapon = 1,
+	None = 0,
+	Other = 1,
+	Weapon,
 	Armor
 }

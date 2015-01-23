@@ -12,6 +12,15 @@ public class PlayerData {
 	public PlayerStoryProgress StoryProgress { get; private set; }
 	public PlayerStatistics Statistics { get; private set; }
 
+	private EPlayerVIP _vipStatus = EPlayerVIP.None;
+	private EPlayerVIP VIPStatus {
+		get { return _vipStatus; }
+		set {
+			_vipStatus = value;
+			EventsAggregator.Player.Broadcast<EPlayerVIP>(EPlayerEvent.VIPUpdate, _vipStatus);
+		}
+	}
+
 	//load player data
 	public void Load() {
 		EventsAggregator.Network.AddListener(ENetworkEvent.PlayerDataLoadSuccess, OnLoadSuccess);
@@ -29,6 +38,7 @@ public class PlayerData {
 		City = new PlayerCity();
 		StoryProgress = new PlayerStoryProgress();
 		Statistics = new PlayerStatistics();
+		VIPStatus = EPlayerVIP.None;
 	}
 
 	//save player data

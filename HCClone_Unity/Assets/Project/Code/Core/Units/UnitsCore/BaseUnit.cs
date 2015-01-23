@@ -108,9 +108,9 @@ public abstract class BaseUnit {
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}
 
-	protected virtual void OnEquipmentUpdate(EUnitEqupmentSlot slot, EItemKey oldItem, EItemKey newItem) {
+	protected virtual void OnEquipmentUpdate(EUnitEqupmentSlot slot, EItemKey oldItemKey, EItemKey newItemKey) {
 		RecalculateParams();
 
-		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.EquipmentUpdate, this);
+		EventsAggregator.Units.Broadcast<BaseUnit, EUnitEqupmentSlot, EItemKey, EItemKey>(EUnitEvent.EquipmentUpdate, this, slot, oldItemKey, newItemKey);
 	}
 }

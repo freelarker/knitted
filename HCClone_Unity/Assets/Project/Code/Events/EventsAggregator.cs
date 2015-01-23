@@ -2,6 +2,9 @@
 	private static EventManager<ENetworkEvent> _network = new EventManager<ENetworkEvent>();
 	public static EventManager<ENetworkEvent> Network { get { return _network; } }
 
+	private static EventManager<EPlayerEvent> _player = new EventManager<EPlayerEvent>();
+	public static EventManager<EPlayerEvent> Player { get { return _player; } }
+
 	private static EventManager<EFightEvent> _fight = new EventManager<EFightEvent>();
 	public static EventManager<EFightEvent> Fight { get { return _fight; } }
 

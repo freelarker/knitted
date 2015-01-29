@@ -27,7 +27,7 @@ public class PlayerStoryProgress {
 			return false;
 		}
 
-		PlanetData pd = MissionsData.Instance.GetPlanet(planetKey);
+		PlanetData pd = MissionsConfig.Instance.GetPlanet(planetKey);
 		for (int i = 0; i < pd.Missions.Length; i++) {
 			if (!IsMissionCompleted(planetKey, pd.Missions[i].Key)) {
 				return false;

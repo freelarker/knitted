@@ -13,4 +13,7 @@
 
 	private static EventManager<EUnitEvent> _units = new EventManager<EUnitEvent>();
 	public static EventManager<EUnitEvent> Units { get { return _units; } }
+
+	private static EventManager<ECityEvent> _city = new EventManager<ECityEvent>();
+	public static EventManager<ECityEvent> City { get { return _city; } }
 }

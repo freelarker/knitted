@@ -34,7 +34,7 @@ public class PlayerData {
 		//TODO: assign correct values
 		Resources = new PlayerResources(10, 2500, 100);
 		Inventory = new PlayerInventory();
-		Heroes = new PlayerHeroes(new BaseHero[] { new BaseHero(UnitsData.Instance.GetHeroData(EUnitKey.Hero_Sniper), 0) }, 0);
+		Heroes = new PlayerHeroes(new BaseHero[] { new BaseHero(UnitsConfig.Instance.GetHeroData(EUnitKey.Hero_Sniper), 0) }, 0);
 		City = new PlayerCity();
 		StoryProgress = new PlayerStoryProgress();
 		Statistics = new PlayerStatistics();

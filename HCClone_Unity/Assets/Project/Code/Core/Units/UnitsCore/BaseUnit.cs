@@ -75,7 +75,7 @@ public abstract class BaseUnit {
 
 	protected virtual Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
 		Dictionary<EUnitEqupmentSlot, EItemType[]> slotsData = new Dictionary<EUnitEqupmentSlot, EItemType[]>();
-		ArrayRO<EUnitEqupmentSlot> availableSlots = UnitsData.Instance.GetUnitEquipmentSlots(this);
+		ArrayRO<EUnitEqupmentSlot> availableSlots = UnitsConfig.Instance.GetUnitEquipmentSlots(this);
 		for (int i = 0; i < availableSlots.Length; i++) {
 			slotsData.Add(availableSlots[i], new EItemType[0]);
 		}
@@ -90,10 +90,10 @@ public abstract class BaseUnit {
 		AttackSpeed = _data.BaseAttackSpeed;
 		CritChance = _data.BaseCritChance;
 
-		ArrayRO<EUnitEqupmentSlot> equipmentSlots = UnitsData.Instance.GetUnitEquipmentSlots(this);
+		ArrayRO<EUnitEqupmentSlot> equipmentSlots = UnitsConfig.Instance.GetUnitEquipmentSlots(this);
 		BaseItem itemData = null;
 		for (int i = 0; i < equipmentSlots.Length; i++) {
-			itemData = ItemsData.Instance.GetItem(Inventory.GetItemInSlot(i));
+			itemData = ItemsConfig.Instance.GetItem(Inventory.GetItemInSlot(i));
 			if (itemData != null) {
 				Health += itemData.ModHealth;
 				Armor += itemData.ModArmor;
@@ -103,7 +103,7 @@ public abstract class BaseUnit {
 				CritChance += itemData.ModCritChance;
 			}
 		}
-		ArmorDamageAbsorb = Mathf.CeilToInt(UnitsData.Instance.DamageReducePerOneArmor * Armor);
+		ArmorDamageAbsorb = Mathf.CeilToInt(UnitsConfig.Instance.DamageReducePerOneArmor * Armor);
 
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}

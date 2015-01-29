@@ -1,5 +1,9 @@
 ﻿public enum EPlayerEvent {
 	Idle = 0,
 
-	VIPUpdate
+	VIPUpdate,
+
+	CreditsUpdate,
+	MineralsUpdate,
+	FuelUpdate
 }

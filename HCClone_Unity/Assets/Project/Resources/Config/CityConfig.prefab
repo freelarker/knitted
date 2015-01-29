@@ -1,61 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &181012
+--- !u!1 &195568
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 481012}
-  - 114: {fileID: 11481012}
+  - 4: {fileID: 495568}
+  - 114: {fileID: 11495568}
   m_Layer: 0
-  m_Name: ItemsData
+  m_Name: CityConfig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &481012
+--- !u!4 &495568
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181012}
+  m_GameObject: {fileID: 195568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11481012
+--- !u!114 &11495568
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181012}
+  m_GameObject: {fileID: 195568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab55e91a1476ef47b183d91ca4c7533, type: 3}
+  m_Script: {fileID: 11500000, guid: 366d656b61282c64d86d3a483a156903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data:
-  - _key: 1
-    _type: 0
-    _slot: 2
-    _modHealth: 5
-    _modDamage: 0
-    _modDamageRange: 0
-    _modDamageSpeed: 0
-    _levelRequirement: 1
-  - _key: 1000001
-    _type: 0
-    _slot: 1
-    _modHealth: 0
-    _modDamage: 5
-    _modDamageRange: 6
-    _modDamageSpeed: .5
-    _levelRequirement: 1
+  _townHall:
+    _levelsRequirements: []
+  _barracks:
+    _levelsRequirements: []
+  _warehouse:
+    _levelsRequirements:
+    - _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements:
+      - _key: 1
+        _level: 1
+    _upgrades:
+    - _limitCredits: 10
+      _limitMinerals: 2
+      _limitFuel: 0
+      _bonusCreditsProduction: 0
+      _bonusMineralsProduction: 0
+      _bonusFuelProduction: 0
+  _market:
+    _levelsRequirements: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -65,6 +70,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 181012}
+  m_RootGameObject: {fileID: 195568}
   m_IsPrefabParent: 1
   m_IsExploded: 1

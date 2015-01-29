@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 496294}
   - 114: {fileID: 11496294}
   m_Layer: 0
-  m_Name: UnitsData
+  m_Name: UnitsConfig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxUnitsHeroCanHire: 4
+  _damageReducePerOneArmor: 0
   _heroEquipmentSlots: 0100000002000000
   _soldierEquipmentSlots: 0100000002000000
   _heroesData:

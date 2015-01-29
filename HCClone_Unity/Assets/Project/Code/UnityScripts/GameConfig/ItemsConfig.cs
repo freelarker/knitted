@@ -4,11 +4,10 @@
 /// Keeps all items data
 /// Configured through prefab
 /// </summary>
-public class ItemsData : MonoBehaviourResourceSingleton<ItemsData> {	//TODO: create editor
+public class ItemsConfig : MonoBehaviourResourceSingleton<ItemsConfig> {	//TODO: create editor
 #pragma warning disable 0414
-	private static string _path = "Config/ItemsData";
+	private static string _path = "Config/ItemsConfig";
 #pragma warning restore 0414
-	
 
 	[SerializeField]
 	private BaseItem[] _data = new BaseItem[0];

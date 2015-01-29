@@ -63,6 +63,15 @@ public class MissionData {
 	}
 
 	[SerializeField]
+	private int _mineIncome = 0;
+	public int MineIncome {
+		get { return _mineIncome; }
+	}
+	public bool HasMine {
+		get { return _mineIncome > 0; }
+	}
+
+	[SerializeField]
 	private MissionMapData[] _maps = new MissionMapData[0];
 	public int MapsCount {
 		get { return _maps.Length; }

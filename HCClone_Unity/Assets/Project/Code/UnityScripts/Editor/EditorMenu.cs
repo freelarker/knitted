@@ -5,17 +5,22 @@ using UnityEditor;
 public class EditorMenu : MonoBehaviour {
 	[MenuItem ("HCClone/Config/Items config")]
 	public static void InstantiateItemsConfig() {
-		Selection.activeObject = InstantiateSingletonPrefab <ItemsData>();
+		Selection.activeObject = InstantiateSingletonPrefab <ItemsConfig>();
 	}
 
 	[MenuItem("HCClone/Config/Units config")]
 	public static void InstantiateUnitsConfig() {
-		Selection.activeObject = InstantiateSingletonPrefab<UnitsData>();
+		Selection.activeObject = InstantiateSingletonPrefab<UnitsConfig>();
 	}
 
 	[MenuItem("HCClone/Config/Missions config")]
 	public static void InstantiateMissionsConfig() {
-		Selection.activeObject = InstantiateSingletonPrefab<MissionsData>();
+		Selection.activeObject = InstantiateSingletonPrefab<MissionsConfig>();
+	}
+
+	[MenuItem("HCClone/Config/City config")]
+	public static void InstantiateCityConfig() {
+		Selection.activeObject = InstantiateSingletonPrefab<CityConfig>();
 	}
 
 	private static GameObject InstantiateSingletonPrefab<T>() where T : MonoBehaviour {

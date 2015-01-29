@@ -62,7 +62,7 @@ public class FightManager : MonoBehaviour {
 
 		FightCamera.Adapt();
 
-		_currentMissionData = MissionsData.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
+		_currentMissionData = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
 
 		LoadMap();
 	}
@@ -115,7 +115,7 @@ public class FightManager : MonoBehaviour {
 
 		BaseUnitData bud = null;
 		for (int i = 0; i < mapData.Units.Length; i++) {
-			bud = UnitsData.Instance.GetUnitData(mapData.Units[i]);
+			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			if (bud is BaseHeroData) {
 				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy hero inventory
 			} else {
@@ -131,14 +131,14 @@ public class FightManager : MonoBehaviour {
 
 			unitTransform = _graphics.AllyUnits[i].transform;
 			unitTransform.parent = _allyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsData.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i * _unitsZDistance);
+			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i * _unitsZDistance);
 			//TODO: position units by Z
 		}
 
 		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
 			unitTransform = _graphics.EnemyUnits[i].transform;
 			unitTransform.parent = _enemyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsData.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
+			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
 			//TODO: position units by Z
 		}
 	}

@@ -74,6 +74,104 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
+--- !u!1 &67937237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 196294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+  m_PrefabInternal: {fileID: 1379916440}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 67937239}
+  - 114: {fileID: 67937238}
+  m_Layer: 0
+  m_Name: UnitsConfig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &67937238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11496294, guid: dd4674e29672e914690989f42508aca2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1379916440}
+  m_GameObject: {fileID: 67937237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32abf7a4b745d949aa752d6fdc56806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxUnitsHeroCanHire: 4
+  _damageReducePerOneArmor: 0
+  _heroEquipmentSlots: 0200000003000000
+  _soldierEquipmentSlots: 0200000003000000
+  _heroesData:
+  - _key: 1
+    _baseHealth: 50
+    _baseArmor: 0
+    _baseDamage: 10
+    _baseAttackRange: 1
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _prefabName: 
+    _baseAggroCrystals: 10
+    _baseLeadership: 20
+    _baseAggroCrystalsPerAttack: 0
+    _availableItemTypes: []
+  - _key: 2
+    _baseHealth: 100
+    _baseArmor: 0
+    _baseDamage: 15
+    _baseAttackRange: 3
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _prefabName: HeroSniper
+    _baseAggroCrystals: 10
+    _baseLeadership: 17
+    _baseAggroCrystalsPerAttack: 0
+    _availableItemTypes: []
+  _soldiersData:
+  - _key: 1000001
+    _baseHealth: 50
+    _baseArmor: 0
+    _baseDamage: 10
+    _baseAttackRange: 1
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _prefabName: UnitTrooper
+    _leadershipCost: 5
+    _creditsCost: 0
+  - _key: 1000002
+    _baseHealth: 30
+    _baseArmor: 0
+    _baseDamage: 3
+    _baseAttackRange: 1
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _prefabName: UnitMedic
+    _leadershipCost: 10
+    _creditsCost: 0
+--- !u!4 &67937239
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+  m_PrefabInternal: {fileID: 1379916440}
+  m_GameObject: {fileID: 67937237}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!1 &70496551
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +500,7 @@ RectTransform:
   - {fileID: 1097842716}
   - {fileID: 137810852}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -619,7 +717,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &282314881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,6 +1202,66 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1247142677}
+--- !u!1001 &1379916440
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: _soldierEquipmentSlots.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: _soldierEquipmentSlots.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: _heroEquipmentSlots.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496294, guid: dd4674e29672e914690989f42508aca2, type: 2}
+      propertyPath: _heroEquipmentSlots.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: dd4674e29672e914690989f42508aca2, type: 2}
+  m_RootGameObject: {fileID: 67937237}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1408508777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1345,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1460981367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,7 +1949,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1847315633
 GameObject:
   m_ObjectHideFlags: 0

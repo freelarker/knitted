@@ -78,7 +78,7 @@ public class FightGraphics {
 
 		//instantiate soldiers
 		for (int i = 0; i < mapData.Units.Length; i++) {
-			bud = UnitsData.Instance.GetUnitData(mapData.Units[i]);
+			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			bub = (GameObject.Instantiate(_enemyUnitsGraphicsResources[mapData.Units[i]].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 
 			if (bud is BaseHeroData) {
@@ -123,7 +123,7 @@ public class FightGraphics {
 				continue;
 			}
 
-			bud = UnitsData.Instance.GetSoldierData(playerSoldiersList[i].Data.Key);
+			bud = UnitsConfig.Instance.GetSoldierData(playerSoldiersList[i].Data.Key);
 			if (bud != null && !bud.PrefabName.Equals(string.Empty)) {
 				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, bud.PrefabName));
 				_allyUnitsGraphicsResources.Add(playerSoldiersList[i].Data.Key, bub);
@@ -152,7 +152,7 @@ public class FightGraphics {
 				continue;
 			}
 
-			bud = UnitsData.Instance.GetUnitData(mapData.Units[i]);
+			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			if (bud != null && !bud.PrefabName.Equals(string.Empty)) {
 				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, bud.PrefabName));
 				_enemyUnitsGraphicsResources.Add(mapData.Units[i], bub);

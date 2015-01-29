@@ -49,7 +49,7 @@ public class BaseHero : BaseUnit {
 	protected override Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
 		BaseHeroData heroData = base._data as BaseHeroData;
 		Dictionary<EUnitEqupmentSlot, EItemType[]> slotsData = new Dictionary<EUnitEqupmentSlot, EItemType[]>();
-		ArrayRO<EUnitEqupmentSlot> availableSlots = UnitsData.Instance.GetUnitEquipmentSlots(this);
+		ArrayRO<EUnitEqupmentSlot> availableSlots = UnitsConfig.Instance.GetUnitEquipmentSlots(this);
 		for (int i = 0; i < availableSlots.Length; i++) {
 			slotsData.Add(availableSlots[i], new EItemType[0]);
 			for (int j = 0; j < heroData.AvailableItemTypes.Length; j++) {

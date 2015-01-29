@@ -42,7 +42,7 @@ public class UnitInventory {
 			return;
 		}
 
-		BaseItem item = ItemsData.Instance.GetItem(itemKey);
+		BaseItem item = ItemsConfig.Instance.GetItem(itemKey);
 
 		EItemKey oldItemKey = GetItemInSlot(slotId);
 		_equipment[slotId].ItemKey = item.Key;
@@ -73,7 +73,7 @@ public class UnitInventory {
 	}
 
 	public bool CanEquipItem(EItemKey itemKey) {
-		BaseItem item = ItemsData.Instance.GetItem(itemKey);
+		BaseItem item = ItemsConfig.Instance.GetItem(itemKey);
 
 		//check item data found
 		if (item == null) {

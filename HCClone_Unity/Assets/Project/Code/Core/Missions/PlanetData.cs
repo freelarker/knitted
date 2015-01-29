@@ -9,6 +9,12 @@ public class PlanetData {
 	}
 
 	[SerializeField]
+	private int _creditsIncome = 0;
+	public int CreditsIncome {
+		get { return _creditsIncome; }
+	}
+
+	[SerializeField]
 	private MissionData[] _missions = new MissionData[0];
 	private ArrayRO<MissionData> _missionsRO = null;
 	public ArrayRO<MissionData> Missions {

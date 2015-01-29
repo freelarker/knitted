@@ -36,7 +36,7 @@ public class UnitsSelectGUI : MonoBehaviour {
 	public void Start() {
 		Global.Instance.Initialize();
 
-		_availableUnits = Global.Instance.Player.City.AvailableUnits;
+		_availableUnits = Global.Instance.Player.City.AvailableUnits.ToArray();
 
 		_btnNext.onClick.AddListener(NextUnit);
 		_btnPref.onClick.AddListener(PrevUnit);
@@ -68,7 +68,7 @@ public class UnitsSelectGUI : MonoBehaviour {
 	}
 
 	private void SelectUnit() {
-		_currentSoldierData = UnitsData.Instance.GetSoldierData(_availableUnits[_currentUnitIndex]);
+		_currentSoldierData = UnitsConfig.Instance.GetSoldierData(_availableUnits[_currentUnitIndex]);
 
 		_txtUnitName.text = _availableUnits[_currentUnitIndex].ToString();
 		_txtUnitHealth.text = _currentSoldierData.BaseHealth.ToString();
@@ -100,7 +100,7 @@ public class UnitsSelectGUI : MonoBehaviour {
 
 	private void StartFight() {
 		PlayerResources playerResources = Global.Instance.Player.Resources;
-		MissionData md = MissionsData.Instance.GetPlanet(EPlanetKey.PlanetA).GetMission(EMissionKey.PlanetA_Test1);
+		MissionData md = MissionsConfig.Instance.GetPlanet(EPlanetKey.PlanetA).GetMission(EMissionKey.PlanetA_Test1);
 		if (playerResources.Fuel < md.FuelWinCost || playerResources.Fuel < md.FuelLoseCost ||
 			playerResources.Credits < md.CreditsWinCost || playerResources.Credits < md.CreditsLoseCost ||
 			playerResources.Minerals < md.MineralsWinCost || playerResources.Minerals < md.MineralsLoseCost) {
@@ -110,7 +110,7 @@ public class UnitsSelectGUI : MonoBehaviour {
 
 		BaseSoldier[] soldiers = new BaseSoldier[_hiredUnits.Count];
 		for (int i = 0; i < soldiers.Length; i++) {
-			soldiers[i] = new BaseSoldier(UnitsData.Instance.GetSoldierData(_hiredUnits[i]));
+			soldiers[i] = new BaseSoldier(UnitsConfig.Instance.GetSoldierData(_hiredUnits[i]));
 		}
 
 		Global.Instance.CurrentMission.PlanetKey = EPlanetKey.PlanetA;

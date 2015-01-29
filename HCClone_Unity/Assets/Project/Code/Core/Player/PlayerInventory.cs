@@ -55,7 +55,7 @@ public class PlayerInventory {
 
 	#region listeners
 	private void OnItemEquip(BaseUnit unit, EUnitEqupmentSlot slot, EItemKey oldItemKey, EItemKey newItemKey) {
-		if (UnitsData.Instance.IsHero(unit.Data.Key) && Global.Instance.Player.Heroes.HaveHero(unit.Data.Key)) {
+		if (UnitsConfig.Instance.IsHero(unit.Data.Key) && Global.Instance.Player.Heroes.HaveHero(unit.Data.Key)) {
 			PlayerItem oldItem = GetItem(oldItemKey);
 			if (oldItem != null) {
 				oldItem.ItemCarrier = EUnitKey.Idle;

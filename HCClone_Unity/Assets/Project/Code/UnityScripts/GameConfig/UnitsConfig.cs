@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class UnitsData : MonoBehaviourResourceSingleton<UnitsData> {
+public class UnitsConfig : MonoBehaviourResourceSingleton<UnitsConfig> {
 #pragma warning disable 0414
-	private static string _path = "Config/UnitsData";
+	private static string _path = "Config/UnitsConfig";
 #pragma warning restore 0414
 
 	[SerializeField]
@@ -28,6 +28,18 @@ public class UnitsData : MonoBehaviourResourceSingleton<UnitsData> {
 	private BaseHeroData[] _heroesData = new BaseHeroData[0];
 	[SerializeField]
 	private BaseSoldierData[] _soldiersData = new BaseSoldierData[0];
+
+	[SerializeField]
+	private SoldierUpgrade[] _soldierUpgrades = null;
+	private ArrayRO<SoldierUpgrade> _soldierUpgradesRO = null;
+	public ArrayRO<SoldierUpgrade> SoldierUpgrades {
+		get {
+			if (_soldierUpgradesRO == null) {
+				_soldierUpgradesRO = new ArrayRO<SoldierUpgrade>(_soldierUpgrades);
+			}
+			return _soldierUpgradesRO;
+		}
+	}
 
 	public ArrayRO<EUnitEqupmentSlot> GetUnitEquipmentSlots(BaseUnit unit) {
 		if (_heroEquipmentSlotsRO == null) {

@@ -41,8 +41,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxUnitsHeroCanHire: 4
   _damageReducePerOneArmor: 0
-  _heroEquipmentSlots: 0100000002000000
-  _soldierEquipmentSlots: 0100000002000000
+  _heroEquipmentSlots: 0200000003000000
+  _soldierEquipmentSlots: 0200000003000000
   _heroesData:
   - _key: 1
     _baseHealth: 50
@@ -97,6 +97,11 @@ MonoBehaviour:
     _prefabName: UnitMedic
     _leadershipCost: 10
     _creditsCost: 0
+  _soldierUpgrades:
+  - _soldierKey: 1000001
+    _levelsData:
+    - _weaponKey: 0
+      _armorKey: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -42,7 +42,16 @@ MonoBehaviour:
   _townHall:
     _levelsRequirements: []
   _barracks:
-    _levelsRequirements: []
+    _levelsRequirements:
+    - _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
+    _upgrades:
+    - _availableUnits: 41420f00
+      _unitWeaponUpgradeLevel: 0
+      _unitArmorUpgradeLevel: 0
   _warehouse:
     _levelsRequirements:
     - _buildTime: 0

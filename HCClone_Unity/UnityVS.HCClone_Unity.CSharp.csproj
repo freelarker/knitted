@@ -49,6 +49,9 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files (x86)\Unity\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\EventSystem\MainScripts\EnumConverterCreator.cs" />
@@ -139,6 +142,14 @@
     <Compile Include="Assets\Project\Code\Events\PlayerEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\UnitEvents.cs" />
+    <Compile Include="Assets\Project\Code\Grid\HCCCell.cs" />
+    <Compile Include="Assets\Project\Code\Grid\HCCGridController.cs" />
+    <Compile Include="Assets\Project\Code\Grid\HCCGridData.cs" />
+    <Compile Include="Assets\Project\Code\Grid\HCCGridObject.cs" />
+    <Compile Include="Assets\Project\Code\Grid\HCCGridView.cs" />
+    <Compile Include="Assets\Project\Code\Grid\HCCPathfinder.cs" />
+    <Compile Include="Assets\Project\Code\Grid\Utils\HCCGridPoint.cs" />
+    <Compile Include="Assets\Project\Code\Grid\Utils\HCCGridRect.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightCamera.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightGraphics.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightManager.cs" />
@@ -156,6 +167,7 @@
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\FightGUI.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\UnitsSelectGUI.cs" />
+    <None Include="C:\Program Files (x86)\Unity\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
 </Project>

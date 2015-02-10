@@ -77,7 +77,7 @@ MonoBehaviour:
     _baseHealth: 50
     _baseArmor: 0
     _baseDamage: 10
-    _baseAttackRange: 1
+    _baseAttackRange: 2
     _baseAttackSpeed: 1
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
     _baseHealth: 30
     _baseArmor: 0
     _baseDamage: 3
-    _baseAttackRange: 1
+    _baseAttackRange: 2
     _baseAttackSpeed: 1
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0

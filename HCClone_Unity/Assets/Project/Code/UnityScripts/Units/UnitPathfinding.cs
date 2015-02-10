@@ -3,7 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class UnitPathfinding : Pathfinding {
+[RequireComponent(typeof(HCCGridObject))]
+public class UnitPathfinding : MonoBehaviour {
 	private enum EUnitMovementState {
 		None,
 		MoveToPrepPoint,
@@ -11,6 +12,9 @@ public class UnitPathfinding : Pathfinding {
 		WatchEnemy,
 		NoEnemy
 	}
+
+	[SerializeField]
+	private HCCGridObject _gridObject;
 
 	private int _searchesPerSecond = 3;
 	private float _minDistanceToTargetUnit = 1f;
@@ -55,7 +59,8 @@ public class UnitPathfinding : Pathfinding {
 	}
 
 	private IEnumerator FindPathTimer() {
-		FindPath(_cachedTransform.position, _targetPosition);
+		//_gridObject.FindPath(_targetPosition, _gridObject, _nearestTarget.gameObject.GetComponent<HCCGridObject>());
+		_gridObject.FindPath(_nearestTarget.gameObject.GetComponent<HCCGridObject>());
 		yield return _cachedWaitForSeconds;
 		StartCoroutine(FindPathTimer());
 	}
@@ -106,7 +111,7 @@ public class UnitPathfinding : Pathfinding {
 			_targetPosition.z = transform.position.z;
 			_targetPosition.x = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.AllyStartLine.position.x : FightManager.Instance.EnemyStartLine.position.x;
 
-			FindPath(_cachedTransform.position, _targetPosition);
+			_gridObject.FindPath(_targetPosition, _gridObject);
 
 			CurrentState = EUnitMovementState.MoveToPrepPoint;
 		} else {
@@ -128,10 +133,9 @@ public class UnitPathfinding : Pathfinding {
 	}
 
 	private void MoveToAttackPoint() {
-		//TODO: setup correct target position
 		_targetPosition = _nearestTarget.position;
 
-		PerformMovement(_minDistanceToTargetUnit);
+		PerformMovement();
 
 		if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
 			OnAttackPointReached();
@@ -152,11 +156,12 @@ public class UnitPathfinding : Pathfinding {
 		_cachedTransform.LookAt(_nearestTarget.transform);
 	}
 
-	private bool PerformMovement(float minDistance = 0.4f) {
-		if (Path.Count > 0) {
-			_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, Path[0], Time.deltaTime * _speed);
-			if (Vector3.Distance(_cachedTransform.position, Path[0]) < minDistance) {
-				Path.RemoveAt(0);
+	private bool PerformMovement(float minDistance = 0.6f) {
+		if (_gridObject.Path.Count > 0) {
+			Vector3 pos = HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition);
+			_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, pos, Time.deltaTime * _speed);
+			if (Vector3.Distance(_cachedTransform.position, pos) < minDistance) {
+				_gridObject.PathPointReached();
 			}
 			return true;
 		}

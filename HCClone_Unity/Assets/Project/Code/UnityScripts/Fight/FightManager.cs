@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class FightManager : MonoBehaviour {
 	private static FightManager _instance = null;
@@ -48,21 +49,26 @@ public class FightManager : MonoBehaviour {
 	public void Awake() {
 		_instance = this;
 
+		HCCGridController.Instance.Initialize((int)(-HCCGridView.Instance.ZeroPoint.x / HCCGridView.Instance.TileSize) * 2, (int)(-HCCGridView.Instance.ZeroPoint.z / HCCGridView.Instance.TileSize) * 2);
+
 		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
 
-	public void Start() {
+	public IEnumerator Start() {
 		if (Global.Instance.CurrentMission.PlanetKey == EPlanetKey.None || Global.Instance.CurrentMission.MissionKey == EMissionKey.None) {
 			//TODO: broadcast message
 			Debug.LogError("Wrong mission info");
-			return;
+			//return;
+			yield break;
 		}
 
 		FightCamera.Adapt();
 
 		_currentMissionData = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
+
+		yield return null;
 
 		LoadMap();
 	}
@@ -96,7 +102,7 @@ public class FightManager : MonoBehaviour {
 
 		InitializeUnitsData(mapData);
 		InitializeUnitsPositions();
-		
+
 		//WARNING! temp
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
 			_graphics.AllyUnits[i].Run();
@@ -128,7 +134,6 @@ public class FightManager : MonoBehaviour {
 		Transform unitTransform;
 
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
-
 			unitTransform = _graphics.AllyUnits[i].transform;
 			unitTransform.parent = _allyUnitsRoot;
 			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i * _unitsZDistance);
@@ -138,7 +143,8 @@ public class FightManager : MonoBehaviour {
 		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
 			unitTransform = _graphics.EnemyUnits[i].transform;
 			unitTransform.parent = _enemyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
+			//unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
+			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + i * 2, 0f, 0f);
 			//TODO: position units by Z
 		}
 	}

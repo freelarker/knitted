@@ -344,39 +344,36 @@ public class Pathfinder : MonoBehaviour
     }
 
     private Node FindClosestNode(Vector3 pos)
-    {      
-        int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
-        int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
-
-        if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
-            return null;
-
-        Node n = Map[x, z];
-
-        if (n.walkable)
-        {
-            return new Node(x, z, n.yCoord, n.ID, n.xCoord, n.zCoord, n.walkable);
-        }
-        else
-        {
-            //If we get a non walkable tile, then look around its neightbours
-            for (int i = z - 1; i < z + 2; i++)
-            {
-                for (int j = x - 1; j < x + 2; j++)
-                {
-                    //Check they are within bounderies
-                    if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0))
-                    {
-                        if (Map[j, i].walkable)
-                        {
-                            return new Node(j, i, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable);
-                        }
-                    }
-                }
-            }
-            return null;
-        }
+    {
+		return FindClosestNode(pos, 2);
     }
+
+	private Node FindClosestNode(Vector3 pos, int maxOffset) {
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) : Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+		int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+
+		if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
+			return null;
+
+		Node n = Map[x, z];
+
+		if (n.walkable) {
+			return new Node(x, z, n.yCoord, n.ID, n.xCoord, n.zCoord, n.walkable);
+		} else {
+			//If we get a non walkable tile, then look around its neightbours
+			for (int i = z - 1; i < z + maxOffset; i++) {
+				for (int j = x - 1; j < x + maxOffset; j++) {
+					//Check they are within bounderies
+					if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0)) {
+						if (Map[j, i].walkable) {
+							return new Node(j, i, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable);
+						}
+					}
+				}
+			}
+			return null;
+		}
+	}
 
     private void FindEndNode(Vector3 pos)
     {       
@@ -922,4 +919,22 @@ public class Pathfinder : MonoBehaviour
     }
 
     #endregion
+
+	#region extension
+	public Vector3 GetClosestOpenNodePosition(Vector3 startPos, Vector3 endPos, float maxDistance) {
+		float curDistance = Vector3.Distance(startPos, endPos);
+		if (curDistance < maxDistance) {
+			return startPos;
+		}
+
+		Vector3 targetPos = endPos + ((endPos + startPos) * (1 / Vector3.Distance(endPos, startPos) * maxDistance));
+		Node targetNode = FindClosestNode(targetPos);
+		//UnityEngine.Debug.LogWarning("=== " + targetPos);
+		if (targetNode != null && targetNode.walkable) {
+			return new Vector3(targetNode.xCoord, targetNode.yCoord, targetNode.zCoord);
+		}
+
+		return endPos;
+	}
+	#endregion
 }

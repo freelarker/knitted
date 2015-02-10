@@ -12,6 +12,7 @@ GameObject:
   - 23: {fileID: 2361212}
   - 114: {fileID: 11488874}
   - 114: {fileID: 11493678}
+  - 114: {fileID: 11428212}
   m_Layer: 0
   m_Name: HeroSniper
   m_TagString: Untagged
@@ -58,6 +59,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161212}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11428212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbe24aa4e0b5ca419da402b0565e261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isStatic: 0
 --- !u!114 &11488874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,9 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0633cd4d83242c45a55545fd252bff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: []
-  PathType: 0
-  JS: 0
+  _gridObject: {fileID: 11428212}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

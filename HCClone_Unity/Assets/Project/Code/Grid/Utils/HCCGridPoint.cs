@@ -14,4 +14,22 @@
 		get { return new HCCGridPoint(0, 0); }
 	}
 	#endregion
+
+	#region operators
+	public static HCCGridPoint operator +(HCCGridPoint o1, HCCGridPoint o2) {
+		return new HCCGridPoint(o1.X + o2.X, o1.Z + o2.Z);
+	}
+
+	public static HCCGridPoint operator -(HCCGridPoint o1, HCCGridPoint o2) {
+		return new HCCGridPoint(o1.X - o2.X, o1.Z - o2.Z);
+	}
+
+	public static HCCGridPoint operator *(HCCGridPoint o1, HCCGridPoint o2) {
+		return new HCCGridPoint(o1.X * o2.X, o1.Z * o2.Z);
+	}
+
+	public static HCCGridPoint operator /(HCCGridPoint o1, HCCGridPoint o2) {
+		return new HCCGridPoint(o1.X / o2.X, o1.Z / o2.Z);
+	}
+	#endregion
 }

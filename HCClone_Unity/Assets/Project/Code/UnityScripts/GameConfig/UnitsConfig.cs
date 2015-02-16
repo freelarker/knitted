@@ -90,4 +90,16 @@ public class UnitsConfig : MonoBehaviourResourceSingleton<UnitsConfig> {
 	public bool IsHero(EUnitKey unitKey) {
 		return (int)unitKey > 0 && (int)unitKey < 1000000;
 	}
+
+	#region upgrades
+	public SoldierUpgrade GetSoldierUpgrades(EUnitKey unitKey) {
+		for (int i = 0; i < _soldierUpgrades.Length; i++) {
+			if (_soldierUpgrades[i].SoldierKey == unitKey) {
+				return _soldierUpgrades[i];
+			}
+		}
+
+		return null;
+	}
+	#endregion
 }

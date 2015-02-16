@@ -72,6 +72,16 @@ public class UnitInventory {
 		return _equipment[slotId].ItemKey;
 	}
 
+	public EItemKey GetItemInSlot(EUnitEqupmentSlot slotKey) {
+		for (int i = 0; i < _equipment.Length; i++) {
+			if (_equipment[i].SlotName == slotKey) {
+				return _equipment[i].ItemKey;
+			}
+		}
+
+		return EItemKey.None;
+	}
+
 	public bool CanEquipItem(EItemKey itemKey) {
 		BaseItem item = ItemsConfig.Instance.GetItem(itemKey);
 

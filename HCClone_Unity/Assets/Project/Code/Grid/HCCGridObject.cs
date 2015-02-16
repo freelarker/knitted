@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class HCCGridObject : MonoBehaviour {
 	[SerializeField]
+	private Renderer _modelRenderer = null;
+
+	[SerializeField]
 	private bool _isStatic = false;		//if object marked as static it's cells are unwalkable
 	public bool IsStatic {
 		get { return _isStatic; }
 	}
 
+	//for static bounds any static renderer can be assigned
 	public float XMinWorldPos {
-		get { return _cachedRenderer.bounds.min.x; }
+		get { return _modelRenderer.bounds.min.x; }
 	}
 	public float XMaxWorldPos {
-		get { return _cachedRenderer.bounds.max.x; }
+		get { return _modelRenderer.bounds.max.x; }
 	}
 	public float ZMinWorldPos {
-		get { return _cachedRenderer.bounds.min.z; }
+		get { return _modelRenderer.bounds.min.z; }
 	}
 	public float ZMaxWorldPos {
-		get { return _cachedRenderer.bounds.max.z; }
+		get { return _modelRenderer.bounds.max.z; }
 	}
 	public float XWorldSize { get; private set; }
 	public float ZWorldSize { get; private set; }
@@ -32,9 +36,20 @@ public class HCCGridObject : MonoBehaviour {
 		return HCCGridView.Instance.WorldPosToGridRect(this, worldPosition);
 	}
 
+	public HCCGridPoint GridPosition {
+		get { return HCCGridController.Instance.GridView.WorldToGridPos(_cachedTransform.position); }
+	}
+
+	public bool IsMoving {
+		get { return Path.Count > 0; }
+	}
+
+	public EHCCGridDirection MoveDirection {
+		get { return Path.Count == 0 ? EHCCGridDirection.None : HCCGridDirection.VectorToDirection(Path[0].GridPosition - GridPosition); }
+	}
+
 	public List<HCCCell> Path { get; private set; }
 
-	private Renderer _cachedRenderer = null;
 	private Transform _cachedTransform = null;
 	private Vector3 _oldWorldPosition = Vector3.zero;
 	private HCCGridRect _oldGridRect = new HCCGridRect();
@@ -64,11 +79,13 @@ public class HCCGridObject : MonoBehaviour {
 	private void Initialize() {
 		Path = new List<HCCCell>();
 
-		_cachedRenderer = gameObject.renderer;
+		if (_modelRenderer == null) {
+			_modelRenderer = gameObject.renderer;
+		}
 		_cachedTransform = transform;
 
 		//init world size
-		Bounds bounds = _cachedRenderer.bounds;
+		Bounds bounds = _modelRenderer.bounds;
 		XWorldSize = Mathf.Abs(bounds.max.x - bounds.min.x);
 		ZWorldSize = Mathf.Abs(bounds.max.z - bounds.min.z);
 	}
@@ -77,7 +94,7 @@ public class HCCGridObject : MonoBehaviour {
 		List<HCCCell> targetCells = HCCGridController.Instance.GetGridObjectCellsList(this);
 		if (targetCells != null) {
 			for (int i = 0; i < targetCells.Count; i++) {
-				targetCells[i].ObjectData = this;
+				targetCells[i].ObjectData.Add(this);
 			}
 		}
 	}
@@ -85,32 +102,32 @@ public class HCCGridObject : MonoBehaviour {
 	private void Unregister() {
 		List<HCCCell> cellsList = HCCGridController.Instance.GetGridRectCellsList(_oldGridRect);
 		for (int i = 0; i < cellsList.Count; i++) {
-			if (cellsList[i].ObjectData == this) {
-				cellsList[i].ObjectData = null;
+			if (cellsList[i].ObjectData.IndexOf(this) != -1) {
+				cellsList[i].ObjectData.Remove(this);
 			}
 		}
 	}
 
 	private void UpdateGidPosition() {
 		HCCGridRect gridRect = HCCGridController.Instance.GridView.WorldPosToGridRect(this);
-		if(/*HCCGridController.Instance.IsGridSpaceAvailable(gridRect, this)*/true) {
+		//if(HCCGridController.Instance.IsGridSpaceAvailable(gridRect, this)true) {
 			if (!gridRect.Equals(_oldGridRect)) {
 				//TODO: make more exact check of all object cells
 				List<HCCCell> cellsList = HCCGridController.Instance.GetGridRectCellsList(_oldGridRect);
 				for (int i = 0; i < cellsList.Count; i++) {
-					if (cellsList[i].ObjectData == this) {
-						cellsList[i].ObjectData = null;
+					if (cellsList[i].ObjectData.IndexOf(this) != -1) {
+						cellsList[i].ObjectData.Remove(this);
 					}
 				}
 
 				cellsList = HCCGridController.Instance.GetGridRectCellsList(gridRect);
 				for (int i = 0; i < cellsList.Count; i++) {
-					cellsList[i].ObjectData = this;
+					cellsList[i].ObjectData.Add(this);
 				}
 			}
-		} else {
-			Debug.LogError(string.Format("Object \"{0}\": wrong grid position!", gameObject.name));
-		}
+		//} else {
+		//	Debug.LogError(string.Format("Object \"{0}\": wrong grid position!", gameObject.name));
+		//}
 		_oldGridRect = gridRect;
 	}
 

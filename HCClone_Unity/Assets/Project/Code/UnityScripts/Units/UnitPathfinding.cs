@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class UnitPathfinding : MonoBehaviour {
 	private enum EUnitMovementState {
 		None,
+		MoveToFreePoint,
 		MoveToPrepPoint,
 		MoveToAttackPoint,
 		WatchEnemy,
@@ -15,10 +16,15 @@ public class UnitPathfinding : MonoBehaviour {
 
 	[SerializeField]
 	private HCCGridObject _gridObject;
+	[SerializeField]
+	private UnitModelView _model;
 
-	private int _searchesPerSecond = 3;
+	private int _searchesPerSecond = 2;
 	private float _minDistanceToTargetUnit = 1f;
 	private float _speed = 1f;
+
+	private EHCCGridDirection _freePointDirection = EHCCGridDirection.None;
+	private HCCGridPoint _freePointDirectionVector = HCCGridPoint.Zero;
 
 	private Vector3 _targetPosition = Vector3.zero;
 	private Transform _nearestTarget = null;
@@ -38,6 +44,11 @@ public class UnitPathfinding : MonoBehaviour {
 	private Action _onTargetReached;
 
 	public void Awake() {
+		if (_model == null) {
+			_model = gameObject.GetComponentInChildren<UnitModelView>();
+		}
+
+		_movementStateActions.Add(EUnitMovementState.MoveToFreePoint, MoveToFreePoint);
 		_movementStateActions.Add(EUnitMovementState.MoveToPrepPoint, MoveToPreparationPoint);
 		_movementStateActions.Add(EUnitMovementState.MoveToAttackPoint, MoveToAttackPoint);
 		_movementStateActions.Add(EUnitMovementState.WatchEnemy, WatchEnemy);
@@ -108,20 +119,83 @@ public class UnitPathfinding : MonoBehaviour {
 
 		//setup path to appear on screen
 		if (_currentState == EUnitMovementState.None) {
-			_targetPosition.z = transform.position.z;
-			_targetPosition.x = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.AllyStartLine.position.x : FightManager.Instance.EnemyStartLine.position.x;
-
-			_gridObject.FindPath(_targetPosition, _gridObject);
-
-			CurrentState = EUnitMovementState.MoveToPrepPoint;
+			//if there's interaction with some object we should get rid of it first
+			//List<HCCGridObject> objectsAtMyRect = HCCGridController.Instance.GetObjectsAtRect(_gridObject.GridRect);
+			//if (objectsAtMyRect.Count > 1) {
+			//	CalculateFreePointDirection(objectsAtMyRect);
+			//	CurrentState = EUnitMovementState.MoveToFreePoint;
+			//} else {
+			//	OnFreePointReached();
+			//}
+			OnFreePointReached();
 		} else {
 			OnPreparationPointReached();
 		}
 	}
 
+	private void CalculateFreePointDirection() {
+		CalculateFreePointDirection(HCCGridController.Instance.GetObjectsAtRect(_gridObject.GridRect));
+	}
+
+	private void CalculateFreePointDirection(List<HCCGridObject> objectsAtMyRect) {
+		if (objectsAtMyRect.Count > 1) {
+			List<EHCCGridDirection> directions = new List<EHCCGridDirection>();
+			for (int i = 0; i < objectsAtMyRect.Count; i++) {
+				if (objectsAtMyRect[i] != _gridObject) {
+					directions.Add(objectsAtMyRect[i].MoveDirection);
+				}
+			}
+			directions = HCCGridDirection.GetFreeDirections(directions, false);
+
+			if (directions.IndexOf(_freePointDirection) == -1) {
+				_freePointDirection = directions[UnityEngine.Random.Range(0, directions.Count - 1)];
+				_freePointDirectionVector = HCCGridDirection.DirectionToVector(_freePointDirection);
+			}
+		}
+	}
+
+	private void CheckFreePoint() {
+		List<HCCGridObject> objectsAtMyRect = HCCGridController.Instance.GetObjectsAtRect(_gridObject.GridRect);
+		if (objectsAtMyRect.Count > 1) {
+			CalculateFreePointDirection(objectsAtMyRect);
+
+			HCCGridPoint myPosition = _gridObject.GridPosition;
+			_gridObject.Path.Add(HCCGridController.Instance.GridData.GetCell(myPosition.X + _freePointDirectionVector.X, myPosition.Z + _freePointDirectionVector.Z));
+			_gridObject.Path.Add(HCCGridController.Instance.GridData.GetCell(myPosition.X + _freePointDirectionVector.X * 2, myPosition.Z + _freePointDirectionVector.Z * 2));
+		} else {
+			OnFreePointReached();
+		}
+	}
+
+	private void MoveToFreePoint() {
+		if (!PerformMovement()) {
+			CheckFreePoint();
+		}
+
+		if (_gridObject.Path.Count > 0) {
+			_cachedTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+		}
+	}
+
+	private void OnFreePointReached() {
+		_freePointDirection = EHCCGridDirection.None;
+		_freePointDirectionVector = HCCGridPoint.Zero;
+
+		_targetPosition.z = transform.position.z;
+		_targetPosition.x = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.AllyStartLine.position.x : FightManager.Instance.EnemyStartLine.position.x;
+
+		_gridObject.FindPath(_targetPosition, _gridObject);
+
+		CurrentState = EUnitMovementState.MoveToPrepPoint;
+	}
+
 	private void MoveToPreparationPoint() {
 		if (!PerformMovement()) {
 			OnPreparationPointReached();
+		}
+
+		if(_gridObject.Path.Count > 0) {
+			_cachedTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 	}
 
@@ -136,6 +210,9 @@ public class UnitPathfinding : MonoBehaviour {
 		_targetPosition = _nearestTarget.position;
 
 		PerformMovement();
+		if (_gridObject.Path.Count > 0) {
+			_cachedTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+		}
 
 		if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
 			OnAttackPointReached();

@@ -32,27 +32,36 @@ public class HCCPathfinder {
 		_gScore[start.X, start.Z] = 0f;
 		_fScore[start.X, start.Z] = _gScore[start.X, start.Z] + HeuristicCost(start, end);
 
-		HCCCell current;
+		HCCCell currentCell = null;
 		while (openSet.Count > 0) {
 			int currentIndex = GetLowestFScoreIndex(openSet);
-			current = openSet[currentIndex];
-			if (current.GridPosition.X == end.X && current.GridPosition.Z == end.Z) {
-				List<HCCCell> result = ReconstructPath(current.GridPosition);
+			currentCell = openSet[currentIndex];
+
+			//if destination reached
+			//if (currentCell.GridPosition.X == end.X && currentCell.GridPosition.Z == end.Z) {
+			//	List<HCCCell> result = ReconstructPath(currentCell.GridPosition);
+			//	Cleanup();
+			//	return result;
+			//}
+			//project update 4: move only to rects interception - 1 step
+			if (target.GridRect.Interacts(self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(currentCell.GridPosition)))) {
+				List<HCCCell> result = ReconstructPath(currentCell.GridPosition);
+				result.RemoveAt(result.Count - 1);
 				Cleanup();
 				return result;
 			}
 
 			openSet.RemoveAt(currentIndex);
-			_closedSet[current.GridPosition.X, current.GridPosition.Z] = current;
+			_closedSet[currentCell.GridPosition.X, currentCell.GridPosition.Z] = currentCell;
 
-			for (int i = current.GridPosition.X - 1; i <= current.GridPosition.X + 1; i++) {
-				for (int j = current.GridPosition.Z - 1; j <= current.GridPosition.Z + 1; j++) {
-					if (i == current.GridPosition.X && j == current.GridPosition.Z) {
+			for (int i = currentCell.GridPosition.X - 1; i <= currentCell.GridPosition.X + 1; i++) {
+				for (int j = currentCell.GridPosition.Z - 1; j <= currentCell.GridPosition.Z + 1; j++) {
+					if (i == currentCell.GridPosition.X && j == currentCell.GridPosition.Z) {
 						continue;
 					}
 
-					HCCCell neighbour = _gridData.GetCell(i, j);
-					if (neighbour == null || _closedSet[neighbour.GridPosition.X, neighbour.GridPosition.Z] != null) {
+					HCCCell neighbourCell = _gridData.GetCell(i, j);
+					if (neighbourCell == null || _closedSet[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] != null) {
 						continue;
 					}
 
@@ -62,33 +71,33 @@ public class HCCPathfinder {
 					//	continue;
 					//}
 
-					//project update 2: pass all objects except self and target
+					//project update 2: pass all objects except self, target and excluded
 					bool blockNeighbour = false;
-					selfGridRect = self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(neighbour.GridPosition));
+					selfGridRect = self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(neighbourCell.GridPosition));
 					for (int q = selfGridRect.XMin; q <= selfGridRect.XMax; q++) {
 						for (int k = selfGridRect.ZMin; k <= selfGridRect.ZMax; k++) {
 							HCCCell cellData = _gridData.GetCell(q, k);
-							if (cellData != null && cellData.ObjectData != null) {
-								if (cellData.ObjectData != self && cellData.ObjectData != target) {
+
+							if (cellData == null) {
+								//our rect is out of grid bounds - need to block
+								blockNeighbour = true;
+								break;
+							}
+
+							if (!cellData.IsFree) {
+								if (cellData.ObjectData.IndexOf(self) == -1 && cellData.ObjectData.IndexOf(target) == -1) {
 									blockNeighbour = true;
 									break;
 								}
 							}
 						}
-						if (blockNeighbour) {
-							break;
-						}
+
+						if (blockNeighbour) { break; }
 					}
 					if (blockNeighbour) {
-						_closedSet[neighbour.GridPosition.X, neighbour.GridPosition.Z] = neighbour;
+						_closedSet[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = neighbourCell;
 						continue;
 					}
-					//if (neighbour.ObjectData != null) {
-					//	if (neighbour.ObjectData != self && neighbour.ObjectData != target) {
-					//		_closedSet[neighbour.GridPosition.X, neighbour.GridPosition.Z] = neighbour;
-					//		continue;
-					//	}
-					//}
 					
 					//project update 3: pass all paths except self and target
 					//if (neighbour.ObjectPathReservation != null) {
@@ -98,13 +107,13 @@ public class HCCPathfinder {
 					//	}
 					//}
 
-					float tentativeGScore = _gScore[current.GridPosition.X, current.GridPosition.Z] + HeuristicCost(current.GridPosition, neighbour.GridPosition);
-					if (openSet.IndexOf(neighbour) == -1 || tentativeGScore < _gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z]) {
-						_cameFrom[neighbour.GridPosition.X, neighbour.GridPosition.Z] = current;
-						_gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z] = tentativeGScore;
-						_fScore[neighbour.GridPosition.X, neighbour.GridPosition.Z] = _gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z] + HeuristicCost(neighbour.GridPosition, end);
-						if (openSet.IndexOf(neighbour) == -1) {
-							openSet.Add(neighbour);
+					float tentativeGScore = _gScore[currentCell.GridPosition.X, currentCell.GridPosition.Z] + HeuristicCost(currentCell.GridPosition, neighbourCell.GridPosition);
+					if (openSet.IndexOf(neighbourCell) == -1 || tentativeGScore < _gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z]) {
+						_cameFrom[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = currentCell;
+						_gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = tentativeGScore;
+						_fScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = _gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] + HeuristicCost(neighbourCell.GridPosition, end);
+						if (openSet.IndexOf(neighbourCell) == -1) {
+							openSet.Add(neighbourCell);
 						}
 					}
 				}
@@ -152,10 +161,10 @@ public class HCCPathfinder {
 					//}
 
 					//project update 2: pass all objects except excluded
-					if (excludedObjects != null && neighbour.ObjectData != null) {
+					if (excludedObjects != null && !neighbour.IsFree) {
 						bool objectIsExcluded = false;
 						for (int p = 0; p < excludedObjects.Length; p++) {
-							if (neighbour.ObjectData == excludedObjects[p]) {
+							if (neighbour.ObjectData.IndexOf(excludedObjects[p]) != -1) {
 								objectIsExcluded = true;
 								break;
 							}
@@ -233,7 +242,7 @@ public class HCCPathfinder {
 					bool isBlockedBySomething = false;
 					for (int q = neighbour.GridPosition.X - xMinus; q < neighbour.GridPosition.X - xMinus + xSize; q++) {
 						for (int k = neighbour.GridPosition.Z - zMinus; k < neighbour.GridPosition.Z - zMinus + zSize; k++) {
-							if (_gridData.GetCell(q, k).ObjectData != null) {
+							if (!_gridData.GetCell(q, k).IsFree) {
 								bool objectIsExcluded = false;
 								for (int p = 0; p < excludedObjects.Length; p++) {
 									if (excludedObjects[p] == neighbour.ObjectData) {
@@ -320,7 +329,7 @@ public class HCCPathfinder {
 					bool isBlockedBySomething = false;
 					for (int q = neighbour.GridPosition.X; q < neighbour.GridPosition.X + xSize; q++) {
 						for (int k = neighbour.GridPosition.Z; k < neighbour.GridPosition.Z + zSize; k++) {
-							if (_gridData.GetCell(q, k).ObjectData != null) {
+							if (!_gridData.GetCell(q, k).IsFree) {
 								bool objectIsExcluded = false;
 								for (int p = 0; p < excludedObjects.Length; p++) {
 									if (excludedObjects[p] == neighbour.ObjectData) {

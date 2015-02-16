@@ -5,6 +5,12 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	[SerializeField]
 	private UnitPathfinding _unitPathfinder;
 
+	[SerializeField]
+	private UnitModelView _model;
+	public UnitModelView ModelView {
+		get { return _model; }
+	}
+
 	private BaseUnit _unitData = null;
 	public BaseUnit UnitData {
 		get { return _unitData; }
@@ -19,6 +25,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private WaitForSeconds _cachedWaitForSeconds;
 
 	public void Awake() {
+		if (_model == null) {
+			_model = gameObject.GetComponentInChildren<UnitModelView>();
+		}
+
 		EventsAggregator.Units.AddListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.AddListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.AddListener(EFightEvent.Resume, OnFightResume);

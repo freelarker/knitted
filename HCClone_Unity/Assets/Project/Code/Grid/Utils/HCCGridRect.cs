@@ -30,6 +30,18 @@
 		ZMax = zMax;
 	}
 
+	public bool Contains(HCCGridPoint point) {
+		return Contains(point.X, point.Z);
+	}
+
+	public bool Contains(int x, int z) {
+		return x >= XMin && x <= XMax && z >= ZMin && z <= ZMax;
+	}
+
+	public bool Interacts(HCCGridRect rect) {
+		return this.Contains(rect.XMin, rect.ZMin) || this.Contains(rect.XMin, rect.ZMax) || this.Contains(rect.XMax, rect.ZMax) || this.Contains(rect.XMax, rect.ZMin);
+	}
+
 	public bool Equals(HCCGridRect gridRect) {
 		return XMin == gridRect.XMin && ZMin == gridRect.ZMin && XMax == gridRect.XMax && ZMax == gridRect.ZMax;
 	}

@@ -48,7 +48,7 @@ public class HCCGridController {
 		List<HCCCell> targetCells = GetGridObjectCellsList(obj);
 		if (targetCells != null) {
 			for (int i = 0; i < targetCells.Count; i++) {
-				targetCells[i].ObjectData = obj;
+				targetCells[i].ObjectData.Add(obj);
 			}
 		}
 	}
@@ -66,7 +66,7 @@ public class HCCGridController {
 			return null;
 		}
 
-		//check if object does not interact with others
+		//check if object does not interact with static objects
 		List<HCCCell> result = new List<HCCCell>();
 		HCCCell cell = null;
 		for (int i = objGridRect.XMin; i <= objGridRect.XMax; i++) {
@@ -76,7 +76,7 @@ public class HCCGridController {
 					Debug.LogError(string.Format("Can't get cell [{0}, {1}] for object \"{2}\"", i, j, obj.gameObject.name));
 					return null;
 				}
-				if (!cell.IsFree) {
+				if (cell.IsBusyByStaticObject) {
 					Debug.LogError(string.Format("Attempt to register \"{0}\" object failed: desired cell [{1}, {2}] is busy", obj.gameObject.name, i, j));
 					return null;
 				}
@@ -134,6 +134,31 @@ public class HCCGridController {
 		return true;
 	}
 
+	public List<HCCGridObject> GetObjectsAtRect(HCCGridRect gridRect) {
+		if (gridRect.XMin < 0 || gridRect.ZMin < 0 ||
+			gridRect.XMax >= GridView.XSize || gridRect.ZMax >= GridView.ZSize) {
+			return null;
+		}
+
+		List<HCCGridObject> result = new List<HCCGridObject>();
+
+		HCCCell cell = null;
+		for (int i = gridRect.XMin; i <= gridRect.XMax; i++) {
+			for (int j = gridRect.ZMin; j <= gridRect.ZMax; j++) {
+				cell = GridData.GetCell(i, j);
+				if (cell != null && !cell.IsFree) {
+					for (int k = 0; k < cell.ObjectData.Count; k++) {
+						if(result.IndexOf(cell.ObjectData[k]) == -1) {
+							result.Add(cell.ObjectData[k]);
+						}
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
 	public bool IsGridSpaceAvailable(HCCGridRect gridRect, HCCGridObject excludedObject) {
 		if (gridRect.XMin < 0 || gridRect.ZMin < 0 ||
 			gridRect.XMax >= GridView.XSize || gridRect.ZMax >= GridView.ZSize) {
@@ -147,7 +172,7 @@ public class HCCGridController {
 				if (cell == null) {
 					return false;
 				}
-				if (!cell.IsFree && cell.ObjectData != excludedObject) {
+				if (!cell.IsFree && cell.ObjectData.IndexOf(excludedObject) == -1) {
 					return false;
 				}
 			}

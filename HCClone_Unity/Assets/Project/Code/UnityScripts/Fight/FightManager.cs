@@ -103,20 +103,15 @@ public class FightManager : MonoBehaviour {
 		InitializeUnitsData(mapData);
 		InitializeUnitsPositions();
 
-		//WARNING! temp
-		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
-			_graphics.AllyUnits[i].Run();
-		}
-
-		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
-			_graphics.EnemyUnits[i].Run();
-		}
+		StartCoroutine(RunUnits());
 	}
 
 	private void InitializeUnitsData(MissionMapData mapData) {
 		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
-			_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY);	//TODO: get BaseSoldier from city
+			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
+				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY);	//TODO: get BaseSoldier from city
+			}
 		}
 
 		BaseUnitData bud = null;
@@ -134,18 +129,36 @@ public class FightManager : MonoBehaviour {
 		Transform unitTransform;
 
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
-			unitTransform = _graphics.AllyUnits[i].transform;
-			unitTransform.parent = _allyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 2f - i * _unitsZDistance);
-			//TODO: position units by Z
+			if (_graphics.AllyUnits[i] != null) {
+				unitTransform = _graphics.AllyUnits[i].transform;
+				unitTransform.parent = _allyUnitsRoot;
+				//unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
+				unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - i * 2.5f, 0f, 0f);
+				//TODO: position units by Z
+			}
 		}
 
 		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
 			unitTransform = _graphics.EnemyUnits[i].transform;
 			unitTransform.parent = _enemyUnitsRoot;
-			//unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
-			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + i * 2, 0f, 0f);
+			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
+			//unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + i * 2, 0f, 0f);
 			//TODO: position units by Z
+		}
+	}
+
+	private IEnumerator RunUnits() {
+		yield return null;
+
+		//WARNING! temp
+		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
+			if (_graphics.AllyUnits[i] != null) {
+				_graphics.AllyUnits[i].Run();
+			}
+		}
+
+		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
+			_graphics.EnemyUnits[i].Run();
 		}
 	}
 	#endregion

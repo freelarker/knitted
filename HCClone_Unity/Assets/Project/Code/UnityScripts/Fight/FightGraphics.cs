@@ -5,6 +5,8 @@ public class FightGraphics {
 	private Dictionary<EUnitKey, BaseUnitBehaviour> _allyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
 	private Dictionary<EUnitKey, BaseUnitBehaviour> _enemyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
 
+	private Dictionary<EItemKey, GameObject> _itemsGraphicsResources = new Dictionary<EItemKey, GameObject>();
+	
 	private ArrayRO<BaseUnitBehaviour> _allyUnits = null;
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
 		get { return _allyUnits; }
@@ -54,6 +56,8 @@ public class FightGraphics {
 			if (!playerSoldiersList[i].IsDead) {
 				bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 				unitsList[i] = bub;
+
+				LoadItemsResources(bub, playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
 			}
 		}
 
@@ -62,6 +66,8 @@ public class FightGraphics {
 		if (!playerHero.IsDead) {
 			bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 			unitsList[unitsList.Length - 1] = bub;
+
+			LoadItemsResources(bub, playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
 		}
 
 		//save
@@ -73,21 +79,18 @@ public class FightGraphics {
 
 		BaseUnitBehaviour[] unitsList = new BaseUnitBehaviour[mapData.Units.Length];
 
-		BaseUnitData bud = null;
 		BaseUnitBehaviour bub = null;
 
 		//instantiate soldiers
 		for (int i = 0; i < mapData.Units.Length; i++) {
-			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			bub = (GameObject.Instantiate(_enemyUnitsGraphicsResources[mapData.Units[i]].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
-
-			if (bud is BaseHeroData) {
-				bub.Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy hero
-			} else {
-				bub.Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy soldier upgrades
-			}
-
 			unitsList[i] = bub;
+
+			//TODO: load 
+			SoldierUpgrade uo = UnitsConfig.Instance.GetSoldierUpgrades(mapData.Units[i]);
+			if (uo != null) {
+				LoadItemsResources(bub, uo.BaseWeaponKey, uo.BaseArmorKey);
+			}
 		}
 
 		//save
@@ -162,6 +165,21 @@ public class FightGraphics {
 		}
 	}
 
+	private void LoadItemsResources(BaseUnitBehaviour bub, EItemKey weaponKey, EItemKey armorKey) {
+		if (bub.ModelView != null) {
+			LoadItemResource(weaponKey);
+			LoadItemResource(armorKey);
+
+			bub.ModelView.Setup(GetItemResource(weaponKey), GetItemResource(armorKey));
+		}
+	}
+
+	private void LoadItemResource(EItemKey itemKey) {
+		if (itemKey != EItemKey.None && !_itemsGraphicsResources.ContainsKey(itemKey)) {
+			_itemsGraphicsResources.Add(itemKey, Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, itemKey)) as GameObject);
+		}
+	}
+
 	private void DestroyInstances(bool fullUnload) {
 		//destroy ally units
 		if (fullUnload && _allyUnits != null) {
@@ -199,6 +217,12 @@ public class FightGraphics {
 	private T LoadUnitResource<T>(string path) where T : MonoBehaviour {
 		GameObject go = Resources.Load(path) as GameObject;
 		return go.GetComponent<T>();
+	}
+	#endregion
+
+	#region auxiliary
+	public GameObject GetItemResource(EItemKey itemKey) {
+		return _itemsGraphicsResources.ContainsKey(itemKey) ? _itemsGraphicsResources[itemKey] : null;
 	}
 	#endregion
 }

@@ -44,20 +44,6 @@ MonoBehaviour:
   _heroEquipmentSlots: 0200000003000000
   _soldierEquipmentSlots: 0200000003000000
   _heroesData:
-  - _key: 1
-    _baseHealth: 50
-    _baseArmor: 0
-    _baseDamage: 10
-    _baseAttackRange: 1
-    _baseAttackSpeed: 1
-    _baseCritChance: 0
-    _aggroCrystalsForDeathToEnemy: 0
-    _aggroCrystalsForDeathToAlly: 0
-    _prefabName: 
-    _baseAggroCrystals: 10
-    _baseLeadership: 20
-    _baseAggroCrystalsPerAttack: 0
-    _availableItemTypes: []
   - _key: 2
     _baseHealth: 100
     _baseArmor: 0
@@ -67,6 +53,11 @@ MonoBehaviour:
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
+    _baseEquipment:
+    - _slotName: 2
+      _itemKey: 1000002
+    - _slotName: 3
+      _itemKey: 1
     _prefabName: HeroSniper
     _baseAggroCrystals: 10
     _baseLeadership: 17
@@ -82,6 +73,11 @@ MonoBehaviour:
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
+    _baseEquipment:
+    - _slotName: 2
+      _itemKey: 1000001
+    - _slotName: 3
+      _itemKey: 2
     _prefabName: UnitTrooper
     _leadershipCost: 5
     _creditsCost: 0
@@ -94,14 +90,17 @@ MonoBehaviour:
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
+    _baseEquipment:
+    - _slotName: 2
+      _itemKey: 1000001
+    - _slotName: 3
+      _itemKey: 3
     _prefabName: UnitMedic
     _leadershipCost: 10
     _creditsCost: 0
   _soldierUpgrades:
   - _soldierKey: 1000001
-    _levelsData:
-    - _weaponKey: 0
-      _armorKey: 0
+    _levelsData: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

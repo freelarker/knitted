@@ -16,7 +16,7 @@ public class UnitInventory {
 	/// </summary>
 	/// <param name="_slotsData">Data about slot: slot key && available item types for the slot</param>
 	/// <param name="onEquipmentUpdate"></param>
-	public UnitInventory(Dictionary<EUnitEqupmentSlot, EItemType[]> _slotsData, Action<EUnitEqupmentSlot, EItemKey, EItemKey> onEquipmentUpdate) {
+	public UnitInventory(Dictionary<EUnitEqupmentSlot, EItemType[]> _slotsData, ArrayRO<ItemSlot> _initialItems, Action<EUnitEqupmentSlot, EItemKey, EItemKey> onEquipmentUpdate) {
 		_slotsConfig = _slotsData;
 
 		_equipment = new ItemSlot[_slotsConfig.Count];
@@ -24,6 +24,10 @@ public class UnitInventory {
 		foreach(KeyValuePair<EUnitEqupmentSlot, EItemType[]> kvp in _slotsConfig) {
 			_equipment[i] = new ItemSlot(kvp.Key, EItemKey.None);
 			i++;
+		}
+
+		for (i = 0; i < _initialItems.Length; i++) {
+			Equip(_initialItems[i].SlotName, _initialItems[i].ItemKey);
 		}
 
 		_onEquipmentUpdate = onEquipmentUpdate;
@@ -50,6 +54,10 @@ public class UnitInventory {
 		if (_onEquipmentUpdate != null) {
 			_onEquipmentUpdate(item.Slot, oldItemKey, itemKey);
 		}
+	}
+
+	public void Equip(EUnitEqupmentSlot slotName, EItemKey itemKey) {
+		Equip(SlotNameToId(slotName), itemKey);
 	}
 
 	//unequip item
@@ -82,6 +90,7 @@ public class UnitInventory {
 		return EItemKey.None;
 	}
 
+	//check if item can be equipped
 	public bool CanEquipItem(EItemKey itemKey) {
 		BaseItem item = ItemsConfig.Instance.GetItem(itemKey);
 
@@ -108,5 +117,15 @@ public class UnitInventory {
 		}
 
 		return false;
+	}
+
+	//get slot id by slot name
+	public int SlotNameToId(EUnitEqupmentSlot slotName) {
+		for(int i = 0; i < _equipment.Length; i++) {
+			if(_equipment[i].SlotName == slotName) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }

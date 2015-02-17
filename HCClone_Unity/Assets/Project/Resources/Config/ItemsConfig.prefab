@@ -40,11 +40,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-  - _key: 1
-    _type: 0
+  - _key: 1000001
+    _type: 1000002
     _slot: 2
-    _modHealth: 5
+    _modHealth: 0
     _modArmor: 0
+    _modDamage: 3
+    _modDamageRange: 3
+    _modDamageSpeed: 1
+    _modCritChance: 0
+    _levelRequirement: 1
+    _prefabName: 
+    _prices:
+      _buyCreditsCost: 0
+      _sellCreditsCost: 0
+      _buyMineralsCost: 0
+      _sellMineralsCost: 0
+  - _key: 1000002
+    _type: 1000002
+    _slot: 2
+    _modHealth: 0
+    _modArmor: 0
+    _modDamage: 5
+    _modDamageRange: 3
+    _modDamageSpeed: .5
+    _modCritChance: 0
+    _levelRequirement: 1
+    _prefabName: W_Rifle
+    _prices:
+      _buyCreditsCost: 0
+      _sellCreditsCost: 0
+      _buyMineralsCost: 0
+      _sellMineralsCost: 0
+  - _key: 1
+    _type: 2
+    _slot: 3
+    _modHealth: 50
+    _modArmor: 5
     _modDamage: 0
     _modDamageRange: 0
     _modDamageSpeed: 0
@@ -56,14 +88,30 @@ MonoBehaviour:
       _sellCreditsCost: 0
       _buyMineralsCost: 0
       _sellMineralsCost: 0
-  - _key: 1000001
-    _type: 0
-    _slot: 1
-    _modHealth: 0
-    _modArmor: 0
-    _modDamage: 5
-    _modDamageRange: 6
-    _modDamageSpeed: .5
+  - _key: 2
+    _type: 2
+    _slot: 3
+    _modHealth: 30
+    _modArmor: 4
+    _modDamage: 0
+    _modDamageRange: 0
+    _modDamageSpeed: 0
+    _modCritChance: 0
+    _levelRequirement: 1
+    _prefabName: 
+    _prices:
+      _buyCreditsCost: 0
+      _sellCreditsCost: 0
+      _buyMineralsCost: 0
+      _sellMineralsCost: 0
+  - _key: 3
+    _type: 1
+    _slot: 3
+    _modHealth: 15
+    _modArmor: 1
+    _modDamage: 0
+    _modDamageRange: 0
+    _modDamageSpeed: 0
     _modCritChance: 0
     _levelRequirement: 1
     _prefabName: 

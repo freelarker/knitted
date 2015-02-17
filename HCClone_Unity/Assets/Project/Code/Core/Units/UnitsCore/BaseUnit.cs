@@ -24,7 +24,7 @@ public abstract class BaseUnit {
 
 	public BaseUnit(BaseUnitData data) {
 		_data = data;
-		Inventory = new UnitInventory(CreateSlotsData(), OnEquipmentUpdate);
+		Inventory = new UnitInventory(CreateSlotsData(), _data.BaseEquipment, OnEquipmentUpdate);
 
 		RecalculateParams();
 	}

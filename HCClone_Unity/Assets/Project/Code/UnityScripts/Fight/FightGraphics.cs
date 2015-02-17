@@ -79,6 +79,7 @@ public class FightGraphics {
 
 		BaseUnitBehaviour[] unitsList = new BaseUnitBehaviour[mapData.Units.Length];
 
+		BaseUnitData bud = null;
 		BaseUnitBehaviour bub = null;
 
 		//instantiate soldiers
@@ -86,11 +87,8 @@ public class FightGraphics {
 			bub = (GameObject.Instantiate(_enemyUnitsGraphicsResources[mapData.Units[i]].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 			unitsList[i] = bub;
 
-			//TODO: load 
-			SoldierUpgrade uo = UnitsConfig.Instance.GetSoldierUpgrades(mapData.Units[i]);
-			if (uo != null) {
-				LoadItemsResources(bub, uo.BaseWeaponKey, uo.BaseArmorKey);
-			}
+			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
+			LoadItemsResources(bub, bud.GetBaseItemInSlot(EUnitEqupmentSlot.Weapon), bud.GetBaseItemInSlot(EUnitEqupmentSlot.Armor));
 		}
 
 		//save
@@ -167,6 +165,13 @@ public class FightGraphics {
 
 	private void LoadItemsResources(BaseUnitBehaviour bub, EItemKey weaponKey, EItemKey armorKey) {
 		if (bub.ModelView != null) {
+			if (weaponKey == EItemKey.None) {
+				Debug.LogError(string.Format("No weapon set for {0} unit", bub.UnitData.Data.Key));
+			}
+			if (armorKey == EItemKey.None) {
+				Debug.LogError(string.Format("No armor set for {0} unit", bub.UnitData.Data.Key));
+			}
+
 			LoadItemResource(weaponKey);
 			LoadItemResource(armorKey);
 

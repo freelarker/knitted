@@ -23,7 +23,8 @@ public class UnitModelView : MonoBehaviour {
 		if (_weaponBone != null && weaponResource != null) {
 			GameObject weaponInstance = GameObject.Instantiate(weaponResource) as GameObject;
 			weaponInstance.transform.parent = _weaponBone;
-			weaponInstance.transform.position = Vector3.zero;
+			weaponInstance.transform.localPosition = Vector3.zero;
+			weaponInstance.transform.localRotation = Quaternion.identity;
 
 			_weaponMesh = weaponInstance.GetComponent<SkinnedMeshRenderer>();
 		}
@@ -31,6 +32,8 @@ public class UnitModelView : MonoBehaviour {
 			GameObject armorInstance = GameObject.Instantiate(armorResource) as GameObject;
 			_armorMesh = armorInstance.GetComponent<SkinnedMeshRenderer>();
 		}
+
+		Debug.LogWarning("=== " + transform.parent.gameObject.name + " --- w: " + weaponResource + ", a: " + armorResource);
 		//TODO: setup armor mesh
 		//TODO: setup weapon mesh
 	}

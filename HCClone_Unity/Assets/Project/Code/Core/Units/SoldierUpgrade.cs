@@ -20,19 +20,14 @@ public class SoldierUpgrade {
 		}
 	}
 
-	public EItemKey BaseWeaponKey {
-		get { return WeaponKeyAtLevel(1); }
-	}
-
-	public EItemKey BaseArmorKey {
-		get { return ArmorKeyAtLevel(1); }
-	}
-
-	public EItemKey WeaponKeyAtLevel(int level) {
-		return (_levelsData != null && level > 0 && level <= _levelsData.Length) ? _levelsData[level - 1].WeaponKey : EItemKey.None;
-	}
-
-	public EItemKey ArmorKeyAtLevel(int level) {
-		return (_levelsData != null && level > 0 && level <= _levelsData.Length) ? _levelsData[level - 1].ArmorKey : EItemKey.None;
+	public SoldierUpgradeLevel GetUpgradeLevel(int level) {
+		if (_levelsData != null) {
+			for (int i = 0; i < _levelsData.Length; i++) {
+				if (_levelsData[i].Level == level) {
+					return _levelsData[i];
+				}
+			}
+		}
+		return null;
 	}
 }

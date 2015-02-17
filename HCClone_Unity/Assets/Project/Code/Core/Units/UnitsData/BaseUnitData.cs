@@ -57,8 +57,29 @@ public abstract class BaseUnitData {
 	}
 
 	[SerializeField]
+	protected ItemSlot[] _baseEquipment = null;
+	protected ArrayRO<ItemSlot> _baseEquipmentRO = null;
+	public ArrayRO<ItemSlot> BaseEquipment {
+		get {
+			if (_baseEquipmentRO == null) {
+				_baseEquipmentRO = new ArrayRO<ItemSlot>(_baseEquipment);
+			}
+			return _baseEquipmentRO;
+		}
+	}
+
+	[SerializeField]
 	protected string _prefabName = string.Empty;
 	public string PrefabName {
 		get { return _prefabName; }
+	}
+
+	public EItemKey GetBaseItemInSlot(EUnitEqupmentSlot slotName) {
+		for (int i = 0; i < _baseEquipment.Length; i++) {
+			if (_baseEquipment[i].SlotName == slotName) {
+				return _baseEquipment[i].ItemKey;
+			}
+		}
+		return EItemKey.None;
 	}
 }

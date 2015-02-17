@@ -23,7 +23,10 @@ public enum EItemType {
 /// </summary>
 public enum EItemKey {
 	None = 0,
-	A_Test = 1,
+	A_VestHero = 1,
+	A_VestSoldier,
+	A_Robe,
 
-	W_Test = 1000001
+	W_Gun = 1000001,
+	W_Rifle
 }

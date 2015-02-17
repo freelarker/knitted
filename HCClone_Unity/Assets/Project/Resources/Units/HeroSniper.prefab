@@ -717,7 +717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponMesh: {fileID: 0}
   _armorMesh: {fileID: 13778416}
-  _weaponBone: {fileID: 0}
+  _weaponBone: {fileID: 478414}
   _animator: {fileID: 9578414}
 --- !u!137 &13778414
 SkinnedMeshRenderer:

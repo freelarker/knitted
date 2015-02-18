@@ -67,14 +67,16 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - Base HumanPelvis/Base HumanSpine/Base HumanRibcage/Base HumanRCollarbone/Base
+      HumanRUpperarm/Base HumanRForearm/Base HumanRPalm
     clipAnimations:
     - serializedVersion: 16
       name: Run_NoGun

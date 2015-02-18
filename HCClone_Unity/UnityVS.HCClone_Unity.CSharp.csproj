@@ -170,6 +170,7 @@
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\FightGUI.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\UnitsSelectGUI.cs" />
+    <Compile Include="Assets\Project\_TestingStuff\test.cs" />
     <None Include="C:\Program Files (x86)\Unity\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />

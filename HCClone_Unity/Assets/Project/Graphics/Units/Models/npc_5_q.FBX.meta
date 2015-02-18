@@ -57,7 +57,7 @@ ModelImporter:
     13700000: npc_5_body
     13700002: npc_5_head
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

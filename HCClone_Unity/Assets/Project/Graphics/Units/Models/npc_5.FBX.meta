@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1a7af213f50eba042948e922afd203c0
+guid: 99fbe8b80ef5d0c4e8d9160ca86e2a06
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -54,20 +54,22 @@ ModelImporter:
     13700000: npc_5_body
     13700002: npc_5_head
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - Base HumanPelvis/Base HumanSpine/Base HumanRibcage/Base HumanRCollarbone/Base
+      HumanRUpperarm/Base HumanRForearm/Base HumanRPalm
     clipAnimations: []
     isReadable: 1
   meshes:

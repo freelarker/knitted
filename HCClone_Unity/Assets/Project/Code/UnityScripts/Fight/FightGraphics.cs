@@ -5,7 +5,8 @@ public class FightGraphics {
 	private Dictionary<EUnitKey, BaseUnitBehaviour> _allyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
 	private Dictionary<EUnitKey, BaseUnitBehaviour> _enemyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
 
-	private Dictionary<EItemKey, GameObject> _itemsGraphicsResources = new Dictionary<EItemKey, GameObject>();
+	private Dictionary<EItemKey, GameObject[]> _allyItemsGraphicsResources = new Dictionary<EItemKey, GameObject[]>();
+	private Dictionary<EItemKey, GameObject[]> _enemyItemsGraphicsResources = new Dictionary<EItemKey, GameObject[]>();
 	
 	private ArrayRO<BaseUnitBehaviour> _allyUnits = null;
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
@@ -57,7 +58,7 @@ public class FightGraphics {
 				bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 				unitsList[i] = bub;
 
-				LoadItemsResources(bub, playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
+				LoadItemsResources(_allyItemsGraphicsResources, bub, playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
 			}
 		}
 
@@ -67,7 +68,7 @@ public class FightGraphics {
 			bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 			unitsList[unitsList.Length - 1] = bub;
 
-			LoadItemsResources(bub, playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
+			LoadItemsResources(_allyItemsGraphicsResources, bub, playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
 		}
 
 		//save
@@ -88,7 +89,7 @@ public class FightGraphics {
 			unitsList[i] = bub;
 
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
-			LoadItemsResources(bub, bud.GetBaseItemInSlot(EUnitEqupmentSlot.Weapon), bud.GetBaseItemInSlot(EUnitEqupmentSlot.Armor));
+			LoadItemsResources(_enemyItemsGraphicsResources, bub, bud.GetBaseItemInSlot(EUnitEqupmentSlot.Weapon), bud.GetBaseItemInSlot(EUnitEqupmentSlot.Armor));
 		}
 
 		//save
@@ -163,25 +164,34 @@ public class FightGraphics {
 		}
 	}
 
-	private void LoadItemsResources(BaseUnitBehaviour bub, EItemKey weaponKey, EItemKey armorKey) {
+	private void LoadItemsResources(Dictionary<EItemKey, GameObject[]> resourcesDic, BaseUnitBehaviour bub, EItemKey weaponKey, EItemKey armorKey) {
 		if (bub.ModelView != null) {
+			GameObject[] weaponResources = null;
+			GameObject[] armorResources = null;
+
 			if (weaponKey == EItemKey.None) {
 				Debug.LogError(string.Format("No weapon set for {0} unit", bub.UnitData.Data.Key));
+			} else if (!resourcesDic.ContainsKey(weaponKey)) {
+				weaponResources = new GameObject[1];
+				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, weaponKey)) as GameObject;
+				resourcesDic.Add(weaponKey, weaponResources);
+			} else {
+				weaponResources = resourcesDic[weaponKey];
 			}
+
+
 			if (armorKey == EItemKey.None) {
 				Debug.LogError(string.Format("No armor set for {0} unit", bub.UnitData.Data.Key));
+			} else if (!resourcesDic.ContainsKey(armorKey)) {
+				armorResources = new GameObject[2];
+				armorResources[0] = Resources.Load(string.Format("{0}/{1}_head", GameConstants.Paths.ITEMS_PERFABS, armorKey)) as GameObject;
+				armorResources[1] = Resources.Load(string.Format("{0}/{1}_body", GameConstants.Paths.ITEMS_PERFABS, armorKey)) as GameObject;
+				resourcesDic.Add(armorKey, armorResources);
+			} else {
+				armorResources = resourcesDic[armorKey];
 			}
 
-			LoadItemResource(weaponKey);
-			LoadItemResource(armorKey);
-
-			bub.ModelView.Setup(GetItemResource(weaponKey), GetItemResource(armorKey));
-		}
-	}
-
-	private void LoadItemResource(EItemKey itemKey) {
-		if (itemKey != EItemKey.None && !_itemsGraphicsResources.ContainsKey(itemKey)) {
-			_itemsGraphicsResources.Add(itemKey, Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, itemKey)) as GameObject);
+			bub.ModelView.Setup(weaponResources[0], armorResources[0], armorResources[1]);
 		}
 	}
 
@@ -212,8 +222,10 @@ public class FightGraphics {
 	private void UnloadResources(bool fullUnload) {
 		if (fullUnload) {
 			_allyUnitsGraphicsResources.Clear();
+			_allyItemsGraphicsResources.Clear();
 		}
 		_enemyUnitsGraphicsResources.Clear();
+		_enemyItemsGraphicsResources.Clear();
 		//TODO: free background resources
 
 		Resources.UnloadUnusedAssets();
@@ -222,12 +234,6 @@ public class FightGraphics {
 	private T LoadUnitResource<T>(string path) where T : MonoBehaviour {
 		GameObject go = Resources.Load(path) as GameObject;
 		return go.GetComponent<T>();
-	}
-	#endregion
-
-	#region auxiliary
-	public GameObject GetItemResource(EItemKey itemKey) {
-		return _itemsGraphicsResources.ContainsKey(itemKey) ? _itemsGraphicsResources[itemKey] : null;
 	}
 	#endregion
 }

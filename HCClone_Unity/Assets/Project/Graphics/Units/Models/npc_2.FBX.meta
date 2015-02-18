@@ -47,10 +47,15 @@ ModelImporter:
     400038: //RootNode
     400040: npc_2_body
     400042: npc_2_head
+    2300000: npc_2_body
+    2300002: npc_2_head
+    3300000: npc_2_body
+    3300002: npc_2_head
     4300000: npc_2_body
     4300002: npc_2_head
     7400000: Take 001
     9500000: //RootNode
+    11100000: //RootNode
     13700000: npc_2_body
     13700002: npc_2_head
   materials:
@@ -60,14 +65,16 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     motionNodeName: 
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - Base HumanPelvis/Base HumanSpine/Base HumanRibcage/Base HumanRCollarbone/Base
+      HumanRUpperarm/Base HumanRForearm/Base HumanRPalm
     clipAnimations: []
     isReadable: 1
   meshes:

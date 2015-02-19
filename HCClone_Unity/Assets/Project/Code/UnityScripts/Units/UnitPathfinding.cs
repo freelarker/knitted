@@ -47,6 +47,7 @@ public class UnitPathfinding : MonoBehaviour {
 		if (_model == null) {
 			_model = gameObject.GetComponentInChildren<UnitModelView>();
 		}
+		_model.MovementSpeed = _speed;
 
 		_movementStateActions.Add(EUnitMovementState.MoveToFreePoint, MoveToFreePoint);
 		_movementStateActions.Add(EUnitMovementState.MoveToPrepPoint, MoveToPreparationPoint);
@@ -131,6 +132,8 @@ public class UnitPathfinding : MonoBehaviour {
 		} else {
 			OnPreparationPointReached();
 		}
+
+		_model.PlayRunAnimation();
 	}
 
 	private void CalculateFreePointDirection() {

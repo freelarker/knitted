@@ -83,7 +83,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private IEnumerator AttackTarget() {
-		//TODO: play attack animation
+		_model.PlayAttackAnimation();
 
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
 		yield return _cachedWaitForSeconds;

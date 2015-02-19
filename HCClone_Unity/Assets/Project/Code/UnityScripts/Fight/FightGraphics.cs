@@ -58,7 +58,7 @@ public class FightGraphics {
 				bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 				unitsList[i] = bub;
 
-				LoadItemsResources(_allyItemsGraphicsResources, playerSoldiersList[i].Data.Key, bub.ModelView, playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
+				LoadItemsResources(_allyItemsGraphicsResources, playerSoldiersList[i].Data.Key, bub.ModelView, playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_RHand), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_LHand), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
 			}
 		}
 
@@ -68,7 +68,7 @@ public class FightGraphics {
 			bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
 			unitsList[unitsList.Length - 1] = bub;
 
-			LoadItemsResources(_allyItemsGraphicsResources, playerHero.Data.Key, bub.ModelView, playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
+			LoadItemsResources(_allyItemsGraphicsResources, playerHero.Data.Key, bub.ModelView, playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_RHand), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_LHand), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
 		}
 
 		//save
@@ -89,7 +89,7 @@ public class FightGraphics {
 			unitsList[i] = bub;
 
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
-			LoadItemsResources(_enemyItemsGraphicsResources, mapData.Units[i], bub.ModelView, bud.GetBaseItemInSlot(EUnitEqupmentSlot.Weapon), bud.GetBaseItemInSlot(EUnitEqupmentSlot.Armor));
+			LoadItemsResources(_enemyItemsGraphicsResources, mapData.Units[i], bub.ModelView, bud.GetBaseItemInSlot(EUnitEqupmentSlot.Weapon_RHand), bud.GetBaseItemInSlot(EUnitEqupmentSlot.Weapon_LHand), bud.GetBaseItemInSlot(EUnitEqupmentSlot.Armor));
 		}
 
 		//save
@@ -164,27 +164,40 @@ public class FightGraphics {
 		}
 	}
 
-	private void LoadItemsResources(Dictionary<EItemKey, GameObject[]> resourcesDic, EUnitKey unitKey, UnitModelView unitModelView, EItemKey weaponKey, EItemKey armorKey) {
+	private void LoadItemsResources(Dictionary<EItemKey, GameObject[]> resourcesDic, EUnitKey unitKey, UnitModelView unitModelView, EItemKey weaponRKey, EItemKey weaponLKey, EItemKey armorKey) {
 		if (unitModelView != null) {
-			GameObject weaponResource = null;
+			GameObject rhWeaponResource = null;
+			GameObject lhWeaponResource = null;
 			GameObject headArmorResource = null;
 			GameObject bodyArmorResource = null;
 
-			if (weaponKey == EItemKey.None) {
-				Debug.LogWarning(string.Format("No weapon set for {0} unit", unitKey));
-			} else if (!resourcesDic.ContainsKey(weaponKey)) {
-				GameObject[] weaponResources = new GameObject[1];
-				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, GetItemResourcePath(weaponKey))) as GameObject;
-				resourcesDic.Add(weaponKey, weaponResources);
+			unitModelView.SetWeaponType(weaponRKey, weaponLKey);
 
-				weaponResource = weaponResources[0];
-			} else {
-				weaponResource = resourcesDic[weaponKey][0];
+			//right hand weapon
+			if (!resourcesDic.ContainsKey(weaponRKey)) {
+				GameObject[] weaponResources = new GameObject[1];
+				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, GetItemResourcePath(weaponRKey))) as GameObject;
+				resourcesDic.Add(weaponRKey, weaponResources);
+
+				rhWeaponResource = weaponResources[0];
+			} else if(weaponRKey != EItemKey.None) {
+				rhWeaponResource = resourcesDic[weaponRKey][0];
 			}
 
+			//left hand weapon
+			if (!resourcesDic.ContainsKey(weaponLKey)) {
+				GameObject[] weaponResources = new GameObject[1];
+				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, GetItemResourcePath(weaponLKey))) as GameObject;
+				resourcesDic.Add(weaponLKey, weaponResources);
 
+				lhWeaponResource = weaponResources[0];
+			} else if (weaponLKey != EItemKey.None) {
+				lhWeaponResource = resourcesDic[weaponLKey][0];
+			}
+
+			//armor
 			if (armorKey == EItemKey.None) {
-				Debug.LogWarning(string.Format("No armor set for {0} unit", unitKey));
+				//Debug.LogWarning(string.Format("No armor set for {0} unit", unitKey));
 			} else if (!resourcesDic.ContainsKey(armorKey)) {
 				string armorResourcePath = GetItemResourcePath(armorKey);
 
@@ -200,7 +213,7 @@ public class FightGraphics {
 				bodyArmorResource = resourcesDic[armorKey][1];
 			}
 
-			unitModelView.Setup(weaponResource, headArmorResource, bodyArmorResource);
+			unitModelView.SetupGraphics(rhWeaponResource, lhWeaponResource, headArmorResource, bodyArmorResource);
 		}
 	}
 

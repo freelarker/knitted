@@ -70,6 +70,8 @@ ModelImporter:
     extraExposedTransformPaths:
     - Base HumanPelvis/Base HumanSpine/Base HumanRibcage/Base HumanRCollarbone/Base
       HumanRUpperarm/Base HumanRForearm/Base HumanRPalm
+    - Base HumanPelvis/Base HumanSpine/Base HumanRibcage/Base HumanLCollarbone/Base
+      HumanLUpperarm/Base HumanLForearm/Base HumanLPalm
     clipAnimations: []
     isReadable: 1
   meshes:

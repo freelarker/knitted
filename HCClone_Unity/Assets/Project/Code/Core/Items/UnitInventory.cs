@@ -41,7 +41,7 @@ public class UnitInventory {
 			return;
 		}
 
-		if (!CanEquipItem(itemKey)) {
+		if (!CanEquipItem(itemKey, _equipment[slotId].SlotName)) {
 			EventsAggregator.Items.Broadcast<int>(EItemEvent.WrongItem, slotId);
 			return;
 		}
@@ -52,7 +52,7 @@ public class UnitInventory {
 		_equipment[slotId].ItemKey = item.Key;
 
 		if (_onEquipmentUpdate != null) {
-			_onEquipmentUpdate(item.Slot, oldItemKey, itemKey);
+			_onEquipmentUpdate(_equipment[slotId].SlotName, oldItemKey, itemKey);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class UnitInventory {
 	}
 
 	//check if item can be equipped
-	public bool CanEquipItem(EItemKey itemKey) {
+	public bool CanEquipItem(EItemKey itemKey, EUnitEqupmentSlot slotKey) {
 		BaseItem item = ItemsConfig.Instance.GetItem(itemKey);
 
 		//check item data found
@@ -100,18 +100,18 @@ public class UnitInventory {
 		}
 
 		//check slot is correct
-		if(!_slotsConfig.ContainsKey(item.Slot)) {
+		if (!_slotsConfig.ContainsKey(slotKey)) {
 			return false;
 		}
 
 		//no slot restrictions
-		if (_slotsConfig[item.Slot].Length == 0) {
+		if (_slotsConfig[slotKey].Length == 0) {
 			return true;
 		}
 
 		//check item fits to slot
-		for (int i = 0; i < _slotsConfig[item.Slot].Length; i++) {
-			if (_slotsConfig[item.Slot][i] == item.Type) {
+		for (int i = 0; i < _slotsConfig[slotKey].Length; i++) {
+			if (_slotsConfig[slotKey][i] == item.Type) {
 				return true;
 			}
 		}

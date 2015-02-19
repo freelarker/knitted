@@ -1,8 +1,8 @@
 ﻿public enum EUnitAnimationState {
 	Idle = 0,
 
-	Run_NoGun = 1,
-	Run_Gun,
+	Run_Gun = 1,
+	Run_Rifle,
 
 	Strike_Gun = 11,
 	Strike_Rifle,

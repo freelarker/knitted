@@ -7,11 +7,14 @@
 /// </summary>
 public enum EItemType {
 	Idle = 0,
+
 	A_Light = 1,
 	A_Heavy = 2,
 
-	W_Melee = 1000001,
-	W_Range
+	W_Gun = 1000001,
+	W_Rifle,
+
+	W_DualPistol = 1001001,
 }
 
 /// <summary>

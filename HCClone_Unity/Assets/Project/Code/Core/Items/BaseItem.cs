@@ -3,7 +3,7 @@
 [System.Serializable]
 public class BaseItem {
 	[SerializeField]
-	protected EItemKey _key = EItemKey.None;		//item key
+	protected EItemKey _key = EItemKey.None;	//item key
 	public EItemKey Key {
 		get { return _key; }
 	}
@@ -15,9 +15,15 @@ public class BaseItem {
 	}
 
 	[SerializeField]
-	protected EUnitEqupmentSlot _slot = EUnitEqupmentSlot.Other;	//slot where item should be equipped
-	public EUnitEqupmentSlot Slot {
-		get { return _slot; }
+	protected EUnitEqupmentSlot[] _possibleSlots = null;	//slot where item should be equipped
+	protected ArrayRO<EUnitEqupmentSlot> _possibleSlotsRO = null;
+	public ArrayRO<EUnitEqupmentSlot> PossibleSlots {
+		get {
+			if (_possibleSlotsRO == null) {
+				_possibleSlotsRO = new ArrayRO<EUnitEqupmentSlot>(_possibleSlots);
+			}
+			return _possibleSlotsRO;
+		}
 	}	
 
 	//modifiers
@@ -77,9 +83,9 @@ public class BaseItem {
 
 	public BaseItem() {	}
 
-	public BaseItem(EItemKey key, EItemType type, EUnitEqupmentSlot slot) {
+	public BaseItem(EItemKey key, EItemType type, EUnitEqupmentSlot[] possibleSlots) {
 		_key = key;
 		_type = type;
-		_slot = slot;
+		_possibleSlots = possibleSlots;
 	}
 }

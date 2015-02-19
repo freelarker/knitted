@@ -41,20 +41,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxUnitsHeroCanHire: 4
   _damageReducePerOneArmor: 0
-  _heroEquipmentSlots: 0200000003000000
-  _soldierEquipmentSlots: 0200000003000000
+  _heroEquipmentSlots: 01000000020000000b000000
+  _soldierEquipmentSlots: 01000000020000000b000000
   _heroesData:
   - _key: 1
     _baseHealth: 100
     _baseArmor: 0
-    _baseDamage: 15
-    _baseAttackRange: 3
-    _baseAttackSpeed: 1
+    _baseDamage: 2
+    _baseAttackRange: 1
+    _baseAttackSpeed: 0
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
-    - _slotName: 2
+    - _slotName: 1
       _itemKey: 1000002
     _prefabName: Hero_Sniper
     _baseAggroCrystals: 10
@@ -66,12 +66,12 @@ MonoBehaviour:
     _baseArmor: 0
     _baseDamage: 15
     _baseAttackRange: 3
-    _baseAttackSpeed: 1
+    _baseAttackSpeed: 0
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
-    - _slotName: 2
+    - _slotName: 1
       _itemKey: 1000002
     _prefabName: Hero_Goblin
     _baseAggroCrystals: 10
@@ -80,11 +80,11 @@ MonoBehaviour:
     _availableItemTypes: []
   _soldiersData:
   - _key: 1000001
-    _baseHealth: 50
+    _baseHealth: 10
     _baseArmor: 0
-    _baseDamage: 10
+    _baseDamage: 1
     _baseAttackRange: 2
-    _baseAttackSpeed: 1
+    _baseAttackSpeed: 0
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
@@ -95,26 +95,26 @@ MonoBehaviour:
     _leadershipCost: 5
     _creditsCost: 0
   - _key: 1000002
-    _baseHealth: 30
+    _baseHealth: 20
     _baseArmor: 0
-    _baseDamage: 3
+    _baseDamage: 1
     _baseAttackRange: 2
-    _baseAttackSpeed: 1
+    _baseAttackSpeed: 0
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
-    - _slotName: 2
+    - _slotName: 1
       _itemKey: 1000002
     _prefabName: Unit_Trooper
     _leadershipCost: 10
     _creditsCost: 0
   - _key: 1000004
-    _baseHealth: 30
+    _baseHealth: 50
     _baseArmor: 0
-    _baseDamage: 3
+    _baseDamage: 1
     _baseAttackRange: 2
-    _baseAttackSpeed: 1
+    _baseAttackSpeed: 0
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
@@ -125,16 +125,16 @@ MonoBehaviour:
     _leadershipCost: 0
     _creditsCost: 0
   - _key: 1000005
-    _baseHealth: 30
+    _baseHealth: 50
     _baseArmor: 0
     _baseDamage: 3
     _baseAttackRange: 2
-    _baseAttackSpeed: 1
+    _baseAttackSpeed: 0
     _baseCritChance: 0
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
-    - _slotName: 2
+    - _slotName: 1
       _itemKey: 1000002
     _prefabName: Enemy_Jawa2
     _leadershipCost: 0

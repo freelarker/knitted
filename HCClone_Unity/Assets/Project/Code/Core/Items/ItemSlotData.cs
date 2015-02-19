@@ -3,7 +3,7 @@
 [System.Serializable]
 public class ItemSlotConfig  {
 	[SerializeField]
-	private EUnitEqupmentSlot _slotKey = EUnitEqupmentSlot.Other;
+	private EUnitEqupmentSlot _slotKey = EUnitEqupmentSlot.None;
 	public EUnitEqupmentSlot SlotKey {
 		get { return _slotKey; }
 	}

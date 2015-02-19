@@ -50,7 +50,7 @@ MonoBehaviour:
     _modDamageSpeed: 1
     _modCritChance: 0
     _levelRequirement: 1
-    _prefabName: 
+    _prefabName: Weapons/W_Gun
     _prices:
       _buyCreditsCost: 0
       _sellCreditsCost: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
     _modDamageSpeed: .5
     _modCritChance: 0
     _levelRequirement: 1
-    _prefabName: W_Rifle
+    _prefabName: Weapons/W_Rifle
     _prices:
       _buyCreditsCost: 0
       _sellCreditsCost: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
     _modDamageSpeed: 0
     _modCritChance: 0
     _levelRequirement: 1
-    _prefabName: 
+    _prefabName: Armor/A_VestSoldier
     _prices:
       _buyCreditsCost: 0
       _sellCreditsCost: 0

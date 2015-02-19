@@ -23,7 +23,7 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	public void Setup(GameObject weaponResource, GameObject headArmorResource, GameObject bodyArmorResource) {
-		Debug.LogWarning("=== " + transform.parent.gameObject.name + " --- w: " + weaponResource + ", hA: " + headArmorResource + ", bA: " + bodyArmorResource);
+		//Debug.LogWarning("=== " + transform.parent.gameObject.name + " --- w: " + weaponResource + ", hA: " + headArmorResource + ", bA: " + bodyArmorResource);
 
 		//weapon
 		if (_weaponBone != null && weaponResource != null) {

@@ -173,7 +173,7 @@ public class FightGraphics {
 				Debug.LogError(string.Format("No weapon set for {0} unit", bub.UnitData.Data.Key));
 			} else if (!resourcesDic.ContainsKey(weaponKey)) {
 				weaponResources = new GameObject[1];
-				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, weaponKey)) as GameObject;
+				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, GetItemResourcePath(weaponKey))) as GameObject;
 				resourcesDic.Add(weaponKey, weaponResources);
 			} else {
 				weaponResources = resourcesDic[weaponKey];
@@ -183,9 +183,11 @@ public class FightGraphics {
 			if (armorKey == EItemKey.None) {
 				Debug.LogError(string.Format("No armor set for {0} unit", bub.UnitData.Data.Key));
 			} else if (!resourcesDic.ContainsKey(armorKey)) {
+				string armorResourcePath = GetItemResourcePath(armorKey);
+
 				armorResources = new GameObject[2];
-				armorResources[0] = Resources.Load(string.Format("{0}/{1}_head", GameConstants.Paths.ITEMS_PERFABS, armorKey)) as GameObject;
-				armorResources[1] = Resources.Load(string.Format("{0}/{1}_body", GameConstants.Paths.ITEMS_PERFABS, armorKey)) as GameObject;
+				armorResources[0] = Resources.Load(string.Format("{0}/{1}_head", GameConstants.Paths.ITEMS_PERFABS, armorResourcePath)) as GameObject;
+				armorResources[1] = Resources.Load(string.Format("{0}/{1}_body", GameConstants.Paths.ITEMS_PERFABS, armorResourcePath)) as GameObject;
 				resourcesDic.Add(armorKey, armorResources);
 			} else {
 				armorResources = resourcesDic[armorKey];
@@ -234,6 +236,17 @@ public class FightGraphics {
 	private T LoadUnitResource<T>(string path) where T : MonoBehaviour {
 		GameObject go = Resources.Load(path) as GameObject;
 		return go.GetComponent<T>();
+	}
+	#endregion
+
+	#region auxiliary
+	private string GetItemResourcePath(EItemKey itemKey) {
+		BaseItem itemData = ItemsConfig.Instance.GetItem(itemKey);
+		if (itemData != null && !itemData.PrefabName.Equals(string.Empty)) {
+			return itemData.PrefabName;
+		}
+
+		return itemKey.ToString();
 	}
 	#endregion
 }

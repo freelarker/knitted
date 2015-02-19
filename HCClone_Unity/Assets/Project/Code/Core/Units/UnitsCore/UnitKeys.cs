@@ -3,9 +3,13 @@
 /// </summary>
 public enum EUnitKey {
 	Idle = 0,
-	Hero_Swordsman = 1,
-	Hero_Sniper,
+	Hero_Sniper = 1,
+	Hero_Goblin,
 
-	Soldier_Trooper = 1000001,
-	Soldier_Medic
+	Scout = 1000001,
+	Trooper,
+	Medic,
+
+	Jawa_1,
+	Jawa_2
 }

@@ -44,6 +44,23 @@ MonoBehaviour:
   _heroEquipmentSlots: 0200000003000000
   _soldierEquipmentSlots: 0200000003000000
   _heroesData:
+  - _key: 1
+    _baseHealth: 100
+    _baseArmor: 0
+    _baseDamage: 15
+    _baseAttackRange: 3
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _baseEquipment:
+    - _slotName: 2
+      _itemKey: 1000002
+    _prefabName: Hero_Sniper
+    _baseAggroCrystals: 10
+    _baseLeadership: 17
+    _baseAggroCrystalsPerAttack: 0
+    _availableItemTypes: []
   - _key: 2
     _baseHealth: 100
     _baseArmor: 0
@@ -56,9 +73,7 @@ MonoBehaviour:
     _baseEquipment:
     - _slotName: 2
       _itemKey: 1000002
-    - _slotName: 3
-      _itemKey: 1
-    _prefabName: HeroSniper
+    _prefabName: Hero_Goblin
     _baseAggroCrystals: 10
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 0
@@ -76,9 +91,7 @@ MonoBehaviour:
     _baseEquipment:
     - _slotName: 2
       _itemKey: 1000001
-    - _slotName: 3
-      _itemKey: 2
-    _prefabName: UnitTrooper
+    _prefabName: Unit_Scout
     _leadershipCost: 5
     _creditsCost: 0
   - _key: 1000002
@@ -92,15 +105,41 @@ MonoBehaviour:
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
     - _slotName: 2
-      _itemKey: 1000001
-    - _slotName: 3
-      _itemKey: 3
-    _prefabName: UnitMedic
+      _itemKey: 1000002
+    _prefabName: Unit_Trooper
     _leadershipCost: 10
     _creditsCost: 0
-  _soldierUpgrades:
-  - _soldierKey: 1000001
-    _levelsData: []
+  - _key: 1000004
+    _baseHealth: 30
+    _baseArmor: 0
+    _baseDamage: 3
+    _baseAttackRange: 2
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _baseEquipment:
+    - _slotName: 2
+      _itemKey: 1000001
+    _prefabName: Enemy_Jawa1
+    _leadershipCost: 0
+    _creditsCost: 0
+  - _key: 1000005
+    _baseHealth: 30
+    _baseArmor: 0
+    _baseDamage: 3
+    _baseAttackRange: 2
+    _baseAttackSpeed: 1
+    _baseCritChance: 0
+    _aggroCrystalsForDeathToEnemy: 0
+    _aggroCrystalsForDeathToAlly: 0
+    _baseEquipment:
+    - _slotName: 2
+      _itemKey: 1000002
+    _prefabName: Enemy_Jawa2
+    _leadershipCost: 0
+    _creditsCost: 0
+  _soldierUpgrades: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

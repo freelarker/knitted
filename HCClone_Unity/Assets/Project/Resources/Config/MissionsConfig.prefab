@@ -42,6 +42,7 @@ MonoBehaviour:
   _unitsXPositionStartOffset: 1
   _planets:
   - _key: 1
+    _creditsIncome: 0
     _missions:
     - _key: 1
       _fuelWinCost: 0
@@ -53,9 +54,10 @@ MonoBehaviour:
       _rewardFuel: 0
       _rewardCredits: 0
       _rewardMinerals: 0
+      _mineIncome: 0
       _maps:
-      - _units: 41420f0041420f00
-      - _units: 41420f0041420f0042420f00
+      - _units: 44420f0044420f00
+      - _units: 44420f0044420f0045420f00
     - _key: 2
       _fuelWinCost: 0
       _fuelLoseCost: 0
@@ -66,10 +68,9 @@ MonoBehaviour:
       _rewardFuel: 0
       _rewardCredits: 0
       _rewardMinerals: 0
+      _mineIncome: 0
       _maps:
-      - _units: 41420f0041420f0041420f00
-      - _units: 41420f0041420f0042420f00
-      - _units: 41420f0041420f0002000000
+      - _units: 44420f0045420f0002000000
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

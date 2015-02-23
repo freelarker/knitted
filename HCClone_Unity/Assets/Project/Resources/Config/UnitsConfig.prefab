@@ -48,9 +48,10 @@ MonoBehaviour:
     _baseHealth: 100
     _baseArmor: 0
     _baseDamage: 2
-    _baseAttackRange: 1
+    _baseAttackRange: 0
     _baseAttackSpeed: 0
     _baseCritChance: 0
+    _baseCritDamageMultiplier: 2
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
@@ -65,9 +66,10 @@ MonoBehaviour:
     _baseHealth: 100
     _baseArmor: 0
     _baseDamage: 15
-    _baseAttackRange: 3
+    _baseAttackRange: 0
     _baseAttackSpeed: 0
     _baseCritChance: 0
+    _baseCritDamageMultiplier: 2
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
@@ -83,9 +85,10 @@ MonoBehaviour:
     _baseHealth: 10
     _baseArmor: 0
     _baseDamage: 1
-    _baseAttackRange: 2
+    _baseAttackRange: 0
     _baseAttackSpeed: 0
     _baseCritChance: 0
+    _baseCritDamageMultiplier: 2
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
@@ -98,9 +101,10 @@ MonoBehaviour:
     _baseHealth: 20
     _baseArmor: 0
     _baseDamage: 1
-    _baseAttackRange: 2
+    _baseAttackRange: 0
     _baseAttackSpeed: 0
     _baseCritChance: 0
+    _baseCritDamageMultiplier: 2
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
@@ -110,12 +114,13 @@ MonoBehaviour:
     _leadershipCost: 10
     _creditsCost: 0
   - _key: 1000004
-    _baseHealth: 50
+    _baseHealth: 20
     _baseArmor: 0
     _baseDamage: 1
-    _baseAttackRange: 2
+    _baseAttackRange: 0
     _baseAttackSpeed: 0
     _baseCritChance: 0
+    _baseCritDamageMultiplier: 2
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
@@ -128,9 +133,10 @@ MonoBehaviour:
     _baseHealth: 50
     _baseArmor: 0
     _baseDamage: 3
-    _baseAttackRange: 2
+    _baseAttackRange: 0
     _baseAttackSpeed: 0
     _baseCritChance: 0
+    _baseCritDamageMultiplier: 2
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:

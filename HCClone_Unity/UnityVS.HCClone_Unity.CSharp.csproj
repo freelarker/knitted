@@ -124,9 +124,8 @@
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStatistics.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStoryProgress.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerVIP.cs" />
-    <Compile Include="Assets\Project\Code\Core\Units\SoldierUpgrade.cs" />
-    <Compile Include="Assets\Project\Code\Core\Units\SoldierUpgradeLevel.cs" />
-    <Compile Include="Assets\Project\Code\Core\Units\SoldierUpgradesInfo.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\AttackInfo.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\HitInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseHero.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseSoldier.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseUnit.cs" />
@@ -134,6 +133,9 @@
     <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseHeroData.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseSoldierData.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsData\BaseUnitData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsUpgrades\SoldierUpgrade.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsUpgrades\SoldierUpgradeLevel.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitsUpgrades\SoldierUpgradesInfo.cs" />
     <Compile Include="Assets\Project\Code\Events\CityEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\EventsAggregator.cs" />
     <Compile Include="Assets\Project\Code\Events\FightEvents.cs" />

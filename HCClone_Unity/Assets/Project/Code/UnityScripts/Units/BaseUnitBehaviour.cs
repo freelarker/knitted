@@ -29,13 +29,15 @@ public class BaseUnitBehaviour : MonoBehaviour {
 			_model = gameObject.GetComponentInChildren<UnitModelView>();
 		}
 
-		EventsAggregator.Units.AddListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
+		EventsAggregator.Units.AddListener<BaseUnit, HitInfo>(EUnitEvent.HitReceived, OnHitReceived);
+		EventsAggregator.Units.AddListener<BaseUnit, HitInfo>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.AddListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.AddListener(EFightEvent.Resume, OnFightResume);
 	}
 
 	public void OnDestroy() {
-		EventsAggregator.Units.RemoveListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
+		EventsAggregator.Units.RemoveListener<BaseUnit, HitInfo>(EUnitEvent.HitReceived, OnHitReceived);
+		EventsAggregator.Units.RemoveListener<BaseUnit, HitInfo>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Resume, OnFightResume);
 	}
@@ -72,30 +74,39 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private void OnSelfDeath() {
 		StopAllCoroutines();
 		_targetUnit = null;
-		_unitPathfinder.Reset();
+		_unitPathfinder.Reset(true);
 
 		EventsAggregator.Fight.Broadcast<BaseUnit>(gameObject.tag == GameConstants.Tags.UNIT_ALLY ? EFightEvent.AllyDeath : EFightEvent.EnemyDeath, _unitData);
 
-		//WARNING! temp
-		GameObject.Destroy(gameObject);
-
-		////TODO: play death animation
+		_model.PlayDeathAnimation(OnDeathAnimationEnd);
 	}
 
 	private IEnumerator AttackTarget() {
 		_model.PlayAttackAnimation();
 
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
-		yield return _cachedWaitForSeconds;
-
-		if (!_targetUnit.UnitData.IsDead) {
+		
+		if (_targetUnit != null && !_targetUnit.UnitData.IsDead) {
+			yield return _cachedWaitForSeconds;
 			StartCoroutine(AttackTarget());
 		}
+	}
+
+	private void OnHitReceived(BaseUnit unit, HitInfo hitInfo) {
+		if (unit == _unitData) {
+			_model.PlayHitAnimation(unit.Health, hitInfo);
+		}
+	}
+
+	private IEnumerator Vanish() {
+		yield return new WaitForSeconds(1f);
+
+		GameObject.Destroy(gameObject);
 	}
 	#endregion
 
 	#region listeners
-	private void OnUnitDeath(BaseUnit unitData) {
+	private void OnUnitDeath(BaseUnit unitData, HitInfo hitInfo) {
 		if (unitData == _unitData) {
 			OnSelfDeath();
 		} else if (_targetUnit != null && unitData == _targetUnit._unitData) {
@@ -109,6 +120,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 	private void OnFightResume() {
 
+	}
+
+	private void OnDeathAnimationEnd() {
+		StartCoroutine(Vanish());
 	}
 	#endregion
 }

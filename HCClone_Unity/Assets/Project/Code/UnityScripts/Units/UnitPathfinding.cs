@@ -64,10 +64,14 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 	}
 
-	public void Reset() {
+	public void Reset(bool full) {
 		_nearestTarget = null;
 		_onTargetReached = null;
 		StopAllCoroutines();
+
+		if (full) {
+			_currentState = EUnitMovementState.None;
+		}
 	}
 
 	private IEnumerator FindPathTimer() {
@@ -78,6 +82,11 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private void FindNearestTarget(ArrayRO<BaseUnitBehaviour> possibleTargets) {
+		if (possibleTargets == null) {
+			_nearestTarget = null;
+			return;
+		}
+
 		BaseUnitBehaviour nearestTarget = null;
 
 		float distance = Mathf.Infinity;
@@ -105,14 +114,14 @@ public class UnitPathfinding : MonoBehaviour {
 
 	#region movement
 	public void MoveToTarget(BaseUnitBehaviour self, ArrayRO<BaseUnitBehaviour> possibleTargets, Action<BaseUnitBehaviour> onTargetFound, Action onTargetReached) {
-		Reset();
+		Reset(false);
 
 		_minDistanceToTargetUnit = self.UnitData.AttackRange;
 		_onTargetReached = onTargetReached;
 
 		FindNearestTarget(possibleTargets);
 		if (_nearestTarget == null) {
-			Reset();
+			Reset(false);
 			CurrentState = EUnitMovementState.NoEnemy;
 			return;
 		}

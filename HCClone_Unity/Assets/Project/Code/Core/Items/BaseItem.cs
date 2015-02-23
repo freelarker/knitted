@@ -64,6 +64,12 @@ public class BaseItem {
 	}
 
 	[SerializeField]
+	protected float _modCritDamageMultiplier = 0;
+	public float ModCritDamageMultiplier {
+		get { return _modCritDamageMultiplier; }
+	}
+
+	[SerializeField]
 	protected int _levelRequirement = 1;
 	public float LevelRequirement {
 		get { return _levelRequirement; }

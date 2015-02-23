@@ -45,6 +45,12 @@ public abstract class BaseUnitData {
 	}
 
 	[SerializeField]
+	protected float _baseCritDamageMultiplier = 2f;	//base critical damage multiplier (without upgrades)
+	public float BaseCritDamageMultiplier {
+		get { return _baseCritDamageMultiplier; }
+	}
+
+	[SerializeField]
 	protected int _aggroCrystalsForDeathToEnemy = 0;	//amount of aggro crystals unit gives to enemies after death
 	public int AggroCrystalsForDeathToEnemy {
 		get { return _aggroCrystalsForDeathToEnemy; }

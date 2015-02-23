@@ -16,6 +16,7 @@ public abstract class BaseUnit {
 	public float AttackRange { get; private set; }	//damage range after all upgrades applied
 	public float AttackSpeed { get; private set; }	//damage speed after all upgrades applied
 	public int CritChance { get; private set; }	//critical hit chance after all upgrades applied
+	public float CritDamageMultiplier { get; private set; }	//critical hit damage multiplier after all upgrades applied
 
 	public UnitInventory Inventory { get; private set; }
 
@@ -29,26 +30,31 @@ public abstract class BaseUnit {
 		RecalculateParams();
 	}
 
-	public void ApplyDamage(int damageAmount) {
-		damageAmount -= ArmorDamageAbsorb;
+	public AttackInfo GetAttackInfo() {
+		bool isCrit = Random.Range(0, 100) < CritChance;
+		return new AttackInfo(isCrit ? (int)(Damage * CritDamageMultiplier) : Damage, isCrit);
+	}
 
-		if (IsDead || damageAmount <= 0) {
+	public void ApplyDamage(AttackInfo attackInfo) {
+		attackInfo.DamageAmount -= ArmorDamageAbsorb;
+
+		if (IsDead || attackInfo.DamageAmount <= 0) {
 			return;
 		}
 
-		DamageTaken += damageAmount;
+		DamageTaken += attackInfo.DamageAmount;
 		
 		if (IsDead) {
 			//broadcast death
-			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.DeathCame, this);
+			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.DeathCame, this, new HitInfo(Health + attackInfo.DamageAmount, Health, attackInfo.IsCritical));
 		} else {
 			//broadcast hit
-			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.HitReceived, this);
+			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.HitReceived, this, new HitInfo(Health + attackInfo.DamageAmount, Health, attackInfo.IsCritical));
 		}
 	}
 
-	public void ApplyHeal(int healAmount, bool revive) {
-		if (healAmount <= 0) {
+	public void ApplyHeal(AttackInfo attackInfo, bool revive) {
+		if (attackInfo.DamageAmount <= 0) {
 			return;
 		}
 
@@ -58,14 +64,14 @@ public abstract class BaseUnit {
 			return;
 		}
 
-		DamageTaken -= healAmount;
+		DamageTaken -= attackInfo.DamageAmount;
 		
 		if (preHealDeadState && !IsDead) {
 			//broadcast revive
-			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.ReviveCame, this);
+			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.ReviveCame, this, new HitInfo(Health - attackInfo.DamageAmount, Health, attackInfo.IsCritical));
 		} else {
 			//broadcast heal
-			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.HitReceived, this);
+			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.HitReceived, this, new HitInfo(Health - attackInfo.DamageAmount, Health, attackInfo.IsCritical));
 		}
 	}
 
@@ -89,6 +95,7 @@ public abstract class BaseUnit {
 		AttackRange = _data.BaseAttackRange;
 		AttackSpeed = _data.BaseAttackSpeed;
 		CritChance = _data.BaseCritChance;
+		CritDamageMultiplier = _data.BaseCritDamageMultiplier;
 
 		ArrayRO<EUnitEqupmentSlot> equipmentSlots = UnitsConfig.Instance.GetUnitEquipmentSlots(this);
 		BaseItem itemData = null;
@@ -101,6 +108,7 @@ public abstract class BaseUnit {
 				AttackRange += itemData.ModDamageRange;
 				AttackSpeed += itemData.ModDamageSpeed;
 				CritChance += itemData.ModCritChance;
+				CritDamageMultiplier = itemData.ModCritDamageMultiplier;
 			}
 		}
 		ArmorDamageAbsorb = Mathf.CeilToInt(UnitsConfig.Instance.DamageReducePerOneArmor * Armor);

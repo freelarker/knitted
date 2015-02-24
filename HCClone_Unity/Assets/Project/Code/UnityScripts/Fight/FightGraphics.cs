@@ -7,7 +7,12 @@ public class FightGraphics {
 
 	private Dictionary<EItemKey, GameObject[]> _allyItemsGraphicsResources = new Dictionary<EItemKey, GameObject[]>();
 	private Dictionary<EItemKey, GameObject[]> _enemyItemsGraphicsResources = new Dictionary<EItemKey, GameObject[]>();
-	
+
+	private GameObject _unitUIResource;
+	public GameObject UnitUIResource {
+		get { return _unitUIResource; }
+	}
+
 	private ArrayRO<BaseUnitBehaviour> _allyUnits = null;
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
 		get { return _allyUnits; }
@@ -49,7 +54,6 @@ public class FightGraphics {
 
 		ArrayRO<BaseSoldier> playerSoldiersList = Global.Instance.CurrentMission.SelectedSoldiers;
 		BaseUnitBehaviour[] unitsList = new BaseUnitBehaviour[playerSoldiersList.Length + 1];
-
 		BaseUnitBehaviour bub = null;
 
 		//instantiate soldiers
@@ -102,6 +106,8 @@ public class FightGraphics {
 		LoadBackgroundResources(mapData);
 		LoadAllyUnitsResources();
 		LoadEnemyUnitsResources(mapData);
+
+		_unitUIResource = Resources.Load(GameConstants.Paths.UNIT_UI_PREFAB) as GameObject;
 	}
 
 	private void LoadBackgroundResources(MissionMapData mapData) {
@@ -245,6 +251,7 @@ public class FightGraphics {
 		if (fullUnload) {
 			_allyUnitsGraphicsResources.Clear();
 			_allyItemsGraphicsResources.Clear();
+			_unitUIResource = null;
 		}
 		_enemyUnitsGraphicsResources.Clear();
 		_enemyItemsGraphicsResources.Clear();

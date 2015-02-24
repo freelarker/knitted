@@ -2,7 +2,7 @@
 
 public static class FightCamera {
 	//TODO: finalize this stuff
-	public static void Adapt() {
+	public static void AdaptMain() {
 		float w = 520f;
 		float h = 540f;
 		float y = 7f;
@@ -25,5 +25,10 @@ public static class FightCamera {
 		Vector3 cameraPos = Camera.main.transform.position;
 		cameraPos.y = newY;
 		Camera.main.transform.position = cameraPos;
+	}
+
+	public static void AdaptUI(float defaultWidth, Canvas ui, Canvas bg) {
+		ui.scaleFactor = Screen.width / defaultWidth;
+		bg.scaleFactor = Screen.width / defaultWidth;
 	}
 }

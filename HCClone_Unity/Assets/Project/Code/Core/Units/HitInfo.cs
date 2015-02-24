@@ -15,6 +15,10 @@
 		set { _isCritical = value; }
 	}
 
+	public bool IsLethal {
+		get { return _healthBefore > 0 && _healthAfter <= 0; }
+	}
+
 	public HitInfo(int healthBefore, int healthAfter, bool isCritical) {
 		_healthBefore = healthBefore;
 		_healthAfter = healthAfter;

@@ -154,7 +154,7 @@ PlayerSettings:
   psp2TrophyPackagePath: 
   psp2PackagedResourcesPath: 
   flashStrippingLevel: 2
-  spritePackerPolicy: 
+  spritePackerPolicy: DefaultPackerPolicy
   scriptingDefineSymbols: {}
   metroPackageName: New Unity Project 1
   metroPackageLogo: 

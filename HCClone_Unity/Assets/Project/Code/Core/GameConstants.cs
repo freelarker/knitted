@@ -2,6 +2,8 @@
 	public class Paths {
 		public const string ITEMS_PERFABS = "Items";
 		public const string UNITS_PERFABS = "Units";
+
+		public const string UNIT_UI_PREFAB = "UI/UnitUI";
 	}
 
 	public class Tags {

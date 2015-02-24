@@ -43,13 +43,13 @@ public abstract class BaseUnit {
 		}
 
 		DamageTaken += attackInfo.DamageAmount;
-		
+
+		//broadcast hit
+		EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.HitReceived, this, new HitInfo(Health - DamageTaken + attackInfo.DamageAmount, Health - DamageTaken, attackInfo.IsCritical));
+
 		if (IsDead) {
 			//broadcast death
-			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.DeathCame, this, new HitInfo(Health + attackInfo.DamageAmount, Health, attackInfo.IsCritical));
-		} else {
-			//broadcast hit
-			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.HitReceived, this, new HitInfo(Health + attackInfo.DamageAmount, Health, attackInfo.IsCritical));
+			EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.DeathCame, this);
 		}
 	}
 
@@ -68,10 +68,10 @@ public abstract class BaseUnit {
 		
 		if (preHealDeadState && !IsDead) {
 			//broadcast revive
-			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.ReviveCame, this, new HitInfo(Health - attackInfo.DamageAmount, Health, attackInfo.IsCritical));
+			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.ReviveCame, this, new HitInfo(Health - DamageTaken - attackInfo.DamageAmount, Health - DamageTaken, attackInfo.IsCritical));
 		} else {
 			//broadcast heal
-			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.HitReceived, this, new HitInfo(Health - attackInfo.DamageAmount, Health, attackInfo.IsCritical));
+			EventsAggregator.Units.Broadcast<BaseUnit, HitInfo>(EUnitEvent.HitReceived, this, new HitInfo(Health - DamageTaken - attackInfo.DamageAmount, Health - DamageTaken, attackInfo.IsCritical));
 		}
 	}
 

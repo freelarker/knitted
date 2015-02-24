@@ -11,6 +11,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		get { return _model; }
 	}
 
+	private UnitUI _ui;
+
 	private BaseUnit _unitData = null;
 	public BaseUnit UnitData {
 		get { return _unitData; }
@@ -30,24 +32,28 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		}
 
 		EventsAggregator.Units.AddListener<BaseUnit, HitInfo>(EUnitEvent.HitReceived, OnHitReceived);
-		EventsAggregator.Units.AddListener<BaseUnit, HitInfo>(EUnitEvent.DeathCame, OnUnitDeath);
+		EventsAggregator.Units.AddListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.AddListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.AddListener(EFightEvent.Resume, OnFightResume);
 	}
 
 	public void OnDestroy() {
 		EventsAggregator.Units.RemoveListener<BaseUnit, HitInfo>(EUnitEvent.HitReceived, OnHitReceived);
-		EventsAggregator.Units.RemoveListener<BaseUnit, HitInfo>(EUnitEvent.DeathCame, OnUnitDeath);
+		EventsAggregator.Units.RemoveListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Resume, OnFightResume);
 	}
 
-	public void Setup(BaseUnit unitData, string tag) {
+	public void Setup(BaseUnit unitData, string tag, GameObject uiResource) {
 		_unitData = unitData;
 		gameObject.tag = tag;
 		_isAlly = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY);
 
 		_cachedWaitForSeconds = new WaitForSeconds(1f / unitData.AttackSpeed);
+
+		_ui = (GameObject.Instantiate(uiResource) as GameObject).GetComponent<UnitUI>();
+		_ui.transform.SetParent(transform, false);
+		_ui.transform.localPosition = new Vector3(0f, 1.2f, 0f);
 	}
 
 	public void Run() {
@@ -95,6 +101,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private void OnHitReceived(BaseUnit unit, HitInfo hitInfo) {
 		if (unit == _unitData) {
 			_model.PlayHitAnimation(unit.Health, hitInfo);
+			_ui.ApplyDamage(unit.Health, hitInfo);
 		}
 	}
 
@@ -106,7 +113,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	#endregion
 
 	#region listeners
-	private void OnUnitDeath(BaseUnit unitData, HitInfo hitInfo) {
+	private void OnUnitDeath(BaseUnit unitData) {
 		if (unitData == _unitData) {
 			OnSelfDeath();
 		} else if (_targetUnit != null && unitData == _targetUnit._unitData) {

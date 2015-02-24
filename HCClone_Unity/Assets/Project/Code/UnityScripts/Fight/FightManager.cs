@@ -23,6 +23,9 @@ public class FightManager : MonoBehaviour {
 		get { return _enemyStartLine; }
 	}
 
+	[SerializeField]
+	private UIFight _ui;
+
 	private FightGraphics _graphics = new FightGraphics();
 	private FightLogger _logger = new FightLogger();
 
@@ -57,14 +60,15 @@ public class FightManager : MonoBehaviour {
 	}
 
 	public IEnumerator Start() {
+		FightCamera.AdaptMain();
+		FightCamera.AdaptUI(2048, _ui.CanvasUI, _ui.CanvasBG);
+
 		if (Global.Instance.CurrentMission.PlanetKey == EPlanetKey.None || Global.Instance.CurrentMission.MissionKey == EMissionKey.None) {
 			//TODO: broadcast message
 			Debug.LogError("Wrong mission info");
 			//return;
 			yield break;
 		}
-
-		FightCamera.Adapt();
 
 		_currentMissionData = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
 
@@ -107,10 +111,10 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void InitializeUnitsData(MissionMapData mapData) {
-		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY);
+		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
 			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
-				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY);	//TODO: get BaseSoldier from city
+				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);	//TODO: get BaseSoldier from city
 			}
 		}
 
@@ -118,9 +122,9 @@ public class FightManager : MonoBehaviour {
 		for (int i = 0; i < mapData.Units.Length; i++) {
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			if (bud is BaseHeroData) {
-				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy hero inventory
+				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy hero inventory
 			} else {
-				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY);	//TODO: setup enemy soldier upgrades
+				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades
 			}
 		}
 	}
@@ -164,6 +168,10 @@ public class FightManager : MonoBehaviour {
 	#endregion
 
 	#region maps switch
+	public void Withdraw() {
+		//TODO: withdraw
+	}
+
 	public void NextMap() {
 		_currentMapIndex++;
 

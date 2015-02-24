@@ -30,6 +30,7 @@ public class UnitPathfinding : MonoBehaviour {
 	private Transform _nearestTarget = null;
 
 	private Transform _cachedTransform;
+	private Transform _cachedModelTransform;
 	private WaitForSeconds _cachedWaitForSeconds;
 
 	private Dictionary<EUnitMovementState, Action> _movementStateActions = new Dictionary<EUnitMovementState, Action>();
@@ -55,6 +56,7 @@ public class UnitPathfinding : MonoBehaviour {
 		_movementStateActions.Add(EUnitMovementState.WatchEnemy, WatchEnemy);
 
 		_cachedTransform = transform;
+		_cachedModelTransform = _model.transform;
 		_cachedWaitForSeconds = new WaitForSeconds(1f / _searchesPerSecond);
 	}
 
@@ -185,7 +187,7 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 
 		if (_gridObject.Path.Count > 0) {
-			_cachedTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 	}
 
@@ -207,7 +209,7 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 
 		if(_gridObject.Path.Count > 0) {
-			_cachedTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 	}
 
@@ -223,7 +225,7 @@ public class UnitPathfinding : MonoBehaviour {
 
 		PerformMovement();
 		if (_gridObject.Path.Count > 0) {
-			_cachedTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 
 		if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
@@ -242,7 +244,7 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private void WatchEnemy() {
-		_cachedTransform.LookAt(_nearestTarget.transform);
+		_cachedModelTransform.LookAt(_nearestTarget.transform);
 	}
 
 	private bool PerformMovement(float minDistance = 0.6f) {

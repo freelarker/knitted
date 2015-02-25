@@ -107,7 +107,7 @@ public class FightGraphics {
 		LoadAllyUnitsResources();
 		LoadEnemyUnitsResources(mapData);
 
-		_unitUIResource = Resources.Load(GameConstants.Paths.UNIT_UI_PREFAB) as GameObject;
+		_unitUIResource = Resources.Load(GameConstants.Paths.Prefabs.UI_UNIT) as GameObject;
 	}
 
 	private void LoadBackgroundResources(MissionMapData mapData) {
@@ -133,7 +133,7 @@ public class FightGraphics {
 
 			bud = UnitsConfig.Instance.GetSoldierData(playerSoldiersList[i].Data.Key);
 			if (bud != null && !bud.PrefabName.Equals(string.Empty)) {
-				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, bud.PrefabName));
+				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNIT_RESOURCES, bud.PrefabName));
 				_allyUnitsGraphicsResources.Add(playerSoldiersList[i].Data.Key, bub);
 			} else {
 				Debug.LogError("Can't load unit graphics: " + playerSoldiersList[i].Data.Key);
@@ -146,7 +146,7 @@ public class FightGraphics {
 			Debug.LogError("Can't load unit graphics for player hero");
 		}
 
-		bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, playerHero.Data.PrefabName));
+		bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNIT_RESOURCES, playerHero.Data.PrefabName));
 		_allyUnitsGraphicsResources.Add(playerHero.Data.Key, bub);
 	}
 
@@ -162,7 +162,7 @@ public class FightGraphics {
 
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			if (bud != null && !bud.PrefabName.Equals(string.Empty)) {
-				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNITS_PERFABS, bud.PrefabName));
+				bub = LoadUnitResource<BaseUnitBehaviour>(string.Format("{0}/{1}", GameConstants.Paths.UNIT_RESOURCES, bud.PrefabName));
 				_enemyUnitsGraphicsResources.Add(mapData.Units[i], bub);
 			} else {
 				Debug.LogError("Can't load unit graphics: " + mapData.Units[i]);
@@ -182,7 +182,7 @@ public class FightGraphics {
 			//right hand weapon
 			if (!resourcesDic.ContainsKey(weaponRKey)) {
 				GameObject[] weaponResources = new GameObject[1];
-				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, GetItemResourcePath(weaponRKey))) as GameObject;
+				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEM_RESOURCES, GetItemResourcePath(weaponRKey))) as GameObject;
 				resourcesDic.Add(weaponRKey, weaponResources);
 
 				rhWeaponResource = weaponResources[0];
@@ -193,7 +193,7 @@ public class FightGraphics {
 			//left hand weapon
 			if (!resourcesDic.ContainsKey(weaponLKey)) {
 				GameObject[] weaponResources = new GameObject[1];
-				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEMS_PERFABS, GetItemResourcePath(weaponLKey))) as GameObject;
+				weaponResources[0] = Resources.Load(string.Format("{0}/{1}", GameConstants.Paths.ITEM_RESOURCES, GetItemResourcePath(weaponLKey))) as GameObject;
 				resourcesDic.Add(weaponLKey, weaponResources);
 
 				lhWeaponResource = weaponResources[0];
@@ -208,8 +208,8 @@ public class FightGraphics {
 				string armorResourcePath = GetItemResourcePath(armorKey);
 
 				GameObject[] armorResources = new GameObject[2];
-				armorResources[0] = Resources.Load(string.Format("{0}/{1}_head", GameConstants.Paths.ITEMS_PERFABS, armorResourcePath)) as GameObject;
-				armorResources[1] = Resources.Load(string.Format("{0}/{1}_body", GameConstants.Paths.ITEMS_PERFABS, armorResourcePath)) as GameObject;
+				armorResources[0] = Resources.Load(string.Format("{0}/{1}_head", GameConstants.Paths.ITEM_RESOURCES, armorResourcePath)) as GameObject;
+				armorResources[1] = Resources.Load(string.Format("{0}/{1}_body", GameConstants.Paths.ITEM_RESOURCES, armorResourcePath)) as GameObject;
 				resourcesDic.Add(armorKey, armorResources);
 
 				headArmorResource = armorResources[0];

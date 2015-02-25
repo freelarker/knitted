@@ -1,9 +1,18 @@
 ﻿public static class GameConstants {
 	public class Paths {
-		public const string ITEMS_PERFABS = "Items";
-		public const string UNITS_PERFABS = "Units";
+		public const string ITEM_RESOURCES = "Items";
+		public const string UNIT_RESOURCES = "Units";
+		public const string UI_RESOURCES = "UI";
+		public const string UI_WINDOWS_RESOURCES = "UI/Windows";
 
-		public const string UNIT_UI_PREFAB = "UI/UnitUI";
+		public class Prefabs {
+			public static string UI_UNIT { get { return string.Format("{0}/UnitUI", UI_RESOURCES); } }
+
+			public static string UI_WIN_BATTLE_PREVIEW { get { return string.Format("{0}/Missions/BattlePreview", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_SETUP { get { return string.Format("{0}/Missions/BattleSetup", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_VICTORY { get { return string.Format("{0}/Missions/BattleVictory", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_DEFEAT { get { return string.Format("{0}/Missions/BattleDefeat", UI_WINDOWS_RESOURCES); } }
+		}
 	}
 
 	public class Tags {

@@ -156,6 +156,10 @@
     <Compile Include="Assets\Project\Code\UI\UIFight.cs" />
     <Compile Include="Assets\Project\Code\UI\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\UnitUI.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\UIResourcesManager.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\UIWindow.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\UIWindowKey.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\UIWindowsManager.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightCamera.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightGraphics.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightManager.cs" />

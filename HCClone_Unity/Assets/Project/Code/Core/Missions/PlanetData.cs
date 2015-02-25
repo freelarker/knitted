@@ -26,6 +26,12 @@ public class PlanetData {
 		}
 	}
 
+	[SerializeField]
+	private string _sceneName = string.Empty;
+	public string SceneName {
+		get { return _sceneName; }
+	}
+
 	public MissionData GetMission(EMissionKey missionKey) {
 		for (int i = 0; i < _missions.Length; i++) {
 			if (_missions[i].Key == missionKey) {

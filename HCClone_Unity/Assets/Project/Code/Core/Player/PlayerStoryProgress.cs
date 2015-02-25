@@ -22,6 +22,31 @@ public class PlayerStoryProgress {
 		return _progress[planetKey].IndexOf(missionKey) != -1;
 	}
 
+	public bool IsMissioAvailable(EPlanetKey planetKey, EMissionKey missionKey) {
+		PlanetData pd = MissionsConfig.Instance.GetPlanet(planetKey);
+		if(pd != null) {
+			for (int i = 0; i < pd.Missions.Length; i++) {
+				if (pd.Missions[i].Key == missionKey) {
+					//first mission
+					if (i == 0) {
+						if (MissionsConfig.Instance.Planets[i].Key == pd.Key) {
+							//first planet
+							return true;
+						} else {
+							//check prev planet
+							return IsPlanetCompleted(MissionsConfig.Instance.GetPreviuosPlanet(planetKey).Key);
+						}
+					} else {
+						//check prev mission
+						return IsMissionCompleted(planetKey, pd.Missions[i - 1].Key);
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public bool IsPlanetCompleted(EPlanetKey planetKey) {
 		if (!_progress.ContainsKey(planetKey)) {
 			return false;

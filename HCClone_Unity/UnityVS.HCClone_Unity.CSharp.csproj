@@ -14,7 +14,7 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>Assets\smcs.rsp</CompilerResponseFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -154,6 +154,7 @@
     <Compile Include="Assets\Project\Code\Grid\Utils\HCCGridPoint.cs" />
     <Compile Include="Assets\Project\Code\Grid\Utils\HCCGridRect.cs" />
     <Compile Include="Assets\Project\Code\UI\UIFight.cs" />
+    <Compile Include="Assets\Project\Code\UI\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\UnitUI.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightCamera.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightGraphics.cs" />
@@ -174,7 +175,6 @@
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
     <Compile Include="Assets\Project\Code\_Common\UnityScripts\GradientText.cs" />
     <Compile Include="Assets\Project\Code\_Common\UnityScripts\MultiImageButton.cs" />
-    <Compile Include="Assets\Project\_TestingStuff\FightTest\FightGUI.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\UnitsSelectGUI.cs" />
     <Compile Include="Assets\Project\_TestingStuff\test.cs" />
     <None Include="C:\Program Files (x86)\Unity\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll" />

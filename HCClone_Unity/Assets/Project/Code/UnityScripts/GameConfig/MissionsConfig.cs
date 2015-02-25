@@ -25,10 +25,36 @@ public class MissionsConfig : MonoBehaviourResourceSingleton<MissionsConfig> {
 		}
 	}
 
+	public PlanetData GetPreviuosPlanet(EPlanetKey planetKey) {
+		for (int i = 0; i < _planets.Length; i++) {
+			if (_planets[i].Key == planetKey) {
+				if (i > 0) {
+					return _planets[i - 1];
+				} else {
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+
 	public PlanetData GetPlanet(EPlanetKey planetKey) {
 		for (int i = 0; i < _planets.Length; i++) {
 			if (_planets[i].Key == planetKey) {
 				return _planets[i];
+			}
+		}
+		return null;
+	}
+
+	public PlanetData GetPlanet(EMissionKey missionKey) {
+		if (missionKey != EMissionKey.None) {
+			for (int i = 0; i < _planets.Length; i++) {
+				for (int j = 0; j < _planets[i].Missions.Length; j++) {
+					if (_planets[i].Missions[j].Key == missionKey) {
+						return _planets[i];
+					}
+				}
 			}
 		}
 		return null;

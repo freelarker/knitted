@@ -43,7 +43,7 @@ public class UnitModelView : MonoBehaviour {
 
 	private float _runAnimationSpeed = 1f;	//how fast movement animation will play
 	private float _attackAnimationSpeed = 1f;	//how fast attack animation will play
-	private float _hitAnimationSpeed = 1f;	//how fast hit animation will play
+	//private float _hitAnimationSpeed = 1f;	//how fast hit animation will play
 	private float _deathAnimationSpeed = 1f;	//how death movement animation will play
 
 	private float _defaultMovementSpeed = 1.5f;	//how fast (in unity meters) unit will move with default animation speed

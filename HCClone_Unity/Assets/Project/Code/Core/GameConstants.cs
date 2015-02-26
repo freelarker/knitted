@@ -1,17 +1,24 @@
-﻿public static class GameConstants {
+﻿using UnityEngine;
+
+public static class GameConstants {
+	public const int DEFAULT_RESOLUTION_WIDTH = 2048;
+	public const int DEFAULT_RESOLUTION_HEIGHT = 1152;
+
 	public class Paths {
 		public const string ITEM_RESOURCES = "Items";
 		public const string UNIT_RESOURCES = "Units";
 		public const string UI_RESOURCES = "UI";
 		public const string UI_WINDOWS_RESOURCES = "UI/Windows";
 
+		public static string UI_UNIT_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Units", UI_RESOURCES); } }
+
 		public class Prefabs {
 			public static string UI_UNIT { get { return string.Format("{0}/UnitUI", UI_RESOURCES); } }
 
-			public static string UI_WIN_BATTLE_PREVIEW { get { return string.Format("{0}/Missions/BattlePreview", UI_WINDOWS_RESOURCES); } }
-			public static string UI_WIN_BATTLE_SETUP { get { return string.Format("{0}/Missions/BattleSetup", UI_WINDOWS_RESOURCES); } }
-			public static string UI_WIN_BATTLE_VICTORY { get { return string.Format("{0}/Missions/BattleVictory", UI_WINDOWS_RESOURCES); } }
-			public static string UI_WIN_BATTLE_DEFEAT { get { return string.Format("{0}/Missions/BattleDefeat", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_PREVIEW { get { return string.Format("{0}/Missions/WndBattlePreview", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_SETUP { get { return string.Format("{0}/Missions/WndBattleSetup", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_VICTORY { get { return string.Format("{0}/Missions/WndBattleVictory", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_BATTLE_DEFEAT { get { return string.Format("{0}/Missions/WndBattleDefeat", UI_WINDOWS_RESOURCES); } }
 		}
 	}
 

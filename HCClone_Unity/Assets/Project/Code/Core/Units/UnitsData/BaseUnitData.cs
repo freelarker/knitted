@@ -80,6 +80,12 @@ public abstract class BaseUnitData {
 		get { return _prefabName; }
 	}
 
+	[SerializeField]
+	protected string _iconName = string.Empty;
+	public string IconName {
+		get { return _iconName; }
+	}
+
 	public EItemKey GetBaseItemInSlot(EUnitEqupmentSlot slotName) {
 		for (int i = 0; i < _baseEquipment.Length; i++) {
 			if (_baseEquipment[i].SlotName == slotName) {

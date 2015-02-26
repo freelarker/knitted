@@ -7,7 +7,7 @@ public class UIMissionIcon : MonoBehaviour {
 	[SerializeField]
 	private EMissionKey _missionKey = EMissionKey.None;
 	private EPlanetKey _planetKey = EPlanetKey.None;
-
+	
 	public void Start() {
 #if MISSIONS_TEST
 		if (!Global.IsInitialized) {
@@ -37,7 +37,10 @@ public class UIMissionIcon : MonoBehaviour {
 
 	private void OnIconClick() {
 		if (_missionKey != EMissionKey.None) {
-			//TODO: show mission preview window
+			UIWindowBattlePreview wbp = UIWindowsManager.Instance.GetWindow(EUIWindowKey.BattlePreview) as UIWindowBattlePreview;
+			if (wbp != null) {
+				wbp.Show(_planetKey, _missionKey);
+			}
 		}
 	}
 }

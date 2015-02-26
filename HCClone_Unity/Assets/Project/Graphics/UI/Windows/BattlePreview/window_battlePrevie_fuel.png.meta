@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 46f5c72eadfa0624b8bb8184b1fcc95c
+guid: 50a7ce908783cd6489cd8adf17bf87b0
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -22,7 +22,7 @@ TextureImporter:
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 1024
+  maxTextureSize: 256
   textureSettings:
     filterMode: -1
     aniso: 16
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: AtlasAbilities_Hero1
+  spritePackingTag: AtlasBattlePreview
   userData: 

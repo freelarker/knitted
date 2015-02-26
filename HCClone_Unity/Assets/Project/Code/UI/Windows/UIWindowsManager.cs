@@ -19,7 +19,7 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 		GameObject windowResource = UIResourcesManager.Instance.GetResource<GameObject>(_windowResources[windowKey]);
 		if (windowResource != null) {
 			UIWindow windowInstance = (GameObject.Instantiate(windowResource) as GameObject).GetComponent<UIWindow>();
-			windowInstance.transform.SetParent(Utils.UI.GetCanvas().transform, false);
+			windowInstance.transform.SetParent(Utils.UI.GetWindowsCanvas().transform, false);
 
 			_activeWindows.Add(windowKey, windowInstance);
 

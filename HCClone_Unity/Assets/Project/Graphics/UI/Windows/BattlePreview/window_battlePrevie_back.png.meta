@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 46f5c72eadfa0624b8bb8184b1fcc95c
+guid: 14ed5ed7426baad499af04f93c263608
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: AtlasAbilities_Hero1
+  spritePackingTag: 
   userData: 

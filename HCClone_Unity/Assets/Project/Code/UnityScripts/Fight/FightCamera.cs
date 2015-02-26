@@ -27,8 +27,7 @@ public static class FightCamera {
 		Camera.main.transform.position = cameraPos;
 	}
 
-	public static void AdaptUI(float defaultWidth, Canvas ui, Canvas bg) {
-		ui.scaleFactor = Screen.width / defaultWidth;
-		bg.scaleFactor = Screen.width / defaultWidth;
+	public static void AdaptCanvas(float defaultWidth, Canvas canvasBG) {
+		canvasBG.scaleFactor = Screen.width / defaultWidth;
 	}
 }

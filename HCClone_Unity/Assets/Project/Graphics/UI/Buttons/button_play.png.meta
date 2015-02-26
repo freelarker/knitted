@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 46f5c72eadfa0624b8bb8184b1fcc95c
+guid: c1e7764e5ca5bd34cabd0071f7073e30
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -25,7 +25,7 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: AtlasAbilities_Hero1
+  spritePackingTag: AtlasButtons
   userData: 

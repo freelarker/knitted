@@ -156,6 +156,7 @@
     <Compile Include="Assets\Project\Code\UI\UIFight.cs" />
     <Compile Include="Assets\Project\Code\UI\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\UnitUI.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattlePreview.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIResourcesManager.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindow.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindowKey.cs" />
@@ -177,8 +178,9 @@
     <Compile Include="Assets\Project\Code\_Common\ListRO.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourResourceSingleton.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourSingleton.cs" />
-    <Compile Include="Assets\Project\Code\_Common\UnityScripts\GradientText.cs" />
-    <Compile Include="Assets\Project\Code\_Common\UnityScripts\MultiImageButton.cs" />
+    <Compile Include="Assets\Project\Code\_Common\UnityScripts\UI\CanvasResolutionAdapter.cs" />
+    <Compile Include="Assets\Project\Code\_Common\UnityScripts\UI\GradientText.cs" />
+    <Compile Include="Assets\Project\Code\_Common\UnityScripts\UI\MultiImageButton.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\UnitsSelectGUI.cs" />
     <Compile Include="Assets\Project\_TestingStuff\test.cs" />
     <None Include="C:\Program Files (x86)\Unity\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll" />

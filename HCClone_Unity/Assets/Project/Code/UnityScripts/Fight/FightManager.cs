@@ -61,7 +61,8 @@ public class FightManager : MonoBehaviour {
 
 	public IEnumerator Start() {
 		FightCamera.AdaptMain();
-		FightCamera.AdaptUI(2048, _ui.CanvasUI, _ui.CanvasBG);
+		FightCamera.AdaptCanvas(GameConstants.DEFAULT_RESOLUTION_WIDTH, _ui.CanvasBG);
+		Utils.UI.AdaptCanvasResolution(GameConstants.DEFAULT_RESOLUTION_WIDTH, GameConstants.DEFAULT_RESOLUTION_HEIGHT, _ui.CanvasUI);
 
 		if (Global.Instance.CurrentMission.PlanetKey == EPlanetKey.None || Global.Instance.CurrentMission.MissionKey == EMissionKey.None) {
 			//TODO: broadcast message

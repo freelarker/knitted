@@ -32,12 +32,16 @@ public class UIResourcesManager {
 			return (T)_loadedResources[path].resource;
 		}
 
-		Object resource = Resources.Load(path);
-		if (resource is T) {
-			_loadedResources.Add(path, new ResourceUsageInfo(resource, 1));
-			return (T)resource;
+		Object resource = Resources.Load(path, typeof(T));
+		if (resource != null) {
+			if (resource is T) {
+				_loadedResources.Add(path, new ResourceUsageInfo(resource, 1));
+				return (T)resource;
+			} else {
+				Debug.LogError(string.Format("Resource at path \"{0}\" is not a resource of \"{1}\" type", path, typeof(T)));
+			}
 		} else {
-			Debug.LogError(string.Format("Resource at path \"{0}\" is not a resource of \"{1}\" type", path, typeof(T)));
+			Debug.LogError(string.Format("Attempt to load \"{0}\" resource failed - resource not found", path));
 		}
 
 		return null;

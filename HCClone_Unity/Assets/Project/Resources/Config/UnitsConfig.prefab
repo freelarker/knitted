@@ -58,6 +58,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000002
     _prefabName: Hero_Sniper
+    _iconName: 
     _baseAggroCrystals: 10
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 0
@@ -76,6 +77,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000002
     _prefabName: Hero_Goblin
+    _iconName: 
     _baseAggroCrystals: 10
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 0
@@ -95,6 +97,7 @@ MonoBehaviour:
     - _slotName: 2
       _itemKey: 1000001
     _prefabName: Unit_Scout
+    _iconName: 
     _leadershipCost: 5
     _creditsCost: 0
   - _key: 1000002
@@ -111,6 +114,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000002
     _prefabName: Unit_Trooper
+    _iconName: 
     _leadershipCost: 10
     _creditsCost: 0
   - _key: 1000004
@@ -127,6 +131,7 @@ MonoBehaviour:
     - _slotName: 2
       _itemKey: 1000001
     _prefabName: Enemy_Jawa1
+    _iconName: Jawas/unit_jawa1
     _leadershipCost: 0
     _creditsCost: 0
   - _key: 1000005
@@ -143,6 +148,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000002
     _prefabName: Enemy_Jawa2
+    _iconName: Jawas/unit_jawa2
     _leadershipCost: 0
     _creditsCost: 0
   _soldierUpgrades: []

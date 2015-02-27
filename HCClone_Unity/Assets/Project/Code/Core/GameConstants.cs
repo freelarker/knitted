@@ -4,6 +4,10 @@ public static class GameConstants {
 	public const int DEFAULT_RESOLUTION_WIDTH = 2048;
 	public const int DEFAULT_RESOLUTION_HEIGHT = 1152;
 
+	public class Scenes {
+		public const string FIGHT = "Fight";
+	}
+
 	public class Paths {
 		public const string ITEM_RESOURCES = "Items";
 		public const string UNIT_RESOURCES = "Units";

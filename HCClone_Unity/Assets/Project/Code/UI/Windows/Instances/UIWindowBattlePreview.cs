@@ -50,8 +50,8 @@ public class UIWindowBattlePreview : UIWindow {
 	}
 
 	public void Start() {
-		_btnBack.onClick.AddListener(Hide);
-		_btnPlay.onClick.AddListener(OnPlayClick);
+		_btnBack.onClick.AddListener(OnBtnBackClick);
+		_btnPlay.onClick.AddListener(OnBtnPlayClick);
 	}
 
 	public void Show(EPlanetKey planetKey, EMissionKey missionKey) {
@@ -63,6 +63,9 @@ public class UIWindowBattlePreview : UIWindow {
 	public void Setup(EPlanetKey planetKey, EMissionKey missionKey) {
 		_planetKey = planetKey;
 		_missionKey = missionKey;
+
+		Global.Instance.CurrentMission.PlanetKey = _planetKey;
+		Global.Instance.CurrentMission.MissionKey = _missionKey;
 
 		MissionData md = MissionsConfig.Instance.GetPlanet(planetKey).GetMission(missionKey);
 		if (md != null) {
@@ -137,6 +140,8 @@ public class UIWindowBattlePreview : UIWindow {
 			_lootItemImages[0] = _imgLoot;
 
 			for (int i = 0; i < loot.Length; i++) {
+				_lootItems[i] = loot[i].ItemKey;
+
 				if (i > 0) {
 					_lootItemImages[i] = (GameObject.Instantiate(_imgLoot.gameObject) as GameObject).GetComponent<Image>();
 					_lootItemImages[i].transform.SetParent(_imgLoot.transform.parent, false);
@@ -144,7 +149,7 @@ public class UIWindowBattlePreview : UIWindow {
 				}
 
 				Image lootIcon = _lootItemImages[i];
-				Sprite lootIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetLooiIconResourcePath(loot[i].ItemKey));
+				Sprite lootIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetLootIconResourcePath(loot[i].ItemKey));
 				if (lootIconResource != null) {
 					lootIcon.sprite = lootIconResource;
 				}
@@ -153,13 +158,19 @@ public class UIWindowBattlePreview : UIWindow {
 	}
 	#endregion
 
-	private void OnPlayClick() {
+	#region listeners
+	private void OnBtnPlayClick() {
+		//TODO: do not hide, just show new window using UIWindowsManager
+		Hide();
+
+		UIWindowsManager.Instance.GetWindow(EUIWindowKey.BattleSetup).Show();
+	}
+
+	private void OnBtnBackClick() {
 		Global.Instance.CurrentMission.PlanetKey = _planetKey;
 		Global.Instance.CurrentMission.MissionKey = _missionKey;
 
 		Hide();
-
-		//TODO: show
 	}
 
 	private void OnWindowHide() {
@@ -186,18 +197,21 @@ public class UIWindowBattlePreview : UIWindow {
 				if (i > 0) {
 					GameObject.Destroy(_lootItemImages[i].gameObject);
 				}
-				UIResourcesManager.Instance.FreeResource(GetLooiIconResourcePath(_lootItems[i]));
+				UIResourcesManager.Instance.FreeResource(GetLootIconResourcePath(_lootItems[i]));
 			}
 		}
 		_lootItems = null;
 		_lootItemImages = null;
 	}
+	#endregion
 
+	#region auxiliary
 	private string GetUnitIconResourcePath(EUnitKey unitKey) {
 		return string.Format("{0}/{1}", GameConstants.Paths.UI_UNIT_ICONS_RESOURCES, UnitsConfig.Instance.GetSoldierData(unitKey).IconName);
 	}
 
-	private string GetLooiIconResourcePath(EItemKey itemKey) {
+	private string GetLootIconResourcePath(EItemKey itemKey) {
 		return string.Format("{0}/{1}", GameConstants.Paths.UI_ITEM_ICONS_RESOURCES, ItemsConfig.Instance.GetItem(itemKey).IconName);
 	}
+	#endregion
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 [System.Serializable]
 public class BaseHero : BaseUnit {
+	[SerializeField]
 	protected new BaseHeroData _data;
 	public new BaseHeroData Data {
 		get { return _data; }
@@ -37,6 +38,8 @@ public class BaseHero : BaseUnit {
 		_data = data;
 		AddExperience(experience);
 
+		RecalculateParamsInternal();
+
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
@@ -62,8 +65,8 @@ public class BaseHero : BaseUnit {
 		return slotsData;
 	}
 
-	protected override void RecalculateParams() {
-		base.RecalculateParams();
+	protected override void RecalculateParamsInternal() {
+		base.RecalculateParamsInternal();
 
 		//TODO:
 		// - recalculate health after level-ups
@@ -72,6 +75,10 @@ public class BaseHero : BaseUnit {
 		// - recalculate damage speed after level-ups
 		// - recalculate aggro crystals after level-ups
 		// - recalculate leadership after level-ups
+		//Debug.LogWarning("=== data: " + _data + ", base.data: " + base.Data);
+		if (_data != null) {
+			Leadership = _data.BaseLeadership;
+		}
 
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}

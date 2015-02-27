@@ -11,6 +11,11 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 
 	private Dictionary<EUIWindowKey, UIWindow> _activeWindows = new Dictionary<EUIWindowKey, UIWindow>();
 
+	public T GetWindow<T>(EUIWindowKey windowKey) where T : UIWindow {
+		UIWindow window = GetWindow(windowKey);
+		return window != null ? window as T : null;
+	}
+
 	public UIWindow GetWindow(EUIWindowKey windowKey) {
 		if (_activeWindows.ContainsKey(windowKey) && _activeWindows[windowKey] != null) {
 			return _activeWindows[windowKey];

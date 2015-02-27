@@ -58,7 +58,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000002
     _prefabName: Hero_Sniper
-    _iconName: 
+    _iconName: hero_1
     _baseAggroCrystals: 10
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
     - _slotName: 2
       _itemKey: 1000001
     _prefabName: Unit_Scout
-    _iconName: 
+    _iconName: Soldiers/npc_5_icon
     _leadershipCost: 5
     _creditsCost: 0
   - _key: 1000002
@@ -114,7 +114,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000002
     _prefabName: Unit_Trooper
-    _iconName: 
+    _iconName: Soldiers/npc_6_icon
     _leadershipCost: 10
     _creditsCost: 0
   - _key: 1000004

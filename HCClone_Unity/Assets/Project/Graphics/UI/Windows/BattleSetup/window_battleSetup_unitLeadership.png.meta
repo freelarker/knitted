@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 355628a0ea16db04e809dce38621ecb6
+guid: 97d160a46dd54aa48b6498b84ef280a4
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: AtlasWndBattlePreview
+  spritePackingTag: AtlasWndBattleSetup
   userData: 

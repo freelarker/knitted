@@ -27,7 +27,7 @@ public abstract class BaseUnit {
 		_data = data;
 		Inventory = new UnitInventory(CreateSlotsData(), _data.BaseEquipment, OnEquipmentUpdate);
 
-		RecalculateParams();
+		RecalculateParamsInternal();
 	}
 
 	public AttackInfo GetAttackInfo() {
@@ -88,7 +88,7 @@ public abstract class BaseUnit {
 		return slotsData;
 	}
 
-	protected virtual void RecalculateParams() {
+	protected virtual void RecalculateParamsInternal() {
 		Health = _data.BaseHealth;
 		Armor = _data.BaseArmor;
 		Damage = _data.BaseDamage;
@@ -112,7 +112,10 @@ public abstract class BaseUnit {
 			}
 		}
 		ArmorDamageAbsorb = Mathf.CeilToInt(UnitsConfig.Instance.DamageReducePerOneArmor * Armor);
+	}
 
+	protected void RecalculateParams() {
+		RecalculateParamsInternal();
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}
 

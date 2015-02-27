@@ -5,6 +5,7 @@
 /// </summary>
 public class PlayerStoryProgress {
 	private Dictionary<EPlanetKey, List<EMissionKey>> _progress = new Dictionary<EPlanetKey, List<EMissionKey>>();
+	private Dictionary<EPlanetKey, Dictionary<EMissionKey, int>> _dailyMissionAttempts = new Dictionary<EPlanetKey, Dictionary<EMissionKey, int>>();
 
 	public void SaveProgress(EPlanetKey planetKey, EMissionKey missionKey) {
 		if (!IsMissionCompleted(planetKey, missionKey)) {
@@ -15,6 +16,7 @@ public class PlayerStoryProgress {
 		}
 	}
 
+	#region missions completion and availability
 	public bool IsMissionCompleted(EPlanetKey planetKey, EMissionKey missionKey) {
 		if (!_progress.ContainsKey(planetKey)) {
 			return false;
@@ -61,4 +63,28 @@ public class PlayerStoryProgress {
 
 		return true;
 	}
+	#endregion
+
+	#region attempts
+	//TODO: reset attempts after midnight
+
+	public int GetMissionAttemptsUsed(EPlanetKey planetKey, EMissionKey missionKey) {
+		if (_dailyMissionAttempts.ContainsKey(planetKey) && _dailyMissionAttempts[planetKey].ContainsKey(missionKey)) {
+			return _dailyMissionAttempts[planetKey][missionKey];
+		}
+
+		return 0;
+	}
+
+	public void RegisterAttemptUsage(EPlanetKey planetKey, EMissionKey missionKey) {
+		if (!_dailyMissionAttempts.ContainsKey(planetKey)) {
+			_dailyMissionAttempts.Add(planetKey, new Dictionary<EMissionKey,int>());
+		}
+		if(!_dailyMissionAttempts[planetKey].ContainsKey(missionKey)) {
+			_dailyMissionAttempts[planetKey].Add(missionKey, 1);
+		} else {
+			_dailyMissionAttempts[planetKey][missionKey]++;
+		}
+	}
+	#endregion
 }

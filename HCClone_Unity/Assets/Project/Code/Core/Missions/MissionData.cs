@@ -63,6 +63,24 @@ public class MissionData {
 	}
 
 	[SerializeField]
+	private ItemDropChance[] _rewardItems;
+	public ArrayRO<ItemDropChance> _rewardItemsRO;
+	public ArrayRO<ItemDropChance> RewardItems {
+		get {
+			if (_rewardItemsRO == null) {
+				_rewardItemsRO = new ArrayRO<ItemDropChance>(_rewardItems);
+			}
+			return _rewardItemsRO;
+		}
+	}
+
+	[SerializeField]
+	private int _attemptsDaily = 5;
+	public int AttemptsDaily {
+		get { return _attemptsDaily; }
+	}
+
+	[SerializeField]
 	private int _mineIncome = 0;
 	public int MineIncome {
 		get { return _mineIncome; }

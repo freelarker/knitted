@@ -102,6 +102,7 @@
     <Compile Include="Assets\Project\Code\Core\Global.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\BaseItem.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\EquipmentSlots.cs" />
+    <Compile Include="Assets\Project\Code\Core\Items\ItemDropChance.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\ItemKeys.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\ItemPriceData.cs" />
     <Compile Include="Assets\Project\Code\Core\Items\ItemSlot.cs" />

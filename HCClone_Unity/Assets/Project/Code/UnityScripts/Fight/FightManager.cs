@@ -212,6 +212,16 @@ public class FightManager : MonoBehaviour {
 		Global.Instance.Player.Resources.Credits += -_currentMissionData.CreditsWinCost + _currentMissionData.RewardCredits;
 		Global.Instance.Player.Resources.Minerals += -_currentMissionData.MineralsWinCost + _currentMissionData.RewardMinerals;
 
+		//TODO: get items from server
+		MissionData md = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
+		for (int i = 0; i < md.RewardItems.Length; i++) {
+			if (Random.Range(0, 101) < md.RewardItems[i].DropChance) {
+				Global.Instance.Player.Inventory.AddItem(ItemsConfig.Instance.GetItem(md.RewardItems[i].ItemKey));
+			}
+		}
+
+		Global.Instance.Player.StoryProgress.RegisterAttemptUsage(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+
 		_graphics.Unload(true);
 		_currentMissionData = null;
 		_currentMapIndex = 0;

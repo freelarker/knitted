@@ -11,6 +11,7 @@ public static class GameConstants {
 		public const string UI_WINDOWS_RESOURCES = "UI/Windows";
 
 		public static string UI_UNIT_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Units", UI_RESOURCES); } }
+		public static string UI_ITEM_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Items", UI_RESOURCES); } }
 
 		public class Prefabs {
 			public static string UI_UNIT { get { return string.Format("{0}/UnitUI", UI_RESOURCES); } }

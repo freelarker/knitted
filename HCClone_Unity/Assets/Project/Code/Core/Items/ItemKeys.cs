@@ -31,5 +31,7 @@ public enum EItemKey {
 	A_Robe,
 
 	W_Gun = 1000001,
-	W_Rifle
+	W_Rifle,
+
+	ExperienceBottle_1 = 2000001
 }

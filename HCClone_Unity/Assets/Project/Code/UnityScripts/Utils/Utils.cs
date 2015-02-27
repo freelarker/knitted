@@ -23,13 +23,15 @@ public class Utils {
 				canvas = canvasGO.GetComponent<Canvas>();
 				canvas.renderMode = renderMode;
 
-				GameObject eventSystemGO = new GameObject("EventSystem");
-				eventSystemGO.AddComponent<EventSystem>();
+				if (GameObject.FindObjectOfType<EventSystem>() == null) {
+					GameObject eventSystemGO = new GameObject("EventSystem");
+					eventSystemGO.AddComponent<EventSystem>();
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IPHONE)
-				goES.AddComponent<TouchInputModule>();
+					goES.AddComponent<TouchInputModule>();
 #else
-				eventSystemGO.AddComponent<StandaloneInputModule>();
+					eventSystemGO.AddComponent<StandaloneInputModule>();
 #endif
+				}
 			}
 
 			return canvas;
@@ -52,13 +54,15 @@ public class Utils {
 				canvas = canvasGO.GetComponent<Canvas>();
 				canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-				GameObject eventSystemGO = new GameObject("EventSystem");
-				eventSystemGO.AddComponent<EventSystem>();
+				if (GameObject.FindObjectOfType<EventSystem>() == null) {
+					GameObject eventSystemGO = new GameObject("EventSystem");
+					eventSystemGO.AddComponent<EventSystem>();
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IPHONE)
-				goES.AddComponent<TouchInputModule>();
+					goES.AddComponent<TouchInputModule>();
 #else
-				eventSystemGO.AddComponent<StandaloneInputModule>();
+					eventSystemGO.AddComponent<StandaloneInputModule>();
 #endif
+				}
 			}
 
 			if (canvas.gameObject.GetComponent<CanvasResolutionAdapter>() == null) {

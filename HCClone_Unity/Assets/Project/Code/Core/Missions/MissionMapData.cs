@@ -2,9 +2,6 @@
 
 [System.Serializable]
 public class MissionMapData {
-	//TODO: items drop list
-
-	//TODO: change to unit key + unit upgrades
 	[SerializeField]
 	private EUnitKey[] _units = null;
 	private ArrayRO<EUnitKey> _unitsRO = null;

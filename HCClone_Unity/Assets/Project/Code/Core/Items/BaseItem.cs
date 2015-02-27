@@ -24,7 +24,7 @@ public class BaseItem {
 			}
 			return _possibleSlotsRO;
 		}
-	}	
+	}
 
 	//modifiers
 	[SerializeField]
@@ -79,6 +79,12 @@ public class BaseItem {
 	protected string _prefabName = string.Empty;
 	public string PrefabName {
 		get { return _prefabName; }
+	}
+
+	[SerializeField]
+	protected string _iconName = string.Empty;
+	public string IconName {
+		get { return _iconName; }
 	}
 
 	[SerializeField]

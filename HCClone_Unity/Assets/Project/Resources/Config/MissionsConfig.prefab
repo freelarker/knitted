@@ -45,8 +45,8 @@ MonoBehaviour:
     _creditsIncome: 0
     _missions:
     - _key: 1
-      _fuelWinCost: 0
-      _fuelLoseCost: 0
+      _fuelWinCost: 6
+      _fuelLoseCost: 3
       _creditsWinCost: 0
       _creditsLoseCost: 0
       _mineralsWinCost: 0
@@ -54,6 +54,10 @@ MonoBehaviour:
       _rewardFuel: 0
       _rewardCredits: 0
       _rewardMinerals: 0
+      _rewardItems:
+      - _itemKey: 2000001
+        _dropChance: 100
+      _attemptsDaily: 5
       _mineIncome: 0
       _maps:
       - _units: 44420f0044420f00
@@ -68,6 +72,8 @@ MonoBehaviour:
       _rewardFuel: 0
       _rewardCredits: 0
       _rewardMinerals: 0
+      _rewardItems: []
+      _attemptsDaily: 5
       _mineIncome: 0
       _maps:
       - _units: 44420f0045420f0002000000

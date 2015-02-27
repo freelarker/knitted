@@ -54,7 +54,9 @@ public class UIResourcesManager {
 			} else {
 				_loadedResources[path].usageAmount--;
 				if (_loadedResources[path].usageAmount <= 0) {
-					Resources.UnloadAsset(_loadedResources[path].resource);
+					if (_loadedResources[path].resource != null) {
+						Resources.UnloadAsset(_loadedResources[path].resource);
+					}
 					_loadedResources.Remove(path);
 				}
 			}

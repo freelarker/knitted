@@ -155,6 +155,7 @@
     <Compile Include="Assets\Project\Code\Grid\Utils\HCCGridPoint.cs" />
     <Compile Include="Assets\Project\Code\Grid\Utils\HCCGridRect.cs" />
     <Compile Include="Assets\Project\Code\UI\UIBattleSetupUnitInfo.cs" />
+    <Compile Include="Assets\Project\Code\UI\UICity.cs" />
     <Compile Include="Assets\Project\Code\UI\UIFight.cs" />
     <Compile Include="Assets\Project\Code\UI\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\UnitUI.cs" />

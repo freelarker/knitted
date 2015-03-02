@@ -5,6 +5,7 @@ public static class GameConstants {
 	public const int DEFAULT_RESOLUTION_HEIGHT = 1152;
 
 	public class Scenes {
+		public const string CITY = "City";
 		public const string FIGHT = "Fight";
 	}
 

@@ -3,5 +3,7 @@
 	TownHall,
 	Barracks,
 	Warehouse,
-	Market
+	Market,
+	HeroesHall,
+	Fort
 }

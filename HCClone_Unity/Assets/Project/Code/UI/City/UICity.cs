@@ -2,18 +2,25 @@
 using UnityEngine.UI;
 
 public class UICity : MonoBehaviour {
+	#region local scene instance
+	private static UICity _sceneInstance = null;
+	public static UICity SceneInstance {
+		get { return _sceneInstance; }
+	}
+	#endregion
+
 	[SerializeField]
-	private Button _btnTownHall;
+	private UICityBuildingIcon _cbiTownHall;
 	[SerializeField]
-	private Button _btnFort;
+	private UICityBuildingIcon _cbiFort;
 	[SerializeField]
-	private Button _btnBarracks;
+	private UICityBuildingIcon _cbiBarracks;
 	[SerializeField]
-	private Button _btnMarket;
+	private UICityBuildingIcon _cbiMarket;
 	[SerializeField]
-	private Button _btnWarehouse;
+	private UICityBuildingIcon _cbiWarehouse;
 	[SerializeField]
-	private Button _btnHeroesHall;
+	private UICityBuildingIcon _cbiHeroesHall;
 
 	[SerializeField]
 	private Button _btnBMMissions;
@@ -35,54 +42,42 @@ public class UICity : MonoBehaviour {
 	[SerializeField]
 	private Button _btnRMQuests;
 
+	[SerializeField]
+	private UICityBuildingPopup _buildingPopup;
+	public UICityBuildingPopup BuildingPopup {
+		get { return _buildingPopup; }
+	}
+
+	public void Awake() {
+		_sceneInstance = this;
+
+		if (!Global.IsInitialized) {
+			Global.Instance.Initialize();
+		}
+	}
+
 	public void Start() {
 		//TODO: UI scale
-
-		_btnTownHall.onClick.AddListener(OnTownHallClick);
-		_btnFort.onClick.AddListener(OnFortClick);
-		_btnBarracks.onClick.AddListener(OnBarracksClick);
-		_btnMarket.onClick.AddListener(OnMarketClick);
-		_btnWarehouse.onClick.AddListener(OnWarehouseClick);
-		_btnHeroesHall.onClick.AddListener(OnHeroesHallClick);
 
 		_btnBMMissions.onClick.AddListener(OnMissionsClick);
 		_btnBMCrusade.onClick.AddListener(OnCrusadeClick);
 		_btnBMRaids.onClick.AddListener(OnRaidsClick);
 
 		_btnRightMenuToggle.onClick.AddListener(ToggleRightMenu);
-		_btnRMHeroesHall.onClick.AddListener(OnHeroesHallClick);
-		_btnRMBarracks.onClick.AddListener(OnBarracksClick);
+		_btnRMHeroesHall.onClick.AddListener(OnRMHeroesHallClick);
+		_btnRMBarracks.onClick.AddListener(OnRMBarracksClick);
 		_btnRMInventory.onClick.AddListener(OnInventoryClick);
 		_btnRMQuests.onClick.AddListener(OnQuestsClick);
+
+		_buildingPopup.Hide();
+	}
+
+	public void OnDestroy() {
+		_sceneInstance = null;
 	}
 
 	#region button listeners
-	//buildings
-	private void OnTownHallClick() {
-		//TODO: show town hall window
-	}
-
-	private void OnFortClick() {
-		//TODO: show fort window
-	}
-
-	private void OnBarracksClick() {
-		//TODO: show barracks window
-	}
-
-	private void OnMarketClick() {
-		//TODO: show market window
-	}
-
-	private void OnWarehouseClick() {
-		//TODO: show warehouse window
-	}
-
-	private void OnHeroesHallClick() {
-		//TODO: show heroes hall window
-	}
-
-	//missions
+	//bottom menu
 	private void OnMissionsClick() {
 		//TODO: load last planet's scene
 		Application.LoadLevel("Planet1");
@@ -96,7 +91,7 @@ public class UICity : MonoBehaviour {
 		//TODO: show raids
 	}
 
-	//other
+	//right menu
 	private void ToggleRightMenu() {
 		_goMenuRight.SetActive(!_goMenuRight.activeInHierarchy);
 	}
@@ -107,6 +102,14 @@ public class UICity : MonoBehaviour {
 
 	private void OnQuestsClick() {
 		//TODO: show quests
+	}
+
+	private void OnRMHeroesHallClick() {
+		//TODO: show hh window
+	}
+
+	private void OnRMBarracksClick() {
+		//TODO: show barracks window
 	}
 	#endregion
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UICity : MonoBehaviour {
@@ -54,6 +55,8 @@ public class UICity : MonoBehaviour {
 		if (!Global.IsInitialized) {
 			Global.Instance.Initialize();
 		}
+
+		EventsAggregator.City.AddListener<ECityBuildingKey>(ECityEvent.ConstructionEnd, OnBuildingConstructionComplete);
 	}
 
 	public void Start() {
@@ -70,10 +73,62 @@ public class UICity : MonoBehaviour {
 		_btnRMQuests.onClick.AddListener(OnQuestsClick);
 
 		_buildingPopup.Hide();
+
+		ECityBuildingKey[] buildingKeys = Enum.GetValues(typeof(ECityBuildingKey)) as ECityBuildingKey[];
+		for (int i = 0; i < buildingKeys.Length; i++) {
+			UpdateBuildingImage(buildingKeys[i]);
+		}
 	}
 
 	public void OnDestroy() {
 		_sceneInstance = null;
+
+		EventsAggregator.City.RemoveListener<ECityBuildingKey>(ECityEvent.ConstructionEnd, OnBuildingConstructionComplete);
+	}
+
+	private void UpdateBuildingImage(ECityBuildingKey buildingKey) {
+		if (buildingKey == ECityBuildingKey.Idle) {
+			return;
+		}
+		CBConstructionRequirement cr = CityConfig.Instance.GetBuildingData(buildingKey).GetConstructionRequirements(Global.Instance.Player.City.GetBuilding(buildingKey).Level);
+
+		if (cr != null) {
+			Sprite spriteResource = UIResourcesManager.Instance.GetResource<Sprite>(string.Format("{0}/{1}", GameConstants.Paths.UI_CITY_BUILDINGS_RESOURCES, cr.IconPath));
+			UICityBuildingIcon buildingIcon = null;
+
+			if (spriteResource != null) {
+				switch (buildingKey) {
+					case ECityBuildingKey.TownHall:
+						buildingIcon = _cbiTownHall;
+						break;
+					case ECityBuildingKey.Barracks:
+						buildingIcon = _cbiBarracks;
+						break;
+					case ECityBuildingKey.Fort:
+						buildingIcon = _cbiFort;
+						break;
+					case ECityBuildingKey.HeroesHall:
+						buildingIcon = _cbiHeroesHall;
+						break;
+					case ECityBuildingKey.Market:
+						buildingIcon = _cbiMarket;
+						break;
+					case ECityBuildingKey.Warehouse:
+						buildingIcon = _cbiWarehouse;
+						break;
+				}
+
+				if (buildingIcon != null) {
+					if (buildingIcon.ImgBuilding.sprite != null) {
+						Sprite s = buildingIcon.ImgBuilding.sprite;
+						buildingIcon.ImgBuilding.sprite = null;
+						UIResourcesManager.Instance.FreeResource(s);
+					}
+
+					buildingIcon.ImgBuilding.sprite = spriteResource;
+				}
+			}
+		}
 	}
 
 	#region button listeners
@@ -110,6 +165,12 @@ public class UICity : MonoBehaviour {
 
 	private void OnRMBarracksClick() {
 		//TODO: show barracks window
+	}
+	#endregion
+
+	#region listeners
+	private void OnBuildingConstructionComplete(ECityBuildingKey buildingKey) {
+		UpdateBuildingImage(buildingKey);
 	}
 	#endregion
 }

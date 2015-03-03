@@ -3,6 +3,11 @@ using UnityEngine.UI;
 
 public class UICityBuildingIcon : MonoBehaviour {
 	[SerializeField]
+	private Image _imgBuilding;
+	public Image ImgBuilding {
+		get { return _imgBuilding; }
+	}
+	[SerializeField]
 	private Button _btnBuilding;
 	public Button BtnBuilding {
 		get { return _btnBuilding; }

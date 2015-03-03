@@ -8,5 +8,7 @@
 
 	CityMainHall = 101,
 	CityBarracks,
-	CityMarket
+	CityMarket,
+
+	CityBuildingUpgrade = 176
 }

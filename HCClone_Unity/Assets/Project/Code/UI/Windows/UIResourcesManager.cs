@@ -63,6 +63,20 @@ public class UIResourcesManager {
 		}
 	}
 
+	public void FreeResource(object resource) {
+		string path = string.Empty;
+		foreach (KeyValuePair<string, ResourceUsageInfo> kvp in _loadedResources) {
+			if (kvp.Value.resource == resource) {
+				path = kvp.Key;
+				break;
+			}
+		}
+
+		if (!path.Equals(string.Empty)) {
+			FreeResource(path);
+		}
+	}
+
 	public void Clear() {
 		foreach (KeyValuePair<string, ResourceUsageInfo> kvp in _loadedResources) {
 			if (kvp.Value != null && kvp.Value.resource != null) {

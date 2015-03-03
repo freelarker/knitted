@@ -6,7 +6,10 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 		{ EUIWindowKey.BattlePreview, GameConstants.Paths.Prefabs.UI_WIN_BATTLE_PREVIEW },
 		{ EUIWindowKey.BattleSetup, GameConstants.Paths.Prefabs.UI_WIN_BATTLE_SETUP },
 		{ EUIWindowKey.BattleVictory, GameConstants.Paths.Prefabs.UI_WIN_BATTLE_VICTORY },
-		{ EUIWindowKey.BattleDefeat, GameConstants.Paths.Prefabs.UI_WIN_BATTLE_DEFEAT }
+		{ EUIWindowKey.BattleDefeat, GameConstants.Paths.Prefabs.UI_WIN_BATTLE_DEFEAT },
+
+		
+		{ EUIWindowKey.CityBuildingUpgrade, GameConstants.Paths.Prefabs.UI_WIN_CITY_BUILDING_UPGRADE },
 	};
 
 	private Dictionary<EUIWindowKey, UIWindow> _activeWindows = new Dictionary<EUIWindowKey, UIWindow>();

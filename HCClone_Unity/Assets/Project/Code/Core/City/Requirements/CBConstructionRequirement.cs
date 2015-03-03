@@ -3,13 +3,19 @@
 [System.Serializable]
 public class CBConstructionRequirement {
 	[SerializeField]
-	private int _buildTime = 0;	//Construction time (in seconds)
+	private string _iconPath;	//path to icon
+	public string IconPath {
+		get { return _iconPath; }
+	}
+
+	[SerializeField]
+	private int _buildTime = 0;	//construction time (in seconds)
 	public int BuildTime {
 		get { return _buildTime; }
 	}
 
 	[SerializeField]
-	private int _costCredits = 0;	//Construction cost in credits
+	private int _costCredits = 0;	//construction cost in credits
 	public int CostCredits {
 		get { return _costCredits; }
 	}
@@ -21,7 +27,7 @@ public class CBConstructionRequirement {
 	}
 
 	[SerializeField]
-	private int _costMinerals = 0;	//Construction cost in minerals
+	private int _costMinerals = 0;	//construction cost in minerals
 	public int CostMinerals {
 		get { return _costMinerals; }
 	}

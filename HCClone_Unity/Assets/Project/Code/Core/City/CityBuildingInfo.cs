@@ -20,6 +20,8 @@ public class CityBuildingInfo {
 	}
 
 	public CityBuildingInfo(ECityBuildingKey key, int level) {
+		ConstructionCompletionTimestamp = -1;
+
 		Key = key;
 		Level = level;
 	}

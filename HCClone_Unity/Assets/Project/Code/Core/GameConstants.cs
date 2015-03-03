@@ -13,6 +13,10 @@ public static class GameConstants {
 		public const string ITEM_RESOURCES = "Items";
 		public const string UNIT_RESOURCES = "Units";
 		public const string UI_RESOURCES = "UI";
+
+		public const string UI_CITY_RESOURCES = "UI/City";
+		public const string UI_CITY_BUILDINGS_RESOURCES = "UI/City/Buildings";
+
 		public const string UI_WINDOWS_RESOURCES = "UI/Windows";
 
 		public static string UI_UNIT_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Units", UI_RESOURCES); } }
@@ -25,6 +29,8 @@ public static class GameConstants {
 			public static string UI_WIN_BATTLE_SETUP { get { return string.Format("{0}/Missions/WndBattleSetup", UI_WINDOWS_RESOURCES); } }
 			public static string UI_WIN_BATTLE_VICTORY { get { return string.Format("{0}/Missions/WndBattleVictory", UI_WINDOWS_RESOURCES); } }
 			public static string UI_WIN_BATTLE_DEFEAT { get { return string.Format("{0}/Missions/WndBattleDefeat", UI_WINDOWS_RESOURCES); } }
+
+			public static string UI_WIN_CITY_BUILDING_UPGRADE { get { return string.Format("{0}/Missions/WndBuildingUpgrade", UI_WINDOWS_RESOURCES); } }
 		}
 	}
 

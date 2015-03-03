@@ -118,13 +118,14 @@
     <Compile Include="Assets\Project\Code\Core\Network\NetworkManager.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerCity.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerData.cs" />
-    <Compile Include="Assets\Project\Code\Core\Player\PlayerFuelRefresher.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerHeroes.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerResources.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStatistics.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerStoryProgress.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerVIP.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\Utils\PlayerBuildingConstructor.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\Utils\PlayerFuelRefresher.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\AttackInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\HitInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseHero.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Assets\Project\Code\UI\MissionSelect\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattlePreview.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleSetup.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBuildingUpgrade.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBattleSetupUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIResourcesManager.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindow.cs" />

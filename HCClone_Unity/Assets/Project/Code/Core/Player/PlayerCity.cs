@@ -86,7 +86,7 @@ public class PlayerCity {
 	private void StartConstructionInternal(ECityBuildingKey buildingKey, int constructionCompleteTimestamp) {
 		EventsAggregator.City.Broadcast<ECityBuildingKey>(ECityEvent.ConstructionStart, buildingKey);
 		if (constructionCompleteTimestamp - Utils.UnixTimestamp > 0) {
-			GameTimer.Instance.AddListener(constructionCompleteTimestamp, delegate() { OnConstructionComplete(buildingKey); });
+			GameTimer.Instance.AddListener(constructionCompleteTimestamp - Utils.UnixTimestamp, delegate() { OnConstructionComplete(buildingKey); });
 		} else {
 			OnConstructionComplete(buildingKey);
 		}
@@ -95,6 +95,7 @@ public class PlayerCity {
 	private void OnConstructionComplete(ECityBuildingKey buildingKey) {
 		CityBuildingInfo bInfo = GetBuilding(buildingKey);
 		bInfo.Level++;
+		bInfo.ConstructionCompletionTimestamp = -1;
 
 		EventsAggregator.City.Broadcast<ECityBuildingKey>(ECityEvent.ConstructionEnd, buildingKey);
 	}

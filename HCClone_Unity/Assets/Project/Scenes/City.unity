@@ -887,6 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5b4e1b4ec93c4e909e2a670cbd29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _imgBuilding: {fileID: 778136346}
   _btnBuilding: {fileID: 778136348}
   _lblBuildingName: {fileID: 1924585096}
   _buildingKey: 5
@@ -1993,6 +1994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5b4e1b4ec93c4e909e2a670cbd29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _imgBuilding: {fileID: 1831293410}
   _btnBuilding: {fileID: 1786667003}
   _lblBuildingName: {fileID: 422894200}
   _buildingKey: 3
@@ -2693,6 +2695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5b4e1b4ec93c4e909e2a670cbd29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _imgBuilding: {fileID: 967896019}
   _btnBuilding: {fileID: 967896021}
   _lblBuildingName: {fileID: 1474530538}
   _buildingKey: 2
@@ -2870,6 +2873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5b4e1b4ec93c4e909e2a670cbd29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _imgBuilding: {fileID: 1008391610}
   _btnBuilding: {fileID: 1008391612}
   _lblBuildingName: {fileID: 414906947}
   _buildingKey: 4
@@ -3475,6 +3479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5b4e1b4ec93c4e909e2a670cbd29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _imgBuilding: {fileID: 267819422}
   _btnBuilding: {fileID: 1127589215}
   _lblBuildingName: {fileID: 55891086}
   _buildingKey: 1
@@ -4312,6 +4317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae5b4e1b4ec93c4e909e2a670cbd29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _imgBuilding: {fileID: 1652485364}
   _btnBuilding: {fileID: 1652485366}
   _lblBuildingName: {fileID: 0}
   _buildingKey: 6

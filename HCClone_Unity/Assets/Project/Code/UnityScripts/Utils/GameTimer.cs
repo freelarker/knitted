@@ -36,16 +36,16 @@ public class GameTimer : MonoBehaviourSingleton<GameTimer> {
 		base.OnDestroy();
 	}
 
-	public void AddListener(int reactTime, Action callback) {
+	public void AddListener(int timeLeft, Action callback) {
 		for (int i = 0; i < _updateCallbacks.Length; i++) {
 			if (_updateCallbacks[i] == null) {
-				_updateCallbacks[i] = new TimerListener(reactTime, callback);
+				_updateCallbacks[i] = new TimerListener(timeLeft, callback);
 				return;
 			}
 		}
 
 		ExtendCallbacksList();
-		AddListener(reactTime, callback);
+		AddListener(timeLeft, callback);
 	}
 
 	public void RemoveListener(Action callback) {

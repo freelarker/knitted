@@ -85,4 +85,9 @@ public class Utils {
 	public static int UnixTimestamp {
 		get { return (int)(DateTime.UtcNow - _unixEpochStart).TotalSeconds; }
 	}
+
+	public static string FormatTime(int seconds) {
+		TimeSpan ts = TimeSpan.FromSeconds(seconds);
+		return string.Format("{0:D2}:{1:D2}:{2:D2}", ts.Hours, ts.Minutes, ts.Seconds);
+	}
 }

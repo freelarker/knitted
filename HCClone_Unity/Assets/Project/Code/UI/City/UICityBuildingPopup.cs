@@ -39,7 +39,8 @@ public class UICityBuildingPopup : MonoBehaviour {
 	}
 
 	private void OnBtnUpgradeClick() {
-		//TODO: show window
+		Hide();
+		UIWindowsManager.Instance.GetWindow<UIWindowBuildingUpgrade>(EUIWindowKey.CityBuildingUpgrade).Show(_buildingKey);
 	}
 
 	private void OnBtnEnterClick() {

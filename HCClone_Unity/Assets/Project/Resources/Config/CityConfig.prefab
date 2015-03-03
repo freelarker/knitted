@@ -40,10 +40,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _townHall:
-    _levelsRequirements: []
+    _levelsRequirements:
+    - _iconPath: Main/main_lvl1
+      _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
+    - _iconPath: Main/main_lvl2
+      _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
   _barracks:
     _levelsRequirements:
-    - _buildTime: 0
+    - _iconPath: Barracks/barracks_lvl1
+      _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
+    - _iconPath: Barracks/barracks_lvl2
+      _buildTime: 0
       _costCredits: 0
       _costFuel: 0
       _costMinerals: 0
@@ -54,7 +73,8 @@ MonoBehaviour:
       _unitArmorUpgradeLevel: 0
   _warehouse:
     _levelsRequirements:
-    - _buildTime: 0
+    - _iconPath: Warehouse/warehouse_lvl1
+      _buildTime: 0
       _costCredits: 0
       _costFuel: 0
       _costMinerals: 0
@@ -69,7 +89,13 @@ MonoBehaviour:
       _bonusMineralsProduction: 0
       _bonusFuelProduction: 0
   _market:
-    _levelsRequirements: []
+    _levelsRequirements:
+    - _iconPath: Merchant/merchant_lvl1
+      _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

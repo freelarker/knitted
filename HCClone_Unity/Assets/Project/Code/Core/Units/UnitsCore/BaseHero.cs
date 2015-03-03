@@ -22,14 +22,18 @@ public class BaseHero : BaseUnit {
 
 	public int Leadership { get; private set; }	//hero leadership after all upgrades and level-ups
 	public int Experience { get; private set; }	//hero experience
+	public int AggroCrystalsMaximum { get; private set; }	//aggro crystals cap after all upgrages and level-ups
 	private int _aggroCrystals = 0;	//aggro crystals amount after all upgrades and level-ups
 	public int AggroCrystals {
 		get { return _aggroCrystals; }
 		private set {
-			_aggroCrystals = value;
+			_aggroCrystals = (value < 0 ? 0 : (value > AggroCrystalsMaximum ? AggroCrystalsMaximum : value));
 			EventsAggregator.Units.Broadcast<int>(EUnitEvent.AggroCrystalsUpdate, _aggroCrystals);
 		}
-	}	
+	}
+
+
+	
 
 	//TODO: each action will cost different amount of aggro
 	//public int AggroPerAction { get; private set; }
@@ -47,6 +51,12 @@ public class BaseHero : BaseUnit {
 	~BaseHero() {
 		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
+	}
+
+	public override void Attack(BaseUnit target) {
+		base.Attack(target);
+
+		AggroCrystals += _data.BaseAggroCrystalPerAttack;
 	}
 
 	protected override Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
@@ -78,6 +88,7 @@ public class BaseHero : BaseUnit {
 		//Debug.LogWarning("=== data: " + _data + ", base.data: " + base.Data);
 		if (_data != null) {
 			Leadership = _data.BaseLeadership;
+			AggroCrystalsMaximum = _data.BaseAggroCrystalsMaximum;
 		}
 
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);

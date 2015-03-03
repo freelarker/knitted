@@ -270,7 +270,7 @@ public class FightManager : MonoBehaviour {
 	#region listeners
 	private void OnUnitAttack(BaseUnitBehaviour attacker, BaseUnitBehaviour target) {
 		_logger.LogDamage(attacker, target);
-		target.UnitData.ApplyDamage(attacker.UnitData.GetAttackInfo());
+		attacker.UnitData.Attack(target.UnitData);
 	}
 
 	private void OnAllyDeath(BaseUnit unit) {

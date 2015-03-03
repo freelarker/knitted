@@ -187,6 +187,7 @@
     <Compile Include="Assets\Project\Code\_Common\UnityScripts\UI\CanvasResolutionAdapter.cs" />
     <Compile Include="Assets\Project\Code\_Common\UnityScripts\UI\GradientText.cs" />
     <Compile Include="Assets\Project\Code\_Common\UnityScripts\UI\MultiImageButton.cs" />
+    <Compile Include="Assets\Project\_TestingStuff\FightTest\AggroTestDisplay.cs" />
     <Compile Include="Assets\Project\_TestingStuff\FightTest\UnitsSelectGUI.cs" />
     <Compile Include="Assets\Project\_TestingStuff\test.cs" />
     <None Include="C:\Program Files (x86)\Unity\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll" />

@@ -30,12 +30,16 @@ public abstract class BaseUnit {
 		RecalculateParamsInternal();
 	}
 
-	public AttackInfo GetAttackInfo() {
+	public virtual void Attack(BaseUnit target) {
+		target.ApplyDamage(GetAttackInfo());
+	}
+
+	public virtual AttackInfo GetAttackInfo() {
 		bool isCrit = Random.Range(0, 100) < CritChance;
 		return new AttackInfo(isCrit ? (int)(Damage * CritDamageMultiplier) : Damage, isCrit);
 	}
 
-	public void ApplyDamage(AttackInfo attackInfo) {
+	public virtual void ApplyDamage(AttackInfo attackInfo) {
 		attackInfo.DamageAmount -= ArmorDamageAbsorb;
 
 		if (IsDead || attackInfo.DamageAmount <= 0) {
@@ -53,7 +57,7 @@ public abstract class BaseUnit {
 		}
 	}
 
-	public void ApplyHeal(AttackInfo attackInfo, bool revive) {
+	public virtual void ApplyHeal(AttackInfo attackInfo, bool revive) {
 		if (attackInfo.DamageAmount <= 0) {
 			return;
 		}
@@ -75,7 +79,7 @@ public abstract class BaseUnit {
 		}
 	}
 
-	public void ResetDamageTaken() {
+	public virtual void ResetDamageTaken() {
 		DamageTaken = 0;
 	}
 

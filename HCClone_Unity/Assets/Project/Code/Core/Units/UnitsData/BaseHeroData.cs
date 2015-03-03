@@ -3,12 +3,6 @@
 [System.Serializable]
 public class  BaseHeroData : BaseUnitData {
 	[SerializeField]
-	protected int _baseAggroCrystals = 0;	//base aggro crystals amount (without upgrades and level-ups)
-	public int BaseAggroCrystals {
-		get { return _baseAggroCrystals; }
-	}
-
-	[SerializeField]
 	protected int _baseLeadership = 0;	//base leadership (without upgrades and level-ups)
 	public int BaseLeadership {
 		get { return _baseLeadership; }
@@ -18,6 +12,12 @@ public class  BaseHeroData : BaseUnitData {
 	protected int _baseAggroCrystalsPerAttack = 0;	//base aggro crystals hero receives per attack (without upgrades and level-ups)
 	public int BaseAggroCrystalPerAttack {
 		get { return _baseAggroCrystalsPerAttack; }
+	}
+
+	[SerializeField]
+	protected int _baseAggroCrystalsMaximum = 0;	//base aggro crystals cap (without upgrades and level-ups)
+	public int BaseAggroCrystalsMaximum {
+		get { return _baseAggroCrystalsMaximum; }
 	}
 
 	[SerializeField]

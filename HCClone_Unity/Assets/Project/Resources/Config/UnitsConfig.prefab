@@ -61,7 +61,8 @@ MonoBehaviour:
     _iconName: hero_1
     _baseAggroCrystals: 10
     _baseLeadership: 17
-    _baseAggroCrystalsPerAttack: 0
+    _baseAggroCrystalsPerAttack: 5
+    _baseAggroCrystalsMaximum: 35
     _availableItemTypes: []
   - _key: 2
     _baseHealth: 100
@@ -81,6 +82,7 @@ MonoBehaviour:
     _baseAggroCrystals: 10
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 0
+    _baseAggroCrystalsMaximum: 0
     _availableItemTypes: []
   _soldiersData:
   - _key: 1000001

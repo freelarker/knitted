@@ -30,7 +30,11 @@ public static class GameConstants {
 			public static string UI_WIN_BATTLE_VICTORY { get { return string.Format("{0}/Missions/WndBattleVictory", UI_WINDOWS_RESOURCES); } }
 			public static string UI_WIN_BATTLE_DEFEAT { get { return string.Format("{0}/Missions/WndBattleDefeat", UI_WINDOWS_RESOURCES); } }
 
-			public static string UI_WIN_CITY_BUILDING_UPGRADE { get { return string.Format("{0}/Missions/WndBuildingUpgrade", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_CITY_BUILDING_UPGRADE { get { return string.Format("{0}/City/WndBuildingUpgrade", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_CITY_BARRACKS { get { return string.Format("{0}/City/WndCityBarracks", UI_WINDOWS_RESOURCES); } }
+
+			public static string UI_WIN_HEROES_LIST { get { return string.Format("{0}/City/WndHeroesList", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_HERO_INFO { get { return string.Format("{0}/City/WndHeroInfo", UI_WINDOWS_RESOURCES); } }
 		}
 	}
 

@@ -44,7 +44,17 @@ public class UICityBuildingPopup : MonoBehaviour {
 	}
 
 	private void OnBtnEnterClick() {
-		//TODO: show window
+		
+		switch (_buildingKey) {
+			case ECityBuildingKey.Barracks:
+				UIWindowsManager.Instance.GetWindow<UIWindowCityBarracks>(EUIWindowKey.CityBarracks).Show();
+				Hide();
+				break;
+			case ECityBuildingKey.HeroesHall:
+				UIWindowsManager.Instance.GetWindow<UIWindowHeroesList>(EUIWindowKey.HeroesList).Show();
+				Hide();
+				break;
+		}
 	}
 
 	//WARNING! temp!

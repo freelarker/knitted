@@ -164,6 +164,9 @@
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattlePreview.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleSetup.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBuildingUpgrade.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowCityBarracks.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroInfo.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroesList.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBattleSetupUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIResourcesManager.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindow.cs" />

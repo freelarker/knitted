@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: f4d2a2e53e54c044bb6075a73c6639d9
+guid: 2f8b0747517788347b10e6bff28f0de2
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: 
+  spritePackingTag: AtlasCityBarracks
   userData: 

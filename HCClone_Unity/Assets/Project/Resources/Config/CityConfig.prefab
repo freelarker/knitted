@@ -96,6 +96,22 @@ MonoBehaviour:
       _costFuel: 0
       _costMinerals: 0
       _buildingRequirements: []
+  _fort:
+    _levelsRequirements:
+    - _iconPath: Fort/fort
+      _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
+  _heroesHall:
+    _levelsRequirements:
+    - _iconPath: HeroesHall/council_lvl1
+      _buildTime: 0
+      _costCredits: 0
+      _costFuel: 0
+      _costMinerals: 0
+      _buildingRequirements: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

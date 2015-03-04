@@ -10,6 +10,10 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 
 		
 		{ EUIWindowKey.CityBuildingUpgrade, GameConstants.Paths.Prefabs.UI_WIN_CITY_BUILDING_UPGRADE },
+		{ EUIWindowKey.CityBarracks, GameConstants.Paths.Prefabs.UI_WIN_CITY_BARRACKS },
+
+		{ EUIWindowKey.HeroesList, GameConstants.Paths.Prefabs.UI_WIN_HEROES_LIST },
+		{ EUIWindowKey.HeroInfo, GameConstants.Paths.Prefabs.UI_WIN_HERO_INFO },
 	};
 
 	private Dictionary<EUIWindowKey, UIWindow> _activeWindows = new Dictionary<EUIWindowKey, UIWindow>();

@@ -90,6 +90,7 @@ public class UICity : MonoBehaviour {
 		if (buildingKey == ECityBuildingKey.Idle) {
 			return;
 		}
+
 		CBConstructionRequirement cr = CityConfig.Instance.GetBuildingData(buildingKey).GetConstructionRequirements(Global.Instance.Player.City.GetBuilding(buildingKey).Level);
 
 		if (cr != null) {
@@ -160,7 +161,7 @@ public class UICity : MonoBehaviour {
 	}
 
 	private void OnRMHeroesHallClick() {
-		//TODO: show hh window
+		UIWindowsManager.Instance.GetWindow<UIWindowHeroesList>(EUIWindowKey.HeroesList).Show();
 	}
 
 	private void OnRMBarracksClick() {

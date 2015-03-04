@@ -30,6 +30,18 @@ public class CityConfig : MonoBehaviourResourceSingleton<CityConfig> {
 		get { return _market; }
 	}
 
+	[SerializeField]
+	private CBBaseData _fort = null;
+	public CBBaseData Fort {
+		get { return _fort; }
+	}
+
+	[SerializeField]
+	private CBBaseData _heroesHall = null;
+	public CBBaseData HeroesHall {
+		get { return _heroesHall; }
+	}
+
 	public CBBaseData GetBuildingData(ECityBuildingKey buildingKey) {
 		switch (buildingKey) {
 			case ECityBuildingKey.TownHall:
@@ -40,6 +52,10 @@ public class CityConfig : MonoBehaviourResourceSingleton<CityConfig> {
 				return _market;
 			case ECityBuildingKey.Warehouse:
 				return _warehouse;
+			case ECityBuildingKey.Fort:
+				return _fort;
+			case ECityBuildingKey.HeroesHall:
+				return _heroesHall;
 		}
 
 		return null;

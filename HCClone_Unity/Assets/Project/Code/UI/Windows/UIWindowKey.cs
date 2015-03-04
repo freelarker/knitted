@@ -10,5 +10,8 @@
 	CityBarracks,
 	CityMarket,
 
-	CityBuildingUpgrade = 176
+	CityBuildingUpgrade = 176,
+
+	HeroesList = 200,
+	HeroInfo,
 }

@@ -58,7 +58,7 @@ public class Utils {
 					GameObject eventSystemGO = new GameObject("EventSystem");
 					eventSystemGO.AddComponent<EventSystem>();
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IPHONE)
-					goES.AddComponent<TouchInputModule>();
+					eventSystemGO.AddComponent<TouchInputModule>();
 #else
 					eventSystemGO.AddComponent<StandaloneInputModule>();
 #endif

@@ -161,8 +161,10 @@
     <Compile Include="Assets\Project\Code\UI\Fight\UIFight.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UnitUI.cs" />
     <Compile Include="Assets\Project\Code\UI\MissionSelect\UIMissionIcon.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleDefeat.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattlePreview.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleSetup.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleVictory.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBuildingUpgrade.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowCityBarracks.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroInfo.cs" />

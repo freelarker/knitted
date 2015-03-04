@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f4112937e3ba57945a596540a69c8e0f
+guid: 4bc6f874ad01f604badac5663a8f2d79
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -24,8 +24,8 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    filterMode: -1
-    aniso: -1
+    filterMode: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: 
+  spritePackingTag: AtlasWndBattleVictory
   userData: 

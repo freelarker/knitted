@@ -9,7 +9,7 @@ public class UIMissionIcon : MonoBehaviour {
 	private EPlanetKey _planetKey = EPlanetKey.None;
 	
 	public void Start() {
-#if MISSIONS_TEST
+#if UNITY_EDITOR && MISSIONS_TEST
 		if (!Global.IsInitialized) {
 			Global.Instance.Initialize();
 		}

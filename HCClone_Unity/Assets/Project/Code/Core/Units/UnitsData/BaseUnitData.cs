@@ -86,6 +86,12 @@ public abstract class BaseUnitData {
 		get { return _iconName; }
 	}
 
+	[SerializeField]
+	protected string _hexIconName = string.Empty;
+	public string HexIconName {
+		get { return _hexIconName; }
+	}
+
 	public EItemKey GetBaseItemInSlot(EUnitEqupmentSlot slotName) {
 		for (int i = 0; i < _baseEquipment.Length; i++) {
 			if (_baseEquipment[i].SlotName == slotName) {

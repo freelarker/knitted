@@ -9,9 +9,9 @@ public class UIBattleSetupUnitInfo : MonoBehaviour {
 	}
 
 	[SerializeField]
-	private Text _leadershipCost;
-	public Text LeadershipCost {
-		get { return _leadershipCost; }
+	private Text _lblLeadershipCost;
+	public Text LblLeadershipCost {
+		get { return _lblLeadershipCost; }
 	}
 
 	//TODO: unit upgrades level

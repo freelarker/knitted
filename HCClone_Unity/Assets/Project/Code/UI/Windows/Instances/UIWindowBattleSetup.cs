@@ -74,7 +74,7 @@ public class UIWindowBattleSetup : UIWindow {
 			}
 			int iTmp = i;	//some spike: without this array.Length is passed to listener
 			_availableSoldiersInfo[i].Button.onClick.AddListener(() => { HireSoldier(iTmp); });
-			_availableSoldiersInfo[i].LeadershipCost.text = _availableSoldiers[i].LeadershipCost.ToString();
+			_availableSoldiersInfo[i].LblLeadershipCost.text = _availableSoldiers[i].LeadershipCost.ToString();
 
 			Image soldierIcon = _availableSoldiersInfo[i].Button.image;
 			Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetUnitIconResourcePath(_availableSoldiers[i].IconName));
@@ -129,7 +129,7 @@ public class UIWindowBattleSetup : UIWindow {
 	private void UpdateSoldiersHireAvailability() {
 		int totalLeadershop = Global.Instance.Player.Heroes.Current.Leadership;
 		for (int i = 0; i < _availableSoldiersInfo.Length; i++) {
-			_availableSoldiersInfo[i].LeadershipCost.color = _leadershipSpent + _availableSoldiers[i].LeadershipCost > totalLeadershop ? Color.red : Color.white;
+			_availableSoldiersInfo[i].LblLeadershipCost.color = _leadershipSpent + _availableSoldiers[i].LeadershipCost > totalLeadershop ? Color.red : Color.white;
 		}
 	}
 	#endregion

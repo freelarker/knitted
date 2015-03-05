@@ -27,7 +27,7 @@ GameObject:
   - 222: {fileID: 22209632}
   - 114: {fileID: 11409630}
   m_Layer: 5
-  m_Name: txtLeadershipCaption
+  m_Name: lblLeadershipCaption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ GameObject:
   - 222: {fileID: 22248106}
   - 114: {fileID: 11448106}
   m_Layer: 5
-  m_Name: txtLeadershipAmount
+  m_Name: lblLeadershipAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -219,7 +219,7 @@ GameObject:
   - 222: {fileID: 22251114}
   - 114: {fileID: 11451108}
   m_Layer: 5
-  m_Name: txtLeadershipCost
+  m_Name: lblLeadershipCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -917,7 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 11451114}
-  _leadershipCost: {fileID: 11451108}
+  _lblLeadershipCost: {fileID: 11451108}
 --- !u!114 &11491028
 MonoBehaviour:
   m_ObjectHideFlags: 1

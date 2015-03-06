@@ -33,7 +33,7 @@ public class UIBarracksUnitInfo : MonoBehaviour {
 		_lblLeadershipCost.text = _unitData.LeadershipCost.ToString();
 		//TODO: set leved
 
-		Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetUnitIconResourcePath(_unitData.IconName));
+		Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(_unitData.IconName));
 		if (enemyIconResource != null) {
 			_imgUnitIcon.sprite = enemyIconResource;
 		}
@@ -45,15 +45,9 @@ public class UIBarracksUnitInfo : MonoBehaviour {
 
 		if (_imgUnitIcon.sprite != null) {
 			_imgUnitIcon.sprite = null;
-			UIResourcesManager.Instance.FreeResource(GetUnitIconResourcePath(_unitData.IconName));
+			UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitIconResourcePath(_unitData.IconName));
 		}
 
 		_unitData = null;
 	}
-
-	#region auxiliary
-	private string GetUnitIconResourcePath(string iconName) {
-		return string.Format("{0}/{1}", GameConstants.Paths.UI_UNIT_ICONS_RESOURCES, iconName);
-	}
-	#endregion
 }

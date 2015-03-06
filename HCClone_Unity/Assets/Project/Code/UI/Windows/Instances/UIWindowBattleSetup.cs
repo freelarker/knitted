@@ -36,6 +36,8 @@ public class UIWindowBattleSetup : UIWindow {
 	private int _leadershipSpent = 0;
 
 	public void Awake() {
+		_onPostHide += OnWindowHide;
+
 		_btnPlay.onClick.AddListener(OnBtnPlayClick);
 		_btnBack.onClick.AddListener(OnBtnBackClick);
 	}
@@ -77,7 +79,7 @@ public class UIWindowBattleSetup : UIWindow {
 			_availableSoldiersInfo[i].LblLeadershipCost.text = _availableSoldiers[i].LeadershipCost.ToString();
 
 			Image soldierIcon = _availableSoldiersInfo[i].Button.image;
-			Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetUnitIconResourcePath(_availableSoldiers[i].IconName));
+			Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(_availableSoldiers[i].IconName));
 			if (enemyIconResource != null) {
 				soldierIcon.sprite = enemyIconResource;
 			}
@@ -85,7 +87,7 @@ public class UIWindowBattleSetup : UIWindow {
 	}
 
 	private void SetupHiredUnits() {
-		Sprite heroIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+		Sprite heroIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
 		if (heroIconResource != null) {
 			_imgHero.sprite = heroIconResource;
 		}
@@ -189,11 +191,9 @@ public class UIWindowBattleSetup : UIWindow {
 		//TODO: do not show, UIWindowsManager must show previous open window
 		UIWindowsManager.Instance.GetWindow <UIWindowBattlePreview>(EUIWindowKey.BattlePreview).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 	}
-	#endregion
 
-	#region auxiliary
-	private string GetUnitIconResourcePath(string iconName) {
-		return string.Format("{0}/{1}", GameConstants.Paths.UI_UNIT_ICONS_RESOURCES, iconName);
+	private void OnWindowHide() {
+		//TODO: free resources and clear data
 	}
 	#endregion
 }

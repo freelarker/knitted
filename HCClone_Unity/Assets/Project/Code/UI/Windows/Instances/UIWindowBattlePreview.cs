@@ -121,7 +121,7 @@ public class UIWindowBattlePreview : UIWindow {
 			}
 
 			Image enemyIcon = _enemyImages[i];
-			Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetUnitIconResourcePath(_enemies[i]));
+			Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(_enemies[i]));
 			if (enemyIconResource != null) {
 				enemyIcon.sprite = enemyIconResource;
 			}
@@ -149,7 +149,7 @@ public class UIWindowBattlePreview : UIWindow {
 				}
 
 				Image lootIcon = _lootItemImages[i];
-				Sprite lootIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GetLootIconResourcePath(loot[i].ItemKey));
+				Sprite lootIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetLootIconResourcePath(loot[i].ItemKey));
 				if (lootIconResource != null) {
 					lootIcon.sprite = lootIconResource;
 				}
@@ -184,7 +184,7 @@ public class UIWindowBattlePreview : UIWindow {
 				if (i > 0) {
 					GameObject.Destroy(_enemyImages[i].gameObject);
 				}
-				UIResourcesManager.Instance.FreeResource(GetUnitIconResourcePath(_enemies[i]));
+				UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitIconResourcePath(_enemies[i]));
 			}
 		}
 		_enemies = null;
@@ -197,21 +197,11 @@ public class UIWindowBattlePreview : UIWindow {
 				if (i > 0) {
 					GameObject.Destroy(_lootItemImages[i].gameObject);
 				}
-				UIResourcesManager.Instance.FreeResource(GetLootIconResourcePath(_lootItems[i]));
+				UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetLootIconResourcePath(_lootItems[i]));
 			}
 		}
 		_lootItems = null;
 		_lootItemImages = null;
-	}
-	#endregion
-
-	#region auxiliary
-	private string GetUnitIconResourcePath(EUnitKey unitKey) {
-		return string.Format("{0}/{1}", GameConstants.Paths.UI_UNIT_ICONS_RESOURCES, UnitsConfig.Instance.GetSoldierData(unitKey).IconName);
-	}
-
-	private string GetLootIconResourcePath(EItemKey itemKey) {
-		return string.Format("{0}/{1}", GameConstants.Paths.UI_ITEM_ICONS_RESOURCES, ItemsConfig.Instance.GetItem(itemKey).IconName);
 	}
 	#endregion
 }

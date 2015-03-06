@@ -51,6 +51,8 @@ MonoBehaviour:
       _creditsLoseCost: 0
       _mineralsWinCost: 0
       _mineralsLoseCost: 0
+      _rewardExperienceWin: 10
+      _rewardExperienceLose: 4
       _rewardFuel: 0
       _rewardCredits: 0
       _rewardMinerals: 0
@@ -69,6 +71,8 @@ MonoBehaviour:
       _creditsLoseCost: 0
       _mineralsWinCost: 0
       _mineralsLoseCost: 0
+      _rewardExperienceWin: 0
+      _rewardExperienceLose: 0
       _rewardFuel: 0
       _rewardCredits: 0
       _rewardMinerals: 0

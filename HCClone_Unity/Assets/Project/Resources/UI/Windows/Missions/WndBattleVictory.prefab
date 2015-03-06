@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &136626
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 436628}
-  m_Layer: 0
-  m_Name: '--------------'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &136628
 GameObject:
   m_ObjectHideFlags: 1
@@ -372,18 +357,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &436628
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 136626}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -408.325684, y: 66.8676758, z: 32.4243164}
-  m_LocalScale: {x: 2.22222233, y: 2.22222233, z: 2.22222233}
-  m_Children: []
-  m_Father: {fileID: 22495196}
-  m_RootOrder: 3
 --- !u!114 &11437598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -747,6 +720,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _windowKey: 3
+  _lblCreditsAmount: {fileID: 11437604}
+  _lblExpAmount: {fileID: 11437622}
+  _imgHero: {fileID: 11468036}
+  _imgLoot: {fileID: 11468032}
+  _offsetImageLoot: 20
+  _btnPlay: {fileID: 11495232}
+  _btnReplay: {fileID: 11495228}
 --- !u!114 &11495188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1326,8 +1306,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22495196}
-  - {fileID: 22495198}
   - {fileID: 22495200}
+  - {fileID: 22495198}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -1348,7 +1328,6 @@ RectTransform:
   - {fileID: 22436628}
   - {fileID: 22437628}
   - {fileID: 22437614}
-  - {fileID: 436628}
   m_Father: {fileID: 22495194}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
@@ -1367,7 +1346,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22495194}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
   m_AnchoredPosition: {x: -85, y: 300}
@@ -1384,7 +1363,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22495194}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
   m_AnchoredPosition: {x: -86, y: -300}

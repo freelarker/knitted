@@ -45,6 +45,18 @@ public class MissionData {
 	}
 
 	[SerializeField]
+	private int _rewardExperienceWin = 0;
+	public int RewardExperienceWin {
+		get { return _rewardExperienceWin; }
+	}
+
+	[SerializeField]
+	private int _rewardExperienceLose = 0;
+	public int RewardExperienceLose {
+		get { return _rewardExperienceLose; }
+	}
+
+	[SerializeField]
 	private int _rewardFuel = 0;
 	public int RewardFuel {
 		get { return _rewardFuel; }

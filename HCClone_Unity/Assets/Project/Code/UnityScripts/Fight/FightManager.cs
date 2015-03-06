@@ -212,6 +212,8 @@ public class FightManager : MonoBehaviour {
 		Global.Instance.Player.Resources.Credits += -_currentMissionData.CreditsWinCost + _currentMissionData.RewardCredits;
 		Global.Instance.Player.Resources.Minerals += -_currentMissionData.MineralsWinCost + _currentMissionData.RewardMinerals;
 
+		Global.Instance.Player.Heroes.Current.AddExperience(_currentMissionData.RewardExperienceWin);
+
 		//TODO: get items from server
 		MissionData md = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
 		for (int i = 0; i < md.RewardItems.Length; i++) {
@@ -222,11 +224,7 @@ public class FightManager : MonoBehaviour {
 
 		Global.Instance.Player.StoryProgress.RegisterAttemptUsage(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 
-		_graphics.Unload(true);
-		_currentMissionData = null;
-		_currentMapIndex = 0;
-
-		Debug.Log("Mission complete");
+		UIWindowsManager.Instance.GetWindow<UIWindowBattleVictory>(EUIWindowKey.BattleVictory).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 	}
 
 	private void MissionFail() {
@@ -237,11 +235,18 @@ public class FightManager : MonoBehaviour {
 		Global.Instance.Player.Resources.Credits -= _currentMissionData.CreditsLoseCost;
 		Global.Instance.Player.Resources.Minerals -= _currentMissionData.MineralsLoseCost;
 
+		Global.Instance.Player.Heroes.Current.AddExperience(_currentMissionData.RewardExperienceLose);
+
+		UIWindowsManager.Instance.GetWindow<UIWindowBattleDefeat>(EUIWindowKey.BattleDefeat).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+	}
+
+	public void Clear() {
 		_graphics.Unload(true);
 		_currentMissionData = null;
 		_currentMapIndex = 0;
 
-		Debug.Log("Mission fail");
+		Global.Instance.CurrentMission.PlanetKey = EPlanetKey.None;
+		Global.Instance.CurrentMission.MissionKey = EMissionKey.None;
 	}
 	#endregion
 

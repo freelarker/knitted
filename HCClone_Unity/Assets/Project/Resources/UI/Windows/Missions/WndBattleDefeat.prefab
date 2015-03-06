@@ -487,6 +487,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _windowKey: 4
+  _lblExpAmount: {fileID: 11499024}
+  _imgHero: {fileID: 11499034}
+  _btnPlay: {fileID: 11499004}
+  _btnReplay: {fileID: 11499008}
 --- !u!114 &11499014
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -36,6 +36,24 @@ public static class GameConstants {
 			public static string UI_WIN_HEROES_LIST { get { return string.Format("{0}/City/WndHeroesList", UI_WINDOWS_RESOURCES); } }
 			public static string UI_WIN_HERO_INFO { get { return string.Format("{0}/City/WndHeroInfo", UI_WINDOWS_RESOURCES); } }
 		}
+
+		#region auxiliary
+		public static string GetUnitIconResourcePath(EUnitKey unitKey) {
+			return GetUnitIconResourcePath(UnitsConfig.Instance.GetSoldierData(unitKey).IconName);
+		}
+
+		public static string GetUnitIconResourcePath(string iconName) {
+			return string.Format("{0}/{1}", UI_UNIT_ICONS_RESOURCES, iconName);
+		}
+
+		public static string GetLootIconResourcePath(EItemKey itemKey) {
+			return GetLootIconResourcePath(ItemsConfig.Instance.GetItem(itemKey).IconName);
+		}
+
+		public static string GetLootIconResourcePath(string iconName) {
+			return string.Format("{0}/{1}", UI_ITEM_ICONS_RESOURCES, iconName);
+		}
+		#endregion
 	}
 
 	public class Tags {

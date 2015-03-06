@@ -94,7 +94,7 @@ public class BaseHero : BaseUnit {
 		EventsAggregator.Units.Broadcast<BaseUnit>(EUnitEvent.RecalculateParams, this);
 	}
 
-	protected void AddExperience(int expAmount) {
+	public void AddExperience(int expAmount) {
 		if (expAmount > 0) {
 			Experience += expAmount;
 

@@ -134,6 +134,9 @@ public class HCCGridObject : MonoBehaviour {
 	public void FindPath(HCCGridObject targetObject) {
 		FreePath();
 		Path = HCCGridController.Instance.Pathfinder.FindPath(this, targetObject);
+		if (Path.Count > 0) {
+			Path.RemoveAt(0);
+		}
 		ReservePath();
 	}
 

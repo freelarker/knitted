@@ -114,6 +114,10 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	#region animations
+	public void StopCurrentAnimation() {
+		_animator.StopPlayback();
+	}
+
 	public void PlayRunAnimation() {
 		_animator.speed = _runAnimationSpeed;
 		_animator.Play(_animationClipName[_animRun]);

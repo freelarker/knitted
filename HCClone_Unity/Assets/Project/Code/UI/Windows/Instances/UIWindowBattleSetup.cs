@@ -19,8 +19,8 @@ public class UIWindowBattleSetup : UIWindow {
 	private UIBattleSetupUnitInfo _availableSoldierInfo;
 	[SerializeField]
 	private float _offsetImageAvailableSoldiersX = 70f;
-	[SerializeField]
-	private float _offsetImageAvailableSoldiersY = 265f;
+	//[SerializeField]
+	//private float _offsetImageAvailableSoldiersY = 265f;
 
 	[SerializeField]
 	private Button _btnBack;

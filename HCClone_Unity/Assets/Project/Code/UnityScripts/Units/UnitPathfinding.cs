@@ -79,6 +79,9 @@ public class UnitPathfinding : MonoBehaviour {
 	private IEnumerator FindPathTimer() {
 		//_gridObject.FindPath(_targetPosition, _gridObject, _nearestTarget.gameObject.GetComponent<HCCGridObject>());
 		_gridObject.FindPath(_nearestTarget.gameObject.GetComponent<HCCGridObject>());
+		if (gameObject.name == "Hero_Sniper(Clone)") {
+			//UnityEditor.EditorApplication.isPaused = true;
+		}
 		yield return _cachedWaitForSeconds;
 		StartCoroutine(FindPathTimer());
 	}
@@ -129,6 +132,8 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 		onTargetFound(_nearestTarget.gameObject.GetComponent<BaseUnitBehaviour>());
 
+		_model.PlayRunAnimation();
+
 		//setup path to appear on screen
 		if (_currentState == EUnitMovementState.None) {
 			//if there's interaction with some object we should get rid of it first
@@ -141,10 +146,12 @@ public class UnitPathfinding : MonoBehaviour {
 			//}
 			OnFreePointReached();
 		} else {
-			OnPreparationPointReached();
+			if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
+				OnAttackPointReached();
+			} else {
+				OnPreparationPointReached();
+			}
 		}
-
-		_model.PlayRunAnimation();
 	}
 
 	private void CalculateFreePointDirection() {
@@ -234,6 +241,8 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private void OnAttackPointReached() {
+		_model.StopCurrentAnimation();
+
 		Action onTargetReached = _onTargetReached;
 		_onTargetReached = null;
 		StopAllCoroutines();
@@ -248,6 +257,22 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private bool PerformMovement(float minDistance = 0.6f) {
+		bool result = false;
+
+		for (int i = 0; i < _gridObject.Path.Count; i++) {
+			Vector3 pos = HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[i].GridPosition);
+			_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, pos, Time.deltaTime * _speed);
+			if (Vector3.Distance(_cachedTransform.position, pos) < minDistance) {
+				_gridObject.PathPointReached();
+				result = true;
+			} else {
+				break;
+			}
+		}
+
+		return result;
+
+		/*
 		if (_gridObject.Path.Count > 0) {
 			Vector3 pos = HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition);
 			_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, pos, Time.deltaTime * _speed);
@@ -257,6 +282,7 @@ public class UnitPathfinding : MonoBehaviour {
 			return true;
 		}
 		return false;
+		*/
 	}
 	#endregion
 }

@@ -121,7 +121,7 @@ public class HCCGridView : MonoBehaviourResourceSingleton<HCCGridView> {
 					//draw cell state
 					if (HCCGridController.Instance.GridData != null) {
 						cellData = HCCGridController.Instance.GridData.GetCell(i, j);
-						if (!cellData.IsFree) {
+						/*if (!cellData.IsFree) {
 							if (cellData.IsBusyByStaticObject) {
 								cellStateColor = Color.red;
 							} else {
@@ -133,7 +133,20 @@ public class HCCGridView : MonoBehaviourResourceSingleton<HCCGridView> {
 							} else {
 								cellStateColor = Color.green;
 							}
+						}*/
+
+						if (cellData.ObjectPathReservation != null) {
+							cellStateColor = Color.blue;
+						} else if (!cellData.IsFree) {
+							if (cellData.IsBusyByStaticObject) {
+								cellStateColor = Color.red;
+							} else {
+								cellStateColor = Color.yellow;
+							}
+						} else {
+							cellStateColor = Color.green;
 						}
+
 						start.x = _zeroPoint.x + i * _tileSize;
 						start.z = _zeroPoint.z + j * _tileSize;
 						end.x = start.x + _tileSize;

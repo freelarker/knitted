@@ -30,6 +30,13 @@ public class HCCGridView : MonoBehaviourResourceSingleton<HCCGridView> {
 		get { return _zSize; }
 	}
 
+	//public void Start() {
+	//	//WARNING! temp code for camera calibration
+	//	GameObject p = GameObject.CreatePrimitive(PrimitiveType.Plane);
+	//	p.transform.position = Vector3.zero;
+	//	p.transform.localScale = new Vector3(_xSize * _tileSize / 10, 0.1f, _zSize * _tileSize / 10);
+	//}
+
 	public void LateUpdate() {
 #if UNITY_EDITOR
 		DrawMap();

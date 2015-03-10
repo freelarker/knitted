@@ -284,7 +284,6 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void OnAllyDeath(BaseUnit unit) {
-		Debug.LogWarning("=== " + _alliesCount);
 		_alliesCount--;
 		if (_alliesCount <= 0) {
 			MapFail();

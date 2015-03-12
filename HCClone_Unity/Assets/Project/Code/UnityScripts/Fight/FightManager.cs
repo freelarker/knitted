@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FightManager : MonoBehaviour {
@@ -22,6 +23,11 @@ public class FightManager : MonoBehaviour {
 	public Transform EnemyStartLine {
 		get { return _enemyStartLine; }
 	}
+
+	[SerializeField]
+	private Transform[] _allySpawnPoints;
+	[SerializeField]
+	private Transform[] _enemySpawnPoints;
 
 	[SerializeField]
 	private UIFight _ui;
@@ -111,7 +117,8 @@ public class FightManager : MonoBehaviour {
 		_enemiesCount = _graphics.EnemyUnits.Length;
 
 		InitializeUnitsData(mapData);
-		InitializeUnitsPositions();
+		InitializeUnitsPositions(_graphics.AllyUnits, _allySpawnPoints, _allyUnitsRoot);
+		InitializeUnitsPositions(_graphics.EnemyUnits, _enemySpawnPoints, _enemyUnitsRoot);
 
 		StartCoroutine(RunUnits());
 	}
@@ -135,25 +142,59 @@ public class FightManager : MonoBehaviour {
 		}
 	}
 
-	private void InitializeUnitsPositions() {
-		Transform unitTransform;
+	private void InitializeUnitsPositions(ArrayRO<BaseUnitBehaviour> units, Transform[] spawnPoints, Transform unitsRoot) {
+		Transform[] order = new Transform[spawnPoints.Length];
 
-		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
-			if (_graphics.AllyUnits[i] != null) {
-				unitTransform = _graphics.AllyUnits[i].transform;
-				unitTransform.parent = _allyUnitsRoot;
-				//unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - _graphics.AllyUnits[i].UnitData.AttackRange, 0f, 4f - i * _unitsZDistance * 2);
-				unitTransform.localPosition = new Vector3(_allyStartLine.position.x - MissionsConfig.Instance.UnitsXPositionStartOffset - i * 1f, 0f, 0f);
-				//TODO: position units by Z
+		List<BaseUnitBehaviour> sotrtedSoldiersList = new List<BaseUnitBehaviour>();
+		for (int i = 0; i < units.Length; i++) {
+			if (units[i] != null) {
+				units[i].transform.parent = unitsRoot;
+				if (UnitsConfig.Instance.IsHero(units[i].UnitData.Data.Key)) {
+					//position hero
+					EItemKey rightHandWeapon = units[i].UnitData.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_RHand);
+					EItemKey leftHandWeapon = units[i].UnitData.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_LHand);
+
+					bool isMelee = true;
+					if (rightHandWeapon != EItemKey.None) {
+						isMelee = !ItemsConfig.Instance.IsWeaponRanged(rightHandWeapon);
+					} else if (leftHandWeapon != EItemKey.None) {
+						isMelee = !ItemsConfig.Instance.IsWeaponRanged(leftHandWeapon);
+					}
+
+					int positionIndex = isMelee ? 0 : 3;
+					if (order[positionIndex] != null) {
+						Debug.LogError("=== Two or more heroes of the same attack type found! position error!");
+						return;
+					}
+					order[positionIndex] = units[i].transform;
+				} else {
+					//sort soldiers
+					int insertIndex = sotrtedSoldiersList.Count;
+					for (int j = 0; j < sotrtedSoldiersList.Count; j++) {
+						if (sotrtedSoldiersList[j].UnitData.AttackRange > units[i].UnitData.AttackRange) {
+							insertIndex = j;
+							break;
+						} else if (sotrtedSoldiersList[j].UnitData.AttackRange == units[i].UnitData.AttackRange) {
+							if (sotrtedSoldiersList[j].UnitData.Health > units[i].UnitData.Health) {	//TODO: compare level
+								insertIndex = j;
+								break;
+							}
+						}
+					}
+					sotrtedSoldiersList.Insert(insertIndex, units[i]);
+				}
 			}
 		}
 
-		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
-			unitTransform = _graphics.EnemyUnits[i].transform;
-			unitTransform.parent = _enemyUnitsRoot;
-			unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + _graphics.EnemyUnits[i].UnitData.AttackRange, 0f, 2.5f - i * _unitsZDistance * 2);
-			//unitTransform.localPosition = new Vector3(_enemyStartLine.position.x + MissionsConfig.Instance.UnitsXPositionStartOffset + i * 2, 0f, 0f);
-			//TODO: position units by Z
+		for (int i = 0, j = 0; i < order.Length; i++) {
+			if (order[i] == null && j < sotrtedSoldiersList.Count) {
+				order[i] = sotrtedSoldiersList[j].transform;
+				j++;
+			}
+
+			if (order[i] != null) {
+				order[i].position = spawnPoints[i].position;
+			}
 		}
 	}
 
@@ -192,11 +233,11 @@ public class FightManager : MonoBehaviour {
 		Debug.Log("Map complete");
 
 		_graphics.Unload(false);
-		_logger.Clear();
-		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
-
+		
 		EventsAggregator.Network.AddListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
 		Global.Instance.Network.SendFightResults(_logger.ToJSON());
+
+		_logger.Clear();
 	}
 
 	private void MapFail() {

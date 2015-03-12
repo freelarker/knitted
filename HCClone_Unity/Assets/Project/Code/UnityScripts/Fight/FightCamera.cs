@@ -5,7 +5,7 @@ public static class FightCamera {
 	public static void AdaptMain() {
 		float w = 640f;
 		float h = 480f;
-		float y = 4.7f;
+		//float y = 4.7f;
 		float s = 4.25f;
 
 		float diffWidth = w / Screen.width;

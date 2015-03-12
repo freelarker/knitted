@@ -41,7 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _drawMapInEditor: 1
   _tileSize: .5
-  _zeroPoint: {x: -10, y: 0, z: -3.5}
+  _zeroPoint: {x: -15, y: 0, z: -3.5}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

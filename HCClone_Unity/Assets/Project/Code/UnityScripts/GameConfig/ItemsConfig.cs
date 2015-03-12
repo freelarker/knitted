@@ -21,4 +21,15 @@ public class ItemsConfig : MonoBehaviourResourceSingleton<ItemsConfig> {	//TODO:
 
 		return null;
 	}
+
+	public bool IsWeapon(EItemKey itemKey) {
+		return (int)itemKey > 1000000 && (int)itemKey < 2000000;
+	}
+
+	public bool IsWeaponRanged(EItemKey itemKey) {
+		if (IsWeapon(itemKey)) {
+			return itemKey == EItemKey.W_Gun || itemKey == EItemKey.W_Rifle;
+		}
+		return false;
+	}
 }

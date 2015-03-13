@@ -259,6 +259,8 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void MapFail() {
+		EventsAggregator.Fight.Broadcast(EFightEvent.MapFail);
+
 		Debug.Log("Map fail");
 
 		MissionFail();

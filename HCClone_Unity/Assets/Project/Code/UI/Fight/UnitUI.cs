@@ -51,6 +51,17 @@ public class UnitUI : MonoBehaviour {
 		StartCoroutine(PlayFloatingTextAnimation(GetFreeFloatingText(hitInfo.IsCritical ? _critTextArray : _damageTextArray), hitInfo.HealthBefore - hitInfo.HealthAfter));
 	}
 
+	public void Reset() {
+		StopAllCoroutines();
+
+		for (int i = 0; i < _damageTextArray.Length; i++) {
+			_damageTextArray[i].enabled = false;
+		}
+		for (int i = 0; i < _critTextArray.Length; i++) {
+			_critTextArray[i].enabled = false;
+		}
+	}
+
 	private IEnumerator PlayFloatingTextAnimation(Text t, int damageAmount) {
 		if (t == null) {
 			yield break;

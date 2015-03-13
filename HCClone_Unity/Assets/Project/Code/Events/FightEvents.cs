@@ -10,5 +10,8 @@
 	EnemyDeath,
 
 	MapComplete,
-	MissionComplete
+	MapFail,
+
+	MissionComplete,
+	MissionFail
 }

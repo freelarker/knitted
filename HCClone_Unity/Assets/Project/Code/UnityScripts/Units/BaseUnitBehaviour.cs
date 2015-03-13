@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class BaseUnitBehaviour : MonoBehaviour {
 	[SerializeField]
@@ -24,7 +25,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		get { return _isAlly; }
 	}
 
+	private float _attackTime = 0f;
+
 	private WaitForSeconds _cachedWaitForSeconds;
+	private float _lastAttackTime = 0f;
 
 	public void Awake() {
 		if (_model == null) {
@@ -49,11 +53,20 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		gameObject.tag = tag;
 		_isAlly = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY);
 
-		_cachedWaitForSeconds = new WaitForSeconds(1f / unitData.AttackSpeed);
+		_attackTime = 1f / unitData.AttackSpeed;
+		_cachedWaitForSeconds = new WaitForSeconds(_attackTime);
 
-		_ui = (GameObject.Instantiate(uiResource) as GameObject).GetComponent<UnitUI>();
-		_ui.transform.SetParent(transform, false);
-		_ui.transform.localPosition = new Vector3(0f, 1.2f, 0f);
+		if (_ui == null) {
+			_ui = (GameObject.Instantiate(uiResource) as GameObject).GetComponent<UnitUI>();
+			_ui.transform.SetParent(transform, false);
+			_ui.transform.localPosition = new Vector3(0f, 1.2f, 0f);
+		} else {
+			_ui.Reset();
+		}
+
+		if (unitData.DamageTaken > 0) {
+			_ui.UpdateHealthBar(unitData.DamageTaken > 0f ? (1f * unitData.DamageTaken / unitData.Health) : 1f);
+		}
 	}
 
 	public void Run() {
@@ -68,17 +81,29 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnTargetReached() {
-		StartCoroutine(AttackTarget());
+		if (_lastAttackTime != 0f && Time.time - _lastAttackTime < _attackTime) {
+			_model.PlayAttackAnimation();
+			_model.StopCurrentAnimation();
+			Invoke("OnTargetReached", _attackTime - (Time.time - _lastAttackTime));
+		} else {
+			StartCoroutine(AttackTarget());
+		}
 	}
 
 	private void OnTargetDeath() {
 		StopAllCoroutines();
+		if (IsInvoking("OnTargetReached")) {
+			CancelInvoke("OnTargetReached");
+		}
 		_targetUnit = null;
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	private void OnSelfDeath() {
 		StopAllCoroutines();
+		if (IsInvoking("OnTargetReached")) {
+			CancelInvoke("OnTargetReached");
+		}
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);
 
@@ -88,8 +113,9 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private IEnumerator AttackTarget() {
-		_model.PlayAttackAnimation();
+		_lastAttackTime = Time.time;
 
+		_model.PlayAttackAnimation();
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
 		
 		if (_targetUnit != null && !_targetUnit.UnitData.IsDead) {

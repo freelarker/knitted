@@ -35,21 +35,26 @@ public class UIWindowBattleSetup : UIWindow {
 
 	private int _leadershipSpent = 0;
 
+	private EPlanetKey _planetKey = EPlanetKey.None;
+	private EMissionKey _missionKey = EMissionKey.None;
+
 	public void Awake() {
-		_onPostHide += OnWindowHide;
+		AddDisplayAction(EUIWindowDisplayAction.PostHide, OnWindowHide);
 
 		_btnPlay.onClick.AddListener(OnBtnPlayClick);
 		_btnBack.onClick.AddListener(OnBtnBackClick);
 	}
 
-	public void Start() {
-		//WARNING! temp: need to call setup before show
-		//TODO: save previous setup
-		Setup();
+	public void Show(EPlanetKey planetKey, EMissionKey missionKey) {
+		Setup(planetKey, missionKey);
+		Show();
 	}
 
 	#region setup
-	public void Setup() {
+	public void Setup(EPlanetKey planetKey, EMissionKey missionKey) {
+		_planetKey = planetKey;
+		_missionKey = missionKey;
+
 		SetupAvailableUnits();
 		SetupHiredUnits();
 
@@ -174,6 +179,9 @@ public class UIWindowBattleSetup : UIWindow {
 
 	#region button listeners
 	private void OnBtnPlayClick() {
+		Global.Instance.CurrentMission.PlanetKey = _planetKey;
+		Global.Instance.CurrentMission.MissionKey = _missionKey;
+
 		List<BaseSoldier> soldiers = new List<BaseSoldier>();
 		for (int i = 0; i < _hiredSoldiers.Length; i++) {
 			if (_hiredSoldiers[i] >= 0) {
@@ -187,12 +195,12 @@ public class UIWindowBattleSetup : UIWindow {
 
 	private void OnBtnBackClick() {
 		Hide();
-
-		//TODO: do not show, UIWindowsManager must show previous open window
-		UIWindowsManager.Instance.GetWindow <UIWindowBattlePreview>(EUIWindowKey.BattlePreview).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 	}
 
-	private void OnWindowHide() {
+	private void OnWindowHide(UIWindow window) {
+		_planetKey = EPlanetKey.None;
+		_missionKey = EMissionKey.None;
+
 		//TODO: free resources and clear data
 	}
 	#endregion

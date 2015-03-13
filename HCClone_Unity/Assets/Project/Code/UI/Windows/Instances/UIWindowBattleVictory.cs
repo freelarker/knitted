@@ -23,8 +23,11 @@ public class UIWindowBattleVictory : UIWindow {
 	private EItemKey[] _lootItems = null;
 	private Image[] _lootItemImages = null;
 
+	private EPlanetKey _planetKey = EPlanetKey.None;
+	private EMissionKey _missionKey = EMissionKey.None;
+
 	public void Awake() {
-		_onPostHide += OnWindowHide;
+		AddDisplayAction(EUIWindowDisplayAction.PostHide, OnWindowHide);
 
 		_btnPlay.onClick.AddListener(OnBtnPlayClick);
 		_btnReplay.onClick.AddListener(OnBtnReplayClick);
@@ -37,6 +40,9 @@ public class UIWindowBattleVictory : UIWindow {
 
 	#region setup
 	public void Setup(EPlanetKey planetKey, EMissionKey missionKey) {
+		_planetKey = planetKey;
+		_missionKey = missionKey;
+
 		MissionData md = MissionsConfig.Instance.GetPlanet(planetKey).GetMission(missionKey);
 		if (md != null) {
 			_lblCreditsAmount.text = string.Format("+ {0}", md.RewardCredits);
@@ -83,15 +89,19 @@ public class UIWindowBattleVictory : UIWindow {
 	#region listeners
 	private void OnBtnPlayClick() {
 		//TODO: load correct planet scene
-		FightManager.Instance.Clear();
+		FightManager.SceneInstance.Clear();
 		Application.LoadLevel("Planet1");
 	}
 
 	private void OnBtnReplayClick() {
-		//TODO: restart fight
+		UIWindowBattlePreview wbp = UIWindowsManager.Instance.GetWindow<UIWindowBattlePreview>(EUIWindowKey.BattlePreview);
+		wbp.Show(_planetKey, _missionKey);
 	}
 
-	private void OnWindowHide() {
+	private void OnWindowHide(UIWindow window) {
+		_planetKey = EPlanetKey.None;
+		_missionKey = EMissionKey.None;
+
 		//clear loot
 		if (_lootItems != null) {
 			for (int i = 0; i < _lootItems.Length; i++) {

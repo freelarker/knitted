@@ -46,7 +46,7 @@ public class UIWindowBattlePreview : UIWindow {
 	private Image[] _lootItemImages = null;
 
 	public void Awake() {
-		_onPostHide += OnWindowHide;
+		AddDisplayAction(EUIWindowDisplayAction.PostHide, OnWindowHide);
 	}
 
 	public void Start() {
@@ -63,9 +63,6 @@ public class UIWindowBattlePreview : UIWindow {
 	public void Setup(EPlanetKey planetKey, EMissionKey missionKey) {
 		_planetKey = planetKey;
 		_missionKey = missionKey;
-
-		Global.Instance.CurrentMission.PlanetKey = _planetKey;
-		Global.Instance.CurrentMission.MissionKey = _missionKey;
 
 		MissionData md = MissionsConfig.Instance.GetPlanet(planetKey).GetMission(missionKey);
 		if (md != null) {
@@ -160,20 +157,14 @@ public class UIWindowBattlePreview : UIWindow {
 
 	#region listeners
 	private void OnBtnPlayClick() {
-		//TODO: do not hide, just show new window using UIWindowsManager
-		Hide();
-
-		UIWindowsManager.Instance.GetWindow(EUIWindowKey.BattleSetup).Show();
+		UIWindowsManager.Instance.GetWindow<UIWindowBattleSetup>(EUIWindowKey.BattleSetup).Show(_planetKey, _missionKey);
 	}
 
 	private void OnBtnBackClick() {
-		Global.Instance.CurrentMission.PlanetKey = _planetKey;
-		Global.Instance.CurrentMission.MissionKey = _missionKey;
-
 		Hide();
 	}
 
-	private void OnWindowHide() {
+	private void OnWindowHide(UIWindow window) {
 		_planetKey = EPlanetKey.None;
 		_missionKey = EMissionKey.None;
 

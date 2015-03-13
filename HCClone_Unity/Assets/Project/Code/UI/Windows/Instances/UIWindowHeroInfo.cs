@@ -12,7 +12,6 @@ public class UIWindowHeroInfo : UIWindow {
 	#region listeners
 	private void OnBtnBackClick() {
 		Hide();
-		UIWindowsManager.Instance.GetWindow<UIWindowHeroesList>(EUIWindowKey.HeroesList).Show();
 	}
 	#endregion
 }

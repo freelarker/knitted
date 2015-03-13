@@ -38,9 +38,7 @@ public class UIMissionIcon : MonoBehaviour {
 	private void OnIconClick() {
 		if (_missionKey != EMissionKey.None) {
 			UIWindowBattlePreview wbp = UIWindowsManager.Instance.GetWindow(EUIWindowKey.BattlePreview) as UIWindowBattlePreview;
-			if (wbp != null) {
-				wbp.Show(_planetKey, _missionKey);
-			}
+			wbp.Show(_planetKey, _missionKey);
 		}
 	}
 }

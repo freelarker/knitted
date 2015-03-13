@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FightManager : MonoBehaviour {
-	private static FightManager _instance = null;
-	public static FightManager Instance {
-		get { return _instance; }
+	private static FightManager _sceneInstance = null;
+	public static FightManager SceneInstance {
+		get { return _sceneInstance; }
 	}
 
 	[SerializeField]
@@ -35,8 +35,6 @@ public class FightManager : MonoBehaviour {
 	private FightGraphics _graphics = new FightGraphics();
 	private FightLogger _logger = new FightLogger();
 
-	private float _unitsZDistance = 1f;
-
 	private MissionData _currentMissionData = null;
 	private int _currentMapIndex = 0;
 
@@ -56,7 +54,7 @@ public class FightManager : MonoBehaviour {
 	}
 
 	public void Awake() {
-		_instance = this;
+		_sceneInstance = this;
 
 		HCCGridController.Instance.Initialize((int)(-HCCGridView.Instance.ZeroPoint.x / HCCGridView.Instance.TileSize) * 2, (int)(-HCCGridView.Instance.ZeroPoint.z / HCCGridView.Instance.TileSize) * 2);
 
@@ -81,7 +79,7 @@ public class FightManager : MonoBehaviour {
 
 		yield return null;
 
-		LoadMap();
+		StartFightPreparations();
 	}
 
 	public void OnDestroy() {
@@ -96,11 +94,18 @@ public class FightManager : MonoBehaviour {
 		EventsAggregator.Network.RemoveListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
 
 		_logger.Clear();
+
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
-		Global.Instance.CurrentMission.Clear();
+
+		Clear();
 	}
 
 	#region map start
+	public void StartFightPreparations() {
+		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
+		LoadMap();
+	}
+
 	public void LoadMap() {
 		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
 		_graphics.Load(mapData);
@@ -108,7 +113,7 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void InitializeUnits(MissionMapData mapData) {
-		_alliesCount = 0;
+		_alliesCount = 1;	//hero
 		for (int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
 			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
 				_alliesCount++;
@@ -163,7 +168,7 @@ public class FightManager : MonoBehaviour {
 
 					int positionIndex = isMelee ? 0 : 3;
 					if (order[positionIndex] != null) {
-						Debug.LogError("=== Two or more heroes of the same attack type found! position error!");
+						Debug.LogError("Two or more heroes of the same attack type found! position error!");
 						return;
 					}
 					order[positionIndex] = units[i].transform;
@@ -216,7 +221,20 @@ public class FightManager : MonoBehaviour {
 
 	#region maps switch
 	public void Withdraw() {
-		//TODO: withdraw
+		Global.Instance.Network.SaveMissionFailResults();
+
+		_logger.Clear();
+
+		Global.Instance.Player.Resources.Fuel -= _currentMissionData.FuelLoseCost;
+		Global.Instance.Player.Resources.Credits -= _currentMissionData.CreditsLoseCost;
+		Global.Instance.Player.Resources.Minerals -= _currentMissionData.MineralsLoseCost;
+
+		Global.Instance.CurrentMission.Clear();
+
+		Clear();
+
+		//TODO: load correct planet
+		Application.LoadLevel("Planet1");
 	}
 
 	public void NextMap() {
@@ -243,7 +261,6 @@ public class FightManager : MonoBehaviour {
 	private void MapFail() {
 		Debug.Log("Map fail");
 
-		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
 		MissionFail();
 	}
 	#endregion
@@ -271,11 +288,15 @@ public class FightManager : MonoBehaviour {
 		Global.Instance.Player.StoryProgress.RegisterAttemptUsage(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 
 		UIWindowsManager.Instance.GetWindow<UIWindowBattleVictory>(EUIWindowKey.BattleVictory).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+
+		Global.Instance.CurrentMission.Clear();
 	}
 
 	private void MissionFail() {
 		//TODO: show lose screen, remove player resources, save progress
 		Global.Instance.Network.SaveMissionFailResults();
+
+		_logger.Clear();
 
 		Global.Instance.Player.Resources.Fuel -= _currentMissionData.FuelLoseCost;
 		Global.Instance.Player.Resources.Credits -= _currentMissionData.CreditsLoseCost;
@@ -284,15 +305,14 @@ public class FightManager : MonoBehaviour {
 		Global.Instance.Player.Heroes.Current.AddExperience(_currentMissionData.RewardExperienceLose);
 
 		UIWindowsManager.Instance.GetWindow<UIWindowBattleDefeat>(EUIWindowKey.BattleDefeat).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+
+		Global.Instance.CurrentMission.Clear();
 	}
 
 	public void Clear() {
 		_graphics.Unload(true);
 		_currentMissionData = null;
 		_currentMapIndex = 0;
-
-		Global.Instance.CurrentMission.PlanetKey = EPlanetKey.None;
-		Global.Instance.CurrentMission.MissionKey = EMissionKey.None;
 	}
 	#endregion
 

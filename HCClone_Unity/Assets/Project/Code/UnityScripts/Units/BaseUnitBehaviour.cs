@@ -58,7 +58,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 	public void Run() {
 		//WARNING! temp
-		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.Instance.EnemyUnits : FightManager.Instance.AllyUnits, OnTargetFound, OnTargetReached);
+		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	#region unit controller
@@ -74,7 +74,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private void OnTargetDeath() {
 		StopAllCoroutines();
 		_targetUnit = null;
-		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.Instance.EnemyUnits : FightManager.Instance.AllyUnits, OnTargetFound, OnTargetReached);
+		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	private void OnSelfDeath() {

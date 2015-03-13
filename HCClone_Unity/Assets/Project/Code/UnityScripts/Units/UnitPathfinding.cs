@@ -77,11 +77,8 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private IEnumerator FindPathTimer() {
-		//_gridObject.FindPath(_targetPosition, _gridObject, _nearestTarget.gameObject.GetComponent<HCCGridObject>());
 		_gridObject.FindPath(_nearestTarget.gameObject.GetComponent<HCCGridObject>());
-		if (gameObject.name == "Hero_Sniper(Clone)") {
-			//UnityEditor.EditorApplication.isPaused = true;
-		}
+
 		yield return _cachedWaitForSeconds;
 		StartCoroutine(FindPathTimer());
 	}
@@ -203,7 +200,7 @@ public class UnitPathfinding : MonoBehaviour {
 		_freePointDirectionVector = HCCGridPoint.Zero;
 
 		_targetPosition.z = transform.position.z;
-		_targetPosition.x = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.Instance.AllyStartLine.position.x : FightManager.Instance.EnemyStartLine.position.x;
+		_targetPosition.x = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY) ? FightManager.SceneInstance.AllyStartLine.position.x : FightManager.SceneInstance.EnemyStartLine.position.x;
 
 		_gridObject.FindPath(_targetPosition, _gridObject);
 

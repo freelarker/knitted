@@ -86,7 +86,7 @@ MonoBehaviour:
     _availableItemTypes: []
   _soldiersData:
   - _key: 1000001
-    _baseHealth: 150
+    _baseHealth: 15
     _baseArmor: 0
     _baseDamage: 1
     _baseAttackRange: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
     _leadershipCost: 2
     _creditsCost: 0
   - _key: 1000004
-    _baseHealth: 200
+    _baseHealth: 20
     _baseArmor: 0
     _baseDamage: 1
     _baseAttackRange: 0

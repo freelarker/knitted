@@ -13,8 +13,11 @@ public class UIWindowBattleDefeat : UIWindow {
 	[SerializeField]
 	private Button _btnReplay;
 
+	private EPlanetKey _planetKey = EPlanetKey.None;
+	private EMissionKey _missionKey = EMissionKey.None;
+
 	public void Awake() {
-		_onPostHide += OnWindowHide;
+		AddDisplayAction(EUIWindowDisplayAction.PostHide, OnWindowHide);
 
 		_btnPlay.onClick.AddListener(OnBtnPlayClick);
 		_btnReplay.onClick.AddListener(OnBtnReplayClick);
@@ -27,6 +30,9 @@ public class UIWindowBattleDefeat : UIWindow {
 
 	#region setup
 	public void Setup(EPlanetKey planetKey, EMissionKey missionKey) {
+		_planetKey = planetKey;
+		_missionKey = missionKey;
+
 		MissionData md = MissionsConfig.Instance.GetPlanet(planetKey).GetMission(missionKey);
 		if (md != null) {
 			_lblExpAmount.text = string.Format("+ {0}", md.RewardExperienceWin);
@@ -42,15 +48,19 @@ public class UIWindowBattleDefeat : UIWindow {
 	#region listeners
 	private void OnBtnPlayClick() {
 		//TODO: load correct planet scene
-		FightManager.Instance.Clear();
+		FightManager.SceneInstance.Clear();
 		Application.LoadLevel("Planet1");
 	}
 
 	private void OnBtnReplayClick() {
-		//TODO: restart fight
+		UIWindowBattlePreview wbp = UIWindowsManager.Instance.GetWindow<UIWindowBattlePreview>(EUIWindowKey.BattlePreview);
+		wbp.Show(_planetKey, _missionKey);
 	}
 
-	private void OnWindowHide() {
+	private void OnWindowHide(UIWindow window) {
+		_planetKey = EPlanetKey.None;
+		_missionKey = EMissionKey.None;
+
 		//clear labels
 		_lblExpAmount.text = "+ 0";
 

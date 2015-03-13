@@ -30,7 +30,7 @@ public class UIFight : MonoBehaviour {
 	private Button _btnAbility5;
 
 	public void Start() {
-		_btnPause.onClick.AddListener(FightManager.Instance.TogglePause);
-		_btnWithdraw.onClick.AddListener(FightManager.Instance.Withdraw);
+		_btnPause.onClick.AddListener(FightManager.SceneInstance.TogglePause);
+		_btnWithdraw.onClick.AddListener(FightManager.SceneInstance.Withdraw);
 	}
 }

@@ -16,7 +16,8 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 		{ EUIWindowKey.HeroInfo, GameConstants.Paths.Prefabs.UI_WIN_HERO_INFO },
 	};
 
-	private Dictionary<EUIWindowKey, UIWindow> _activeWindows = new Dictionary<EUIWindowKey, UIWindow>();
+	private List<UIWindow> _activeWindows = new List<UIWindow>();
+	private UIWindow _activeWindow = null;
 
 	public T GetWindow<T>(EUIWindowKey windowKey) where T : UIWindow {
 		UIWindow window = GetWindow(windowKey);
@@ -24,16 +25,20 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 	}
 
 	public UIWindow GetWindow(EUIWindowKey windowKey) {
-		if (_activeWindows.ContainsKey(windowKey) && _activeWindows[windowKey] != null) {
-			return _activeWindows[windowKey];
+		int windowIndex = _activeWindows.FindIndex((UIWindow w) => { return w.WindowKey == windowKey; });
+		if (windowIndex != -1) {
+			return _activeWindows[windowIndex];
 		}
 
 		GameObject windowResource = UIResourcesManager.Instance.GetResource<GameObject>(_windowResources[windowKey]);
 		if (windowResource != null) {
 			UIWindow windowInstance = (GameObject.Instantiate(windowResource) as GameObject).GetComponent<UIWindow>();
 			windowInstance.transform.SetParent(Utils.UI.GetWindowsCanvas().transform, false);
+			windowInstance.gameObject.SetActive(false);
+			windowInstance.AddDisplayAction(EUIWindowDisplayAction.PreShow, OnWindowShow);
+			windowInstance.AddDisplayAction(EUIWindowDisplayAction.PreHide, OnWindowHide);
 
-			_activeWindows.Add(windowKey, windowInstance);
+			_activeWindows.Add(windowInstance);
 
 			return windowInstance;
 		}
@@ -42,16 +47,58 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 	}
 
 	public void Clear() {
-		foreach (KeyValuePair<EUIWindowKey, UIWindow> kvp in _activeWindows) {
-			if (kvp.Value != null) {
-				GameObject.Destroy(kvp.Value);
-			}
+		for (int i = 0; i < _activeWindows.Count; i++) {
+			if (_activeWindows[i] != null) {
+				UIResourcesManager.Instance.FreeResource(_activeWindows[i].gameObject);
+				GameObject.Destroy(_activeWindows[i].gameObject);
 
-			UIResourcesManager.Instance.FreeResource(_windowResources[kvp.Key]);
+			}
+		}
+		_activeWindows.Clear();
+	}
+
+	#region listeners
+	private void OnWindowShow(UIWindow window) {
+		if (_activeWindow == window) {
+			return;
 		}
 
-		UIResourcesManager.Instance.Clear();
+		if (_activeWindow != null && _activeWindow != window) {
+			_activeWindow.gameObject.SetActive(false);
+		}
+
+
+		int windowIndex = _activeWindows.FindIndex((UIWindow w) => { return w.WindowKey == window.WindowKey; });
+		if (windowIndex != -1) {
+			_activeWindows.RemoveAt(windowIndex);
+			_activeWindows.Insert(0, window);
+		}
+
+		_activeWindow = window;
 	}
+
+	private void OnWindowHide(UIWindow window) {
+		window.RemoveDisplayAction(EUIWindowDisplayAction.PreShow, OnWindowShow);
+		window.RemoveDisplayAction(EUIWindowDisplayAction.PreHide, OnWindowHide);
+
+		if (_activeWindow == window) {
+			_activeWindow = null;
+		}
+
+		int windowIndex = _activeWindows.FindIndex((UIWindow w) => { return w.WindowKey == window.WindowKey; });
+		if (windowIndex != -1) {
+			_activeWindows.RemoveAt(windowIndex);
+
+			UIResourcesManager.Instance.FreeResource(window.gameObject);
+			GameObject.Destroy(window.gameObject);
+
+			if (windowIndex == 0 && _activeWindows.Count > 0) {
+				_activeWindows[0].gameObject.SetActive(true);
+				_activeWindow = _activeWindows[0];
+			}
+		}
+	}
+	#endregion
 
 	#region unity funcs
 	public void OnLevelWasLoaded(int levelNumber) {

@@ -76,7 +76,7 @@ public class UICity : MonoBehaviour {
 
 		ECityBuildingKey[] buildingKeys = Enum.GetValues(typeof(ECityBuildingKey)) as ECityBuildingKey[];
 		for (int i = 0; i < buildingKeys.Length; i++) {
-			UpdateBuildingImage(buildingKeys[i]);
+			UpdateBuildingImage(buildingKeys[i], true);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class UICity : MonoBehaviour {
 		EventsAggregator.City.RemoveListener<ECityBuildingKey>(ECityEvent.ConstructionEnd, OnBuildingConstructionComplete);
 	}
 
-	private void UpdateBuildingImage(ECityBuildingKey buildingKey) {
+	private void UpdateBuildingImage(ECityBuildingKey buildingKey, bool isFirstLoad) {
 		if (buildingKey == ECityBuildingKey.Idle) {
 			return;
 		}
@@ -120,7 +120,7 @@ public class UICity : MonoBehaviour {
 				}
 
 				if (buildingIcon != null) {
-					if (buildingIcon.ImgBuilding.sprite != null) {
+					if (!isFirstLoad && buildingIcon.ImgBuilding.sprite != null) {
 						Sprite s = buildingIcon.ImgBuilding.sprite;
 						buildingIcon.ImgBuilding.sprite = null;
 						UIResourcesManager.Instance.FreeResource(s);
@@ -171,7 +171,7 @@ public class UICity : MonoBehaviour {
 
 	#region listeners
 	private void OnBuildingConstructionComplete(ECityBuildingKey buildingKey) {
-		UpdateBuildingImage(buildingKey);
+		UpdateBuildingImage(buildingKey, false);
 	}
 	#endregion
 }

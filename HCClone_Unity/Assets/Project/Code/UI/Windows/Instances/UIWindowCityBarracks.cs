@@ -51,8 +51,8 @@ public class UIWindowCityBarracks : UIWindow {
 		}
 #endif
 
-		_onPreShow += SetupUnits;
-		_onPostHide += ClearUnits;
+		AddDisplayAction(EUIWindowDisplayAction.PreShow, SetupUnits);
+		AddDisplayAction(EUIWindowDisplayAction.PostHide, ClearUnits);
 	}
 
 	public void Start() {
@@ -66,7 +66,7 @@ public class UIWindowCityBarracks : UIWindow {
 		_btnSort_5.onClick.AddListener(OnBtnSort5Click);
 	}
 
-	private void SetupUnits() {
+	private void SetupUnits(UIWindow window) {
 		_startUnitImagesPosition = _unitImage.gameObject.GetComponent<RectTransform>().anchoredPosition;
 
 		List<EUnitKey> playerUnitKeys = Global.Instance.Player.City.AvailableUnits;
@@ -88,7 +88,7 @@ public class UIWindowCityBarracks : UIWindow {
 		ShowSoldierInfo(0);
 	}
 
-	private void ClearUnits() {
+	private void ClearUnits(UIWindow window) {
 		for (int i = 0; i < _unitImages.Length; i++) {
 			_unitImages[i].Clear();
 

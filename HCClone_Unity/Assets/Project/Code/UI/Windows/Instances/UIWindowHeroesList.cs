@@ -14,7 +14,6 @@ public class UIWindowHeroesList : UIWindow {
 
 	#region listeners
 	private void OnBtnHeroClick() {
-		Hide();
 		UIWindowsManager.Instance.GetWindow<UIWindowHeroInfo>(EUIWindowKey.HeroInfo).Show();
 	}
 

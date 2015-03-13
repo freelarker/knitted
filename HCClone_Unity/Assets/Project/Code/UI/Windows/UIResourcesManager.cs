@@ -32,7 +32,7 @@ public class UIResourcesManager {
 			return (T)_loadedResources[path].resource;
 		}
 
-		Object resource = Resources.Load(path, typeof(T));
+		Object resource = Resources.Load(path, typeof(T)); 
 		if (resource != null) {
 			if (resource is T) {
 				_loadedResources.Add(path, new ResourceUsageInfo(resource, 1));

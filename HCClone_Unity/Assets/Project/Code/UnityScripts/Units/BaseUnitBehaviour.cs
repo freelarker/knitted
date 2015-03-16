@@ -5,6 +5,9 @@ using System;
 public class BaseUnitBehaviour : MonoBehaviour {
 	[SerializeField]
 	private UnitPathfinding _unitPathfinder;
+	public UnitPathfinding UnitPathfinder {
+		get { return _unitPathfinder; }
+	}
 
 	[SerializeField]
 	private UnitModelView _model;
@@ -30,7 +33,14 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private WaitForSeconds _cachedWaitForSeconds;
 	private float _lastAttackTime = 0f;
 
+	private Transform _cachedTransform = null;
+	public Transform CachedTransform {
+		get { return _cachedTransform; }
+	}
+
 	public void Awake() {
+		_cachedTransform = transform;
+
 		if (_model == null) {
 			_model = gameObject.GetComponentInChildren<UnitModelView>();
 		}
@@ -80,7 +90,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_targetUnit = target;
 	}
 
-	private void OnTargetReached() {
+	private void OnTargetReached(BaseUnitBehaviour nearesTarget) {
+		_targetUnit = nearesTarget;
 		if (_lastAttackTime != 0f && Time.time - _lastAttackTime < _attackTime) {
 			_model.PlayAttackAnimation();
 			_model.StopCurrentAnimation();

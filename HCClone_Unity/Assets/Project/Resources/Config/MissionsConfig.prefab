@@ -62,7 +62,7 @@ MonoBehaviour:
       _attemptsDaily: 5
       _mineIncome: 0
       _maps:
-      - _units: 44420f0044420f00
+      - _units: 44420f0044420f0044420f0044420f0044420f00
       - _units: 44420f0044420f0045420f00
     - _key: 2
       _fuelWinCost: 0

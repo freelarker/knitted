@@ -28,6 +28,7 @@ public class UnitPathfinding : MonoBehaviour {
 
 	private Vector3 _targetPosition = Vector3.zero;
 	private Transform _nearestTarget = null;
+	private BaseUnitBehaviour _nearestTargetBUB = null;
 
 	private Transform _cachedTransform;
 	private Transform _cachedModelTransform;
@@ -42,7 +43,8 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 	}
 
-	private Action _onTargetReached;
+	private ArrayRO<BaseUnitBehaviour> _possibleTargets = null;
+	private Action<BaseUnitBehaviour> _onTargetReached;
 
 	public void Awake() {
 		if (_model == null) {
@@ -68,6 +70,7 @@ public class UnitPathfinding : MonoBehaviour {
 
 	public void Reset(bool full) {
 		_nearestTarget = null;
+		_nearestTargetBUB = null;
 		_onTargetReached = null;
 		StopAllCoroutines();
 
@@ -84,8 +87,11 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private void FindNearestTarget(ArrayRO<BaseUnitBehaviour> possibleTargets) {
+		_possibleTargets = possibleTargets;
+
 		if (possibleTargets == null) {
 			_nearestTarget = null;
+			_nearestTargetBUB = null;
 			return;
 		}
 
@@ -108,6 +114,7 @@ public class UnitPathfinding : MonoBehaviour {
 
 		if (nearestTarget != null) {
 			_nearestTarget = nearestTarget.transform;
+			_nearestTargetBUB = nearestTarget;
 			_targetPosition = _nearestTarget.transform.position;
 		} else {
 			Debug.LogWarning(string.Format("{0} \"{1}\" reporting: No target found!", gameObject.tag, gameObject.name));
@@ -115,7 +122,7 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	#region movement
-	public void MoveToTarget(BaseUnitBehaviour self, ArrayRO<BaseUnitBehaviour> possibleTargets, Action<BaseUnitBehaviour> onTargetFound, Action onTargetReached) {
+	public void MoveToTarget(BaseUnitBehaviour self, ArrayRO<BaseUnitBehaviour> possibleTargets, Action<BaseUnitBehaviour> onTargetFound, Action<BaseUnitBehaviour> onTargetReached) {
 		Reset(false);
 
 		_minDistanceToTargetUnit = self.UnitData.AttackRange;
@@ -144,7 +151,7 @@ public class UnitPathfinding : MonoBehaviour {
 			OnFreePointReached();
 		} else {
 			if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
-				OnAttackPointReached();
+				OnAttackPointReached(_nearestTargetBUB);
 			} else {
 				OnPreparationPointReached();
 			}
@@ -232,21 +239,28 @@ public class UnitPathfinding : MonoBehaviour {
 			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 
-		if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
-			OnAttackPointReached();
+		BaseUnitBehaviour nearestTargetInRange = GetNearestTargetInRange();
+		if (nearestTargetInRange != null) {
+			_nearestTarget = nearestTargetInRange.CachedTransform;
+			_nearestTargetBUB = nearestTargetInRange;
+			OnAttackPointReached(nearestTargetInRange);
 		}
+
+		//if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
+		//	OnAttackPointReached();
+		//}
 	}
 
-	private void OnAttackPointReached() {
+	private void OnAttackPointReached(BaseUnitBehaviour nearesTarget) {
 		_model.StopCurrentAnimation();
 
-		Action onTargetReached = _onTargetReached;
+		Action<BaseUnitBehaviour> onTargetReached = _onTargetReached;
 		_onTargetReached = null;
 		StopAllCoroutines();
 
 		CurrentState = EUnitMovementState.WatchEnemy;
 
-		onTargetReached();
+		onTargetReached(nearesTarget);
 	}
 
 	private void WatchEnemy() {
@@ -280,6 +294,20 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 		return false;
 		*/
+	}
+	#endregion
+
+	#region auxiliary
+	private BaseUnitBehaviour GetNearestTargetInRange() {
+		for (int i = 0; i < _possibleTargets.Length; i++) {
+			if (!_possibleTargets[i].UnitData.IsDead) {
+				if (Vector3.Distance(_cachedTransform.position, _possibleTargets[i].CachedTransform.position) <= _minDistanceToTargetUnit) {
+					return _possibleTargets[i];
+				}
+			}
+		}
+
+		return null;
 	}
 	#endregion
 }

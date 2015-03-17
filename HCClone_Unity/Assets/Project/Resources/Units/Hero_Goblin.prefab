@@ -118,7 +118,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105482}
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: -4.37113883e-08}
+  m_LocalRotation: {x: -.993768096, y: .0869434997, z: -.069491066, w: .00607968448}
   m_LocalPosition: {x: 0, y: -1.14999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -233,6 +233,7 @@ MonoBehaviour:
   _weaponBoneRight: {fileID: 418822}
   _weaponBoneLeft: {fileID: 405482}
   _animator: {fileID: 9518816}
+  _handLength: .455000013
 --- !u!114 &11484228
 MonoBehaviour:
   m_ObjectHideFlags: 1

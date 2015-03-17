@@ -45,7 +45,7 @@ MonoBehaviour:
   _soldierEquipmentSlots: 01000000020000000b000000
   _heroesData:
   - _key: 1
-    _baseHealth: 100
+    _baseHealth: 1000
     _baseArmor: 0
     _baseDamage: 0
     _baseAttackRange: 0

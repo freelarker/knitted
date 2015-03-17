@@ -17,6 +17,14 @@ public class UnitModelView : MonoBehaviour {
 	[SerializeField]
 	private Animator _animator;
 
+	private float _gunStanceOffset = 0.44f;
+	private float _rifleStanceOffset = 0.13f;
+
+	private float _weaponStanceOffset = 0f;
+
+	private WeaponView _weaponViewRH = null;
+	private WeaponView _weaponViewLH = null;
+
 	private EUnitAnimationState _animRun = EUnitAnimationState.Run_Gun;
 	private EUnitAnimationState _animAttack = EUnitAnimationState.Strike_Gun;
 	private EUnitAnimationState _animDeath = EUnitAnimationState.Death_FallForward;
@@ -68,10 +76,12 @@ public class UnitModelView : MonoBehaviour {
 				case EItemType.W_Gun:
 					_animRun = EUnitAnimationState.Run_Gun;
 					_animAttack = EUnitAnimationState.Strike_Gun;
+					_weaponStanceOffset = _gunStanceOffset;
 					break;
 				case EItemType.W_Rifle:
 					_animRun = EUnitAnimationState.Run_Rifle;
 					_animAttack = EUnitAnimationState.Strike_Rifle;
+					_weaponStanceOffset = _rifleStanceOffset;
 					break;
 			}
 		}
@@ -84,12 +94,18 @@ public class UnitModelView : MonoBehaviour {
 			weaponInstance.transform.parent = _weaponBoneRight;
 			weaponInstance.transform.localPosition = Vector3.zero;
 			weaponInstance.transform.localRotation = Quaternion.identity;
+
+			_weaponViewRH = weaponInstance.GetComponent<WeaponView>();
+			_weaponViewRH.Setup(transform.parent);
 		}
 		if (_weaponBoneLeft != null && lhWeaponResource != null) {
 			GameObject weaponInstance = GameObject.Instantiate(lhWeaponResource) as GameObject;
 			weaponInstance.transform.parent = _weaponBoneLeft;
 			weaponInstance.transform.localPosition = Vector3.zero;
 			weaponInstance.transform.localRotation = Quaternion.identity;
+
+			_weaponViewLH = weaponInstance.GetComponent<WeaponView>();
+			_weaponViewLH.Setup(transform.parent);
 		}
 
 		//armor
@@ -115,6 +131,14 @@ public class UnitModelView : MonoBehaviour {
 
 	#region animations
 	public void StopCurrentAnimation() {
+		if (_animator.GetInteger("MAS") == _mainAnimationState[_animAttack]) {
+			if (_weaponViewRH != null) {
+				_weaponViewRH.Stop();
+			}
+			if (_weaponViewLH != null) {
+				_weaponViewLH.Stop();
+			}
+		}
 		_animator.StopPlayback();
 	}
 
@@ -144,10 +168,18 @@ public class UnitModelView : MonoBehaviour {
 		}
 	}
 
-	public void PlayAttackAnimation() {
+	public void PlayAttackAnimation(float distanceToTarget) {
 		_animator.speed = _attackAnimationSpeed;
 		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 		_animator.SetInteger("MAS", _mainAnimationState[_animAttack]);
+
+		distanceToTarget -= _weaponStanceOffset;
+		if (_weaponViewRH != null) {
+			_weaponViewRH.Attack(distanceToTarget);
+		}
+		if (_weaponViewLH != null) {
+			_weaponViewLH.Attack(distanceToTarget);
+		}
 	}
 
 	public void PlayDeathAnimation(Action onAnimationEnd) {

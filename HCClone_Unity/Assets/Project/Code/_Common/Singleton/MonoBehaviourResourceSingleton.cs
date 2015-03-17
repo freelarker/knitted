@@ -27,7 +27,7 @@ public abstract class MonoBehaviourResourceSingleton<T> : MonoBehaviour where T 
 	
 	private static T CreateInstance() {
 		T sInstance = FindObjectOfType<T>();
- 
+
 		if (FindObjectsOfType<T>().Length > 1) {
 			Debug.LogError("[MonoBehaviourResourceSingleton] Something went really wrong - there should never be more than 1 singleton! Reopenning the scene might fix it.");
 		}
@@ -57,10 +57,10 @@ public abstract class MonoBehaviourResourceSingleton<T> : MonoBehaviour where T 
 				goInstance = new GameObject();
 				sInstance = goInstance.AddComponent<T>();
 			}
-
-			goInstance.name = "(singleton) " + typeof(T).ToString();
-			DontDestroyOnLoad(goInstance);
 		}
+
+		sInstance.gameObject.name = "(singleton) " + typeof(T).ToString();
+		DontDestroyOnLoad(sInstance.gameObject);
 		
 		return sInstance;
 	}

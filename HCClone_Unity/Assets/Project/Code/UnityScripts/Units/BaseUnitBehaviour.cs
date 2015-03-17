@@ -93,7 +93,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private void OnTargetReached(BaseUnitBehaviour nearesTarget) {
 		_targetUnit = nearesTarget;
 		if (_lastAttackTime != 0f && Time.time - _lastAttackTime < _attackTime) {
-			_model.PlayAttackAnimation();
+			_model.PlayAttackAnimation(1);
 			_model.StopCurrentAnimation();
 			Invoke("OnTargetReached", _attackTime - (Time.time - _lastAttackTime));
 		} else {
@@ -126,7 +126,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private IEnumerator AttackTarget() {
 		_lastAttackTime = Time.time;
 
-		_model.PlayAttackAnimation();
+		_model.PlayAttackAnimation(Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position));
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
 		
 		if (_targetUnit != null && !_targetUnit.UnitData.IsDead) {

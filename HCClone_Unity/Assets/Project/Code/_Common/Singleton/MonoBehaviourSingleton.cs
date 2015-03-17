@@ -30,11 +30,12 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour {
 		}
 
 		if (sInstance == null) {
-			GameObject goInstance = new GameObject("(singleton) " + typeof(T).ToString());
+			GameObject goInstance = new GameObject();
 			sInstance = goInstance.AddComponent<T>();
-			
-			DontDestroyOnLoad(goInstance);
 		}
+
+		sInstance.gameObject.name = "(singleton) " + typeof(T).ToString();
+		DontDestroyOnLoad(sInstance.gameObject);
 		
 		return sInstance;
 	}

@@ -183,12 +183,14 @@
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\ItemsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\MissionsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\UnitsConfig.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Particles\TracerParticleController.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitAnimationState.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitModelView.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitPathfinding.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Utils\GameTimer.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Utils\Utils.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Weapons\WeaponView.cs" />
     <Compile Include="Assets\Project\Code\_Common\ArrayRO.cs" />
     <Compile Include="Assets\Project\Code\_Common\ListRO.cs" />
     <Compile Include="Assets\Project\Code\_Common\Singleton\MonoBehaviourResourceSingleton.cs" />

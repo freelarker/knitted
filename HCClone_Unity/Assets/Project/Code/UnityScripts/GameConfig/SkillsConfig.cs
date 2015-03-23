@@ -36,12 +36,10 @@ public class SkillsConfig : MonoBehaviourResourceSingleton<SkillsConfig> {
 		switch (skillParams.Key) {
 			case ESkillKey.ClipDischarge:
 				return new SkillClipDischarge(skillParams);
+			case ESkillKey.ExplosiveCharges:
+				return new SkillExplosiveCharges(skillParams);
 		}
 
 		return null;
-	}
-
-	private T GetSkillInstance<T>(params object[] args) where T : BaseUnitSkill {
-		return (T)Activator.CreateInstance(typeof(T), args);
 	}
 }

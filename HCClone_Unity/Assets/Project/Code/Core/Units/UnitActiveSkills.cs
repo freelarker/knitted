@@ -7,6 +7,15 @@ public class UnitActiveSkills {
 	};
 
 	private List<BaseUnitSkill> _activeSkills = new List<BaseUnitSkill>();
+	private ListRO<BaseUnitSkill> _activeSkillsRO = null;
+	public ListRO<BaseUnitSkill> ActiveSkills {
+		get {
+			if (_activeSkillsRO == null) {
+				_activeSkillsRO = new ListRO<BaseUnitSkill>(_activeSkills);
+			}
+			return _activeSkillsRO;
+		}
+	}
 
 	private List<BaseUnitSkill> _damageModifyingSkills = new List<BaseUnitSkill>();
 
@@ -50,5 +59,10 @@ public class UnitActiveSkills {
 		}
 
 		return (int)resultDamage;
+	}
+
+	public void Clear() {
+		_activeSkills.Clear();
+		_damageModifyingSkills.Clear();
 	}
 }

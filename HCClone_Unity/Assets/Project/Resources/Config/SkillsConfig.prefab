@@ -68,15 +68,15 @@ MonoBehaviour:
       _modCritChancePercents: 0
       _modCritDamageMultiplierPercents: 0
     - _key: 2
-      _aggroCrystalsCost: 0
+      _aggroCrystalsCost: 5
       _targetSelectionRequired: 0
-      _canCastOnSelf: 0
-      _skillTarget: 0
-      _castTime: 0
-      _cooldownTime: 0
-      _resetAttackTimer: 0
-      _duration: 0
-      _radius: 0
+      _canCastOnSelf: 1
+      _skillTarget: 2
+      _castTime: 3
+      _cooldownTime: 5
+      _resetAttackTimer: 1
+      _duration: 6
+      _radius: 3
       _nativeDamage: 0
       _modHealthAmount: 0
       _modArmorAmount: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
       _modCritDamageMultiplierAmount: 0
       _modHealthPercents: 0
       _modArmorPercents: 0
-      _modDamagePercents: 0
+      _modDamagePercents: 1.5
       _modDamageRangePercents: 0
       _modDamageSpeedPercents: 0
       _modCritChancePercents: 0

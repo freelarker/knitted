@@ -6,12 +6,18 @@
 
 	protected BaseUnitBehaviour _caster;
 
+	protected float _lastUsageTime = 0f;
+
 	public BaseUnitSkill(SkillParameters skillParameters) {
 		_skillParameters = skillParameters;
 	}
 
 	public virtual void Use(BaseUnitBehaviour caster) {
 		_caster = caster;
+	}
+
+	public virtual void Break() {
+		_caster.UnitData.ActiveSkills.UnregisterSkill(this);
 	}
 
 	protected virtual void StartUsage() {
@@ -24,5 +30,12 @@
 
 	protected virtual void Clear() {
 		_caster = null;
+		_lastUsageTime = 0f;
 	}
+
+	public virtual void OnCasterDeath() {
+		_caster.UnitData.ActiveSkills.UnregisterSkill(this);
+	}
+
+	public virtual void OnCasterTargetDeath() { }
 }

@@ -5,7 +5,6 @@ public class SkillClipDischarge : BaseUnitSkill {
 	public SkillClipDischarge(SkillParameters skillParameters) : base(skillParameters) { }
 
 	private int _shotsLeft = -1;
-	private float _lastUsageTime = 0f;
 
 	private WaitForSeconds _wfs = null;
 
@@ -41,13 +40,18 @@ public class SkillClipDischarge : BaseUnitSkill {
 		StartUsage();
 	}
 
-	protected override void StartUsage() {
-		Debug.LogWarning("=== StartUsage(ClipDischarge)" + Time.time);
+	public override void Break() {
+		base.Break();
 
+		GameTimer.Instance.FinishCoroutine(Shoot);
+		Clear();
+	}
+
+	protected override void StartUsage() {
 		base.StartUsage();
 
 		_shotsLeft = (int)_skillParameters.Duration;
-		_wfs = new WaitForSeconds(0.25f);
+		_wfs = new WaitForSeconds(0.25f);			//duration betweeen attacks
 
 		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_caster.StopTargetAttack(true);
@@ -56,8 +60,6 @@ public class SkillClipDischarge : BaseUnitSkill {
 	}
 
 	protected override void EndUsage() {
-		Debug.LogWarning("=== EndUsage(ClipDischarge)" + Time.time);
-
 		base.EndUsage();
 
 		BaseUnitBehaviour caster = _caster;
@@ -74,9 +76,16 @@ public class SkillClipDischarge : BaseUnitSkill {
 	protected override void Clear() {
 		base.Clear();
 
-		_lastUsageTime = 0;
 		_shotsLeft = -1;
 		_wfs = null;
+	}
+
+	public override void OnCasterDeath() {
+		Break();
+	}
+
+	public override void OnCasterTargetDeath() {
+		Break();
 	}
 
 	#region shooting

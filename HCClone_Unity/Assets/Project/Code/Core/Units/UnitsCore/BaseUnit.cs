@@ -36,12 +36,12 @@ public abstract class BaseUnit {
 	}
 
 	public virtual void Attack(BaseUnit target) {
-		target.ApplyDamage(GetAttackInfo());
+		target.ApplyDamage(GetAttackInfo(true, true));
 	}
 
-	public virtual AttackInfo GetAttackInfo() {
-		bool isCrit = Random.Range(0, 100) < CritChance;
-		int damage = _activeSkills.GetDamageFromSkillModifiers(Damage);
+	public virtual AttackInfo GetAttackInfo(bool withSkillEffects, bool withCrit) {
+		bool isCrit = withCrit && Random.Range(0, 100) < CritChance;
+		int damage = withSkillEffects ? _activeSkills.GetDamageFromSkillModifiers(Damage) : Damage;
 		return new AttackInfo(isCrit ? (int)(damage * CritDamageMultiplier) : damage, isCrit);
 	}
 

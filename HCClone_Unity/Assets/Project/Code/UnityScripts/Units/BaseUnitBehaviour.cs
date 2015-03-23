@@ -152,12 +152,20 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnTargetDeath() {
+		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
+			UnitData.ActiveSkills.ActiveSkills[i].OnCasterTargetDeath();
+		}
+
 		StopTargetAttack(false);
 		_targetUnit = null;
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	private void OnSelfDeath() {
+		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
+			UnitData.ActiveSkills.ActiveSkills[i].OnCasterDeath();
+		}
+
 		StopTargetAttack(true);
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);

@@ -24,6 +24,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private BaseUnitBehaviour _targetUnit;
+	public BaseUnitBehaviour TargetUnit {
+		get { return _targetUnit; }
+	}
+
 	private bool _isAlly = false;
 	public bool IsAlly {
 		get { return _isAlly; }
@@ -33,6 +37,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 	private WaitForSeconds _cachedWaitForSeconds;
 	private float _lastAttackTime = 0f;
+	private Coroutine _corTargetAttack;
 
 	private Transform _cachedTransform = null;
 	public Transform CachedTransform {
@@ -64,7 +69,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Resume, OnFightResume);
 
-		if (_isAlly && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
+		if (_isAlly && UnitsConfig.Instance != null && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
 			EventsAggregator.Units.RemoveListener<ESkillKey>(EUnitEvent.SkillUsage, UseSkill);
 		}
 
@@ -117,7 +122,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 			_model.StopCurrentAnimation();
 			Invoke("StartTargetAttack", _attackTime - (Time.time - _lastAttackTime));
 		} else {
-			StartCoroutine(AttackTarget());
+			_corTargetAttack = StartCoroutine(AttackTarget());
 		}
 	}
 
@@ -128,7 +133,12 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		if (IsInvoking("StartTargetAttack")) {
 			CancelInvoke("StartTargetAttack");
 		}
-		StopCoroutine("AttackTarget");
+		if (_corTargetAttack != null) {
+			StopCoroutine(_corTargetAttack);
+			_corTargetAttack = null;
+		}
+
+		_model.StopAttackAnimation();
 	}
 
 	#region unit controller
@@ -142,19 +152,13 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnTargetDeath() {
-		StopAllCoroutines();
-		if (IsInvoking("StartTargetAttack")) {
-			CancelInvoke("StartTargetAttack");
-		}
+		StopTargetAttack(false);
 		_targetUnit = null;
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
 	private void OnSelfDeath() {
-		StopAllCoroutines();
-		if (IsInvoking("StartTargetAttack")) {
-			CancelInvoke("StartTargetAttack");
-		}
+		StopTargetAttack(true);
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);
 
@@ -171,7 +175,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		
 		if (_targetUnit != null && !_targetUnit.UnitData.IsDead) {
 			yield return _cachedWaitForSeconds;
-			StartCoroutine(AttackTarget());
+			_corTargetAttack = StartCoroutine(AttackTarget());
 		}
 	}
 

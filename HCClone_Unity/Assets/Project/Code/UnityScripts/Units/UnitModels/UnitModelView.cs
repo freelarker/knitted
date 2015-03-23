@@ -141,6 +141,12 @@ public class UnitModelView : MonoBehaviour {
 		_animator.StopPlayback();
 	}
 
+	public void StopAttackAnimation() {
+		if (_animator.GetInteger("MAS") == _mainAnimationState[_animAttack]) {
+			StopCurrentAnimation();
+		}
+	}
+
 	public void PlayRunAnimation() {
 		_animator.speed = _runAnimationSpeed;
 		_animator.Play(_animationClipName[_animRun]);

@@ -97,7 +97,6 @@
     <Compile Include="Assets\Project\Code\Core\City\CityBuildingKeys.cs" />
     <Compile Include="Assets\Project\Code\Core\City\Requirements\CBConstructionRequirement.cs" />
     <Compile Include="Assets\Project\Code\Core\City\Requirements\ConstructionBuildingRequirement.cs" />
-    <Compile Include="Assets\Project\Code\Core\Fight\DamageCalculator.cs" />
     <Compile Include="Assets\Project\Code\Core\Fight\FightLogger.cs" />
     <Compile Include="Assets\Project\Code\Core\GameConstants.cs" />
     <Compile Include="Assets\Project\Code\Core\Global.cs" />
@@ -134,6 +133,7 @@
     <Compile Include="Assets\Project\Code\Core\Skills\SkillParameters.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\AttackInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\HitInfo.cs" />
+    <Compile Include="Assets\Project\Code\Core\Units\UnitActiveSkills.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseHero.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseSoldier.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseUnit.cs" />

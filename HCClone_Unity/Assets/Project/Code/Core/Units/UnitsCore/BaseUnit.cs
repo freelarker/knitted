@@ -23,6 +23,11 @@ public abstract class BaseUnit {
 	public int DamageTaken { get; private set; }
 	public bool IsDead { get { return DamageTaken >= Health; } }
 
+	protected UnitActiveSkills _activeSkills = new UnitActiveSkills();
+	public UnitActiveSkills ActiveSkills {
+		get { return _activeSkills; }
+	}
+
 	public BaseUnit(BaseUnitData data) {
 		_data = data;
 		Inventory = new UnitInventory(CreateSlotsData(), _data.BaseEquipment, OnEquipmentUpdate);
@@ -36,7 +41,8 @@ public abstract class BaseUnit {
 
 	public virtual AttackInfo GetAttackInfo() {
 		bool isCrit = Random.Range(0, 100) < CritChance;
-		return new AttackInfo(isCrit ? (int)(Damage * CritDamageMultiplier) : Damage, isCrit);
+		int damage = _activeSkills.GetDamageFromSkillModifiers(Damage);
+		return new AttackInfo(isCrit ? (int)(damage * CritDamageMultiplier) : damage, isCrit);
 	}
 
 	public virtual void ApplyDamage(AttackInfo attackInfo) {

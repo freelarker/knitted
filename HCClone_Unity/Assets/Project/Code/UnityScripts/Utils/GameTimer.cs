@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 public class GameTimer : MonoBehaviourSingleton<GameTimer> {
 	private class TimerListener {
@@ -12,10 +13,7 @@ public class GameTimer : MonoBehaviourSingleton<GameTimer> {
 		}
 	}
 
-	private TimerListener[] _updateCallbacks;
-
-	private float _oneSecond = 0f;
-
+	#region unity funcs
 	public void Awake() {
 		ExtendCallbacksList();
 	}
@@ -33,8 +31,14 @@ public class GameTimer : MonoBehaviourSingleton<GameTimer> {
 
 	public override void OnDestroy() {
 		_updateCallbacks = null;
+		StopAllCoroutines();
 		base.OnDestroy();
 	}
+	#endregion
+
+	#region one-second timer
+	private TimerListener[] _updateCallbacks;
+	private float _oneSecond = 0f;
 
 	public void AddListener(int timeLeft, Action callback) {
 		for (int i = 0; i < _updateCallbacks.Length; i++) {
@@ -78,4 +82,15 @@ public class GameTimer : MonoBehaviourSingleton<GameTimer> {
 			_updateCallbacks = newCallbacks;
 		}
 	}
+	#endregion
+
+	#region coroutines for external usage
+	public void RunCoroutine(Func<IEnumerator> func) {
+		StartCoroutine(func());
+	}
+
+	public void FinishCoroutine(Func<IEnumerator> func) {
+		StopCoroutine(func());
+	}
+	#endregion
 }

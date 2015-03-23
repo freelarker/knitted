@@ -14,5 +14,7 @@
 
 	EquipmentUpdate,
 	RecalculateParams,
-	AggroCrystalsUpdate
+	AggroCrystalsUpdate,
+
+	SkillUsage,
 }

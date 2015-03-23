@@ -13,6 +13,11 @@ public class EditorMenu : MonoBehaviour {
 		Selection.activeObject = InstantiateSingletonPrefab<UnitsConfig>();
 	}
 
+	[MenuItem("HCClone/Config/Skills config")]
+	public static void InstantiateSkillsConfig() {
+		Selection.activeObject = InstantiateSingletonPrefab<SkillsConfig>();
+	}
+
 	[MenuItem("HCClone/Config/Missions config")]
 	public static void InstantiateMissionsConfig() {
 		Selection.activeObject = InstantiateSingletonPrefab<MissionsConfig>();

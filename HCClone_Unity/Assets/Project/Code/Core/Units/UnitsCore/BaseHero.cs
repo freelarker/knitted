@@ -59,6 +59,10 @@ public class BaseHero : BaseUnit {
 		AggroCrystals += _data.BaseAggroCrystalPerAttack;
 	}
 
+	public void UseSkill(SkillParameters skill) {
+		AggroCrystals -= skill.AggroCrystalsCost;
+	}
+
 	protected override Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {
 		BaseHeroData heroData = base._data as BaseHeroData;
 		Dictionary<EUnitEqupmentSlot, EItemType[]> slotsData = new Dictionary<EUnitEqupmentSlot, EItemType[]>();

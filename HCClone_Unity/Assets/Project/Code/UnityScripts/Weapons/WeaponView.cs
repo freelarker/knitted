@@ -21,16 +21,20 @@ public class WeaponView : MonoBehaviour {
 		_particleWorldOffset = _particleParent.TransformPoint(_particleParent.localPosition).x;
 	}
 
-	public void Attack(float distanceToTarget) {
-		StartCoroutine(AttackInternal(distanceToTarget));
+	public void Attack(float distanceToTarget, bool inAttackState) {
+		if (distanceToTarget > 0f) {
+			StartCoroutine(AttackInternal(distanceToTarget, inAttackState));
+		}
 	}
 
 	public void Stop() {
 		_tpc.Particles.Stop(true);
 	}
 
-	private IEnumerator AttackInternal(float distanceToTarget) {
-		//yield return new WaitForEndOfFrame();
+	private IEnumerator AttackInternal(float distanceToTarget, bool inAttackState) {
+		if (!inAttackState) {
+			//yield return new WaitForEndOfFrame();
+		}
 
 		distanceToTarget -= _particleWorldOffset;
 

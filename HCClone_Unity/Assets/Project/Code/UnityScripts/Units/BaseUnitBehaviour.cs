@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class BaseUnitBehaviour : MonoBehaviour {
 	[SerializeField]
@@ -38,6 +39,12 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		get { return _cachedTransform; }
 	}
 
+	public bool TargetInRange {
+		get { return _targetUnit != null && Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position) <= _unitData.AttackRange; }
+	}
+
+	private Dictionary<ESkillKey, BaseUnitSkill> _skills;
+
 	public void Awake() {
 		_cachedTransform = transform;
 
@@ -56,6 +63,16 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		EventsAggregator.Units.RemoveListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Resume, OnFightResume);
+
+		if (_isAlly && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
+			EventsAggregator.Units.RemoveListener<ESkillKey>(EUnitEvent.SkillUsage, UseSkill);
+		}
+
+		_unitData = null;
+		_targetUnit = null;
+		_unitPathfinder = null;
+		_model = null;
+		_ui = null;
 	}
 
 	public void Setup(BaseUnit unitData, string tag, GameObject uiResource) {
@@ -65,6 +82,11 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 		_attackTime = 1f / unitData.AttackSpeed;
 		_cachedWaitForSeconds = new WaitForSeconds(_attackTime);
+
+		_skills = SkillsConfig.Instance.GetHeroSkillsInstances(_unitData.Data.Key);
+		if (_isAlly && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
+			EventsAggregator.Units.AddListener<ESkillKey>(EUnitEvent.SkillUsage, UseSkill);
+		}
 
 		if (_ui == null) {
 			_ui = (GameObject.Instantiate(uiResource) as GameObject).GetComponent<UnitUI>();
@@ -80,31 +102,49 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void Run() {
-		//WARNING! temp
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
-	#region unit controller
-	private void OnTargetFound(BaseUnitBehaviour target) {
-		//TODO: play move animation
-		_targetUnit = target;
+	public void UseSkill(ESkillKey skillKey) {
+		if (_skills.ContainsKey(skillKey) && _skills[skillKey] != null) {
+			_skills[skillKey].Use(this);
+		}
 	}
 
-	private void OnTargetReached(BaseUnitBehaviour nearesTarget) {
-		_targetUnit = nearesTarget;
+	public void StartTargetAttack() {
 		if (_lastAttackTime != 0f && Time.time - _lastAttackTime < _attackTime) {
-			_model.PlayAttackAnimation(1);
+			_model.PlayAttackAnimation(0);
 			_model.StopCurrentAnimation();
-			Invoke("OnTargetReached", _attackTime - (Time.time - _lastAttackTime));
+			Invoke("StartTargetAttack", _attackTime - (Time.time - _lastAttackTime));
 		} else {
 			StartCoroutine(AttackTarget());
 		}
 	}
 
+	public void StopTargetAttack(bool resetAttackTimer) {
+		if (resetAttackTimer) {
+			_lastAttackTime = 0f;
+		}
+		if (IsInvoking("StartTargetAttack")) {
+			CancelInvoke("StartTargetAttack");
+		}
+		StopCoroutine("AttackTarget");
+	}
+
+	#region unit controller
+	private void OnTargetFound(BaseUnitBehaviour target) {
+		_targetUnit = target;
+	}
+
+	private void OnTargetReached(BaseUnitBehaviour nearesTarget) {
+		_targetUnit = nearesTarget;
+		StartTargetAttack();
+	}
+
 	private void OnTargetDeath() {
 		StopAllCoroutines();
-		if (IsInvoking("OnTargetReached")) {
-			CancelInvoke("OnTargetReached");
+		if (IsInvoking("StartTargetAttack")) {
+			CancelInvoke("StartTargetAttack");
 		}
 		_targetUnit = null;
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
@@ -112,8 +152,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 	private void OnSelfDeath() {
 		StopAllCoroutines();
-		if (IsInvoking("OnTargetReached")) {
-			CancelInvoke("OnTargetReached");
+		if (IsInvoking("StartTargetAttack")) {
+			CancelInvoke("StartTargetAttack");
 		}
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);

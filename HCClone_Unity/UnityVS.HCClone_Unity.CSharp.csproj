@@ -97,6 +97,7 @@
     <Compile Include="Assets\Project\Code\Core\City\CityBuildingKeys.cs" />
     <Compile Include="Assets\Project\Code\Core\City\Requirements\CBConstructionRequirement.cs" />
     <Compile Include="Assets\Project\Code\Core\City\Requirements\ConstructionBuildingRequirement.cs" />
+    <Compile Include="Assets\Project\Code\Core\Fight\DamageCalculator.cs" />
     <Compile Include="Assets\Project\Code\Core\Fight\FightLogger.cs" />
     <Compile Include="Assets\Project\Code\Core\GameConstants.cs" />
     <Compile Include="Assets\Project\Code\Core\Global.cs" />
@@ -126,6 +127,11 @@
     <Compile Include="Assets\Project\Code\Core\Player\PlayerVIP.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\Utils\PlayerBuildingConstructor.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\Utils\PlayerFuelRefresher.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\BaseUnitSkill.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\HeroSkillsData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillClipDischarge.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\SkillEnums.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\SkillParameters.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\AttackInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\HitInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitsCore\BaseHero.cs" />
@@ -159,6 +165,8 @@
     <Compile Include="Assets\Project\Code\UI\City\UICityBuildingIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\City\UICityBuildingPopup.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UIFight.cs" />
+    <Compile Include="Assets\Project\Code\UI\Fight\UIHeroSkillButton.cs" />
+    <Compile Include="Assets\Project\Code\UI\Fight\UIHeroSkills.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UnitUI.cs" />
     <Compile Include="Assets\Project\Code\UI\MissionSelect\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\EUIWindowDisplayAction.cs" />
@@ -182,6 +190,7 @@
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\CityConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\ItemsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\MissionsConfig.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\SkillsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\UnitsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Particles\TracerParticleController.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />

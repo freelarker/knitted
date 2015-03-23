@@ -19,7 +19,6 @@ public class UnitModelView : MonoBehaviour {
 
 	private float _gunStanceOffset = 0.44f;
 	private float _rifleStanceOffset = 0.13f;
-
 	private float _weaponStanceOffset = 0f;
 
 	private WeaponView _weaponViewRH = null;
@@ -149,37 +148,34 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	public void PlayHitAnimation(int totalHealth, HitInfo hitInfo) {
-		string animHit = string.Empty;
-
 		float healthState1 = totalHealth * 0.75f;
 		float healthState2 = totalHealth * 0.5f;
 		float healthState3 = totalHealth * 0.25f;
 
 		if ((hitInfo.HealthBefore > healthState1 && hitInfo.HealthAfter < healthState1) ||
 			(hitInfo.HealthBefore > healthState3 && hitInfo.HealthAfter < healthState3)) {
-				animHit = "GetDamage1";
+			_animator.SetTrigger("GetDamage1");
 		} else if (hitInfo.HealthBefore > healthState2 && hitInfo.HealthAfter < healthState2) {
-			//animHit = "GetDamage2";
-			animHit = "GetDamage1";
-		}
-
-		if (!animHit.Equals(string.Empty)) {
-			_animator.SetTrigger(animHit);
+			_animator.SetTrigger("GetDamage2");
 		}
 	}
 
 	public void PlayAttackAnimation(float distanceToTarget) {
-		_animator.speed = _attackAnimationSpeed;
+		int mas = _animator.GetInteger("MAS");
+
+		_animator.speed = 0f;
 		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 		_animator.SetInteger("MAS", _mainAnimationState[_animAttack]);
 
 		distanceToTarget -= _weaponStanceOffset;
 		if (_weaponViewRH != null) {
-			_weaponViewRH.Attack(distanceToTarget);
+			_weaponViewRH.Attack(distanceToTarget, mas == _mainAnimationState[_animAttack]);
 		}
 		if (_weaponViewLH != null) {
-			_weaponViewLH.Attack(distanceToTarget);
+			_weaponViewLH.Attack(distanceToTarget, mas == _mainAnimationState[_animAttack]);
 		}
+
+		_animator.speed = _attackAnimationSpeed;
 	}
 
 	public void PlayDeathAnimation(Action onAnimationEnd) {

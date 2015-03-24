@@ -5,15 +5,6 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(HCCGridObject))]
 public class UnitPathfinding : MonoBehaviour {
-	private enum EUnitMovementState {
-		None,
-		MoveToFreePoint,
-		MoveToPrepPoint,
-		MoveToAttackPoint,
-		WatchEnemy,
-		NoEnemy
-	}
-
 	[SerializeField]
 	private HCCGridObject _gridObject;
 	[SerializeField]
@@ -36,8 +27,9 @@ public class UnitPathfinding : MonoBehaviour {
 
 	private Dictionary<EUnitMovementState, Action> _movementStateActions = new Dictionary<EUnitMovementState, Action>();
 	private EUnitMovementState _currentState = EUnitMovementState.None;
-	private EUnitMovementState CurrentState {
-		set {
+	public EUnitMovementState CurrentState {
+		get { return _currentState; }
+		private set {
 			_currentState = value;
 			Update();
 		}

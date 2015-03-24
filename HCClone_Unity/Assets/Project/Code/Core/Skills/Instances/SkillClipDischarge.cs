@@ -20,8 +20,8 @@ public class SkillClipDischarge : BaseUnitSkill {
 			return;
 		}
 
-		//check target in range
-		if (!caster.TargetInRange) {
+		//check target locked
+		if (caster.UnitPathfinder.CurrentState != EUnitMovementState.WatchEnemy) {
 			return;
 		}
 

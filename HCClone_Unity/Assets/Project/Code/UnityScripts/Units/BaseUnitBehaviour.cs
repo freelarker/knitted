@@ -49,6 +49,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private Dictionary<ESkillKey, BaseUnitSkill> _skills;
+	public bool CastingSkill { get; set; }
 
 	public void Awake() {
 		_cachedTransform = transform;
@@ -117,6 +118,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void StartTargetAttack() {
+		if (CastingSkill) {
+			return;
+		}
+
 		if (_lastAttackTime != 0f && Time.time - _lastAttackTime < _attackTime) {
 			_model.PlayAttackAnimation(0);
 			_model.StopCurrentAnimation();

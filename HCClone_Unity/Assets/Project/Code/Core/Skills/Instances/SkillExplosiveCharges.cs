@@ -69,10 +69,18 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 	public override void OnCasterTargetDeath() { }
 
 	private IEnumerator SkillPrepare() {
-		_caster.StopTargetAttack(true);
+		if (_caster.UnitPathfinder.CurrentState == EUnitMovementState.WatchEnemy) {
+			_caster.StopTargetAttack(true);
+		}
+		_caster.CastingSkill = true;
+		
 		//TODO: play preparation animation
 		yield return new WaitForSeconds(_skillParameters.CastTime);
-		_caster.StartTargetAttack();
+
+		_caster.CastingSkill = false;
+		if (_caster.UnitPathfinder.CurrentState == EUnitMovementState.WatchEnemy) {
+			_caster.StartTargetAttack();
+		}
 	}
 
 	private void OnUnitAttack(BaseUnitBehaviour attacker, BaseUnitBehaviour target) {

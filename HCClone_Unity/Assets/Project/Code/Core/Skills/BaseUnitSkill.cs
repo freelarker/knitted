@@ -1,4 +1,5 @@
-﻿public abstract class BaseUnitSkill {
+﻿using System;
+public abstract class BaseUnitSkill {
 	protected SkillParameters _skillParameters = null;
 	public SkillParameters SkillParameters {
 		get { return _skillParameters; }

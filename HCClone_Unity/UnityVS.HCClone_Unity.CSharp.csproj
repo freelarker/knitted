@@ -197,6 +197,7 @@
     <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitAnimationState.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitModelView.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitMovementState.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitPathfinding.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Utils\GameTimer.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Utils\Utils.cs" />

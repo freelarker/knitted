@@ -130,8 +130,10 @@
     <Compile Include="Assets\Project\Code\Core\Skills\HeroSkillsData.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillClipDischarge.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillExplosiveCharges.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillStunGrenade.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\SkillEnums.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\SkillParameters.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\StunGrenadeController.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\AttackInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\HitInfo.cs" />
     <Compile Include="Assets\Project\Code\Core\Units\UnitActiveSkills.cs" />

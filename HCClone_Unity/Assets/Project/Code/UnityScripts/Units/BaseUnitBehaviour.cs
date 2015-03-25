@@ -107,6 +107,20 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		}
 	}
 
+	public void Stun(float duration) {
+		//TODO: play stun animation
+
+		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
+			UnitData.ActiveSkills.ActiveSkills[i].OnCasterStunned();
+		}
+
+		StopTargetAttack(false);
+		_targetUnit = null;
+		_unitPathfinder.Reset(true);
+
+		Invoke("Run", duration);
+	}
+
 	public void Run() {
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
@@ -169,6 +183,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private void OnSelfDeath() {
 		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
 			UnitData.ActiveSkills.ActiveSkills[i].OnCasterDeath();
+		}
+
+		if (IsInvoking("Run")) {
+			CancelInvoke("Run");
 		}
 
 		StopTargetAttack(true);

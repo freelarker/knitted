@@ -34,6 +34,8 @@ public abstract class BaseUnitSkill {
 		_lastUsageTime = 0f;
 	}
 
+	public virtual void OnCasterStunned() { }
+
 	public virtual void OnCasterDeath() {
 		_caster.UnitData.ActiveSkills.UnregisterSkill(this);
 	}

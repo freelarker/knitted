@@ -11,8 +11,15 @@ public class UnitModelView : MonoBehaviour {
 
 	[SerializeField]
 	private Transform _weaponBoneRight;
+	public Transform WeaponBoneRight {
+		get { return _weaponBoneRight; }
+	}
+
 	[SerializeField]
 	private Transform _weaponBoneLeft;
+	public Transform WeaponBoneLeft {
+		get { return _weaponBoneLeft; }
+	}
 
 	[SerializeField]
 	private Animator _animator;

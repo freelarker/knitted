@@ -89,7 +89,6 @@ public class BaseHero : BaseUnit {
 		// - recalculate damage speed after level-ups
 		// - recalculate aggro crystals after level-ups
 		// - recalculate leadership after level-ups
-		//Debug.LogWarning("=== data: " + _data + ", base.data: " + base.Data);
 		if (_data != null) {
 			Leadership = _data.BaseLeadership;
 			AggroCrystalsMaximum = _data.BaseAggroCrystalsMaximum;

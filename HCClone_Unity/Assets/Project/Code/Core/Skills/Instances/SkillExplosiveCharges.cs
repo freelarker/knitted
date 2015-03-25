@@ -62,6 +62,8 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 		_shotsLeft = -1;
 	}
 
+	public override void OnCasterStunned() { }
+
 	public override void OnCasterDeath() {
 		Break();
 	}
@@ -86,9 +88,10 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 	private void OnUnitAttack(BaseUnitBehaviour attacker, BaseUnitBehaviour target) {
 		if (attacker == _caster) {
 			AttackInfo attackInfo = _caster.UnitData.GetAttackInfo(true, false);			//aoe damage
-			for (int i = 0; i < FightManager.SceneInstance.EnemyUnits.Length; i++) {
-				if (!FightManager.SceneInstance.EnemyUnits[i].UnitData.IsDead && Vector3.Distance(_caster.CachedTransform.position, FightManager.SceneInstance.EnemyUnits[i].CachedTransform.position) <= _skillParameters.Radius) {
-					FightManager.SceneInstance.EnemyUnits[i].UnitData.ApplyDamage(attackInfo);
+			ArrayRO<BaseUnitBehaviour> opposedUnits = _caster.IsAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits;
+			for (int i = 0; i < opposedUnits.Length; i++) {
+				if (!opposedUnits[i].UnitData.IsDead && Vector3.Distance(_caster.CachedTransform.position, opposedUnits[i].CachedTransform.position) <= _skillParameters.Radius) {
+					opposedUnits[i].UnitData.ApplyDamage(attackInfo);
 				}
 			}
 

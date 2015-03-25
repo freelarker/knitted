@@ -100,6 +100,8 @@ public class FightManager : MonoBehaviour {
 		Clear();
 	}
 
+	//TODO: stop all skills
+
 	#region map start
 	public void StartFightPreparations() {
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
@@ -248,7 +250,7 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void MapComlete() {
-		Debug.Log("Map complete");
+		EventsAggregator.Fight.Broadcast(EFightEvent.MapComplete);
 
 		_graphics.Unload(false);
 		

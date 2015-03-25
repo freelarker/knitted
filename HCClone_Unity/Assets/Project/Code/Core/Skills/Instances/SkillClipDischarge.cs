@@ -80,6 +80,10 @@ public class SkillClipDischarge : BaseUnitSkill {
 		_wfs = null;
 	}
 
+	public override void OnCasterStunned() {
+		Break();
+	}
+
 	public override void OnCasterDeath() {
 		Break();
 	}

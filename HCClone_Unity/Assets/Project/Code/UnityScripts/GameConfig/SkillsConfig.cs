@@ -38,6 +38,8 @@ public class SkillsConfig : MonoBehaviourResourceSingleton<SkillsConfig> {
 				return new SkillClipDischarge(skillParams);
 			case ESkillKey.ExplosiveCharges:
 				return new SkillExplosiveCharges(skillParams);
+			case ESkillKey.StunGrenade:
+				return new SkillStunGrenade(skillParams);
 		}
 
 		return null;

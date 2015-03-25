@@ -929,7 +929,7 @@ public class Pathfinder : MonoBehaviour
 
 		Vector3 targetPos = endPos + ((endPos + startPos) * (1 / Vector3.Distance(endPos, startPos) * maxDistance));
 		Node targetNode = FindClosestNode(targetPos);
-		//UnityEngine.Debug.LogWarning("=== " + targetPos);
+
 		if (targetNode != null && targetNode.walkable) {
 			return new Vector3(targetNode.xCoord, targetNode.yCoord, targetNode.zCoord);
 		}

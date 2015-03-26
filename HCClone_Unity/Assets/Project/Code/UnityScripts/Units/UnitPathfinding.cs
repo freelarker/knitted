@@ -92,7 +92,7 @@ public class UnitPathfinding : MonoBehaviour {
 		float distance = Mathf.Infinity;
 		Vector3 position = transform.position;
 		for (int i = 0; i < possibleTargets.Length; i++) {
-			if (possibleTargets[i].UnitData.IsDead) {
+			if (possibleTargets[i] == null || possibleTargets[i].UnitData.IsDead) {
 				continue;
 			}
 
@@ -237,10 +237,6 @@ public class UnitPathfinding : MonoBehaviour {
 			_nearestTargetBUB = nearestTargetInRange;
 			OnAttackPointReached(nearestTargetInRange);
 		}
-
-		//if (Vector3.Distance(_cachedTransform.position, _targetPosition) <= _minDistanceToTargetUnit) {
-		//	OnAttackPointReached();
-		//}
 	}
 
 	private void OnAttackPointReached(BaseUnitBehaviour nearesTarget) {
@@ -292,7 +288,7 @@ public class UnitPathfinding : MonoBehaviour {
 	#region auxiliary
 	private BaseUnitBehaviour GetNearestTargetInRange() {
 		for (int i = 0; i < _possibleTargets.Length; i++) {
-			if (!_possibleTargets[i].UnitData.IsDead) {
+			if (_possibleTargets[i] != null && !_possibleTargets[i].UnitData.IsDead) {
 				if (Vector3.Distance(_cachedTransform.position, _possibleTargets[i].CachedTransform.position) <= _minDistanceToTargetUnit) {
 					return _possibleTargets[i];
 				}

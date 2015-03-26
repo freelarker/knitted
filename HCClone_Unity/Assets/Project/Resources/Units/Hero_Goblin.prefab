@@ -233,7 +233,6 @@ MonoBehaviour:
   _weaponBoneRight: {fileID: 418822}
   _weaponBoneLeft: {fileID: 405482}
   _animator: {fileID: 9518816}
-  _handLength: .455000013
 --- !u!114 &11484228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,7 +270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdbe24aa4e0b5ca419da402b0565e261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelRenderer: {fileID: 13718818}
+  _tModelPosition: {fileID: 484226}
+  _xWorldSize: .5
+  _zWorldSize: .5
   _isStatic: 0
 --- !u!137 &13718816
 SkinnedMeshRenderer:

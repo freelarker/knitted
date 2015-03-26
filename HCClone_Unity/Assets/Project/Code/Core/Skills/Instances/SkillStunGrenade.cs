@@ -65,7 +65,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 		BaseUnitBehaviour result = null;
 		ArrayRO<BaseUnitBehaviour> opposedUnits = _caster.IsAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits;
 		for (int i = 0; i < opposedUnits.Length; i++) {
-			if (!opposedUnits[i].UnitData.IsDead) {
+			if (opposedUnits[i] != null && !opposedUnits[i].UnitData.IsDead) {
 				if (result == null) {
 					result = opposedUnits[i];
 				} else if (Vector3.Distance(_caster.CachedTransform.position, opposedUnits[i].CachedTransform.position) > Vector3.Distance(_caster.CachedTransform.position, result.CachedTransform.position)) {
@@ -96,7 +96,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 	private void OnGrenadeTargetReached(Vector3 position) {
 		ArrayRO<BaseUnitBehaviour> opposedUnits = _caster.IsAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits;
 		for (int i = 0; i < opposedUnits.Length; i++) {
-			if (!opposedUnits[i].UnitData.IsDead) {
+			if (opposedUnits[i] != null && !opposedUnits[i].UnitData.IsDead) {
 				if (Vector3.Distance(position, opposedUnits[i].CachedTransform.position) <= _skillParameters.Radius) {
 					opposedUnits[i].Stun(_skillParameters.Duration);
 				}

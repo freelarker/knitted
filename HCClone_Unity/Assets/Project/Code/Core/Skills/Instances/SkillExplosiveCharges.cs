@@ -90,7 +90,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 			AttackInfo attackInfo = _caster.UnitData.GetAttackInfo(true, false);			//aoe damage
 			ArrayRO<BaseUnitBehaviour> opposedUnits = _caster.IsAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits;
 			for (int i = 0; i < opposedUnits.Length; i++) {
-				if (!opposedUnits[i].UnitData.IsDead && Vector3.Distance(_caster.CachedTransform.position, opposedUnits[i].CachedTransform.position) <= _skillParameters.Radius) {
+				if (opposedUnits[i] !=null && !opposedUnits[i].UnitData.IsDead && Vector3.Distance(_caster.CachedTransform.position, opposedUnits[i].CachedTransform.position) <= _skillParameters.Radius) {
 					opposedUnits[i].UnitData.ApplyDamage(attackInfo);
 				}
 			}

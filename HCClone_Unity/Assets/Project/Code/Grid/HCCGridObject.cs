@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class HCCGridObject : MonoBehaviour {
 	[SerializeField]
-	private Renderer _modelRenderer = null;
+	private Transform _tModelPosition;
+
+	[SerializeField]
+	private float _xWorldSize = 1f;
+	public float XWorldSize {
+		get { return _xWorldSize; }
+	}
+
+	[SerializeField]
+	private float _zWorldSize = 1f;
+	public float ZWorldSize {
+		get { return _zWorldSize; }
+	}
 
 	[SerializeField]
 	private bool _isStatic = false;		//if object marked as static it's cells are unwalkable
@@ -14,19 +26,18 @@ public class HCCGridObject : MonoBehaviour {
 
 	//for static bounds any static renderer can be assigned
 	public float XMinWorldPos {
-		get { return _modelRenderer.bounds.min.x; }
+		get { return _tModelPosition.position.x - _xWorldSize * 0.5f; }
 	}
 	public float XMaxWorldPos {
-		get { return _modelRenderer.bounds.max.x; }
+		get { return _tModelPosition.position.x + _xWorldSize * 0.5f; }
 	}
 	public float ZMinWorldPos {
-		get { return _modelRenderer.bounds.min.z; }
+		get { return _tModelPosition.position.z - _zWorldSize * 0.5f; }
 	}
 	public float ZMaxWorldPos {
-		get { return _modelRenderer.bounds.max.z; }
+		get { return _tModelPosition.position.z + _zWorldSize * 0.5f; }
 	}
-	public float XWorldSize { get; private set; }
-	public float ZWorldSize { get; private set; }
+	
 
 	public HCCGridRect GridRect {
 		get { return HCCGridView.Instance.WorldPosToGridRect(this); }
@@ -79,15 +90,7 @@ public class HCCGridObject : MonoBehaviour {
 	private void Initialize() {
 		Path = new List<HCCCell>();
 
-		if (_modelRenderer == null) {
-			_modelRenderer = gameObject.renderer;
-		}
 		_cachedTransform = transform;
-
-		//init world size
-		Bounds bounds = _modelRenderer.bounds;
-		XWorldSize = Mathf.Abs(bounds.max.x - bounds.min.x);
-		ZWorldSize = Mathf.Abs(bounds.max.z - bounds.min.z);
 	}
 
 	private void Register() {

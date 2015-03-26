@@ -62,6 +62,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		EventsAggregator.Units.AddListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.AddListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.AddListener(EFightEvent.Resume, OnFightResume);
+		EventsAggregator.Fight.AddListener(EFightEvent.MapComplete, OnMapComplete);
+		EventsAggregator.Fight.AddListener(EFightEvent.MapFail, OnMapFail);
 	}
 
 	public void OnDestroy() {
@@ -69,6 +71,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		EventsAggregator.Units.RemoveListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Pause, OnFightPause);
 		EventsAggregator.Fight.RemoveListener(EFightEvent.Resume, OnFightResume);
+		EventsAggregator.Fight.RemoveListener(EFightEvent.MapComplete, OnMapComplete);
+		EventsAggregator.Fight.RemoveListener(EFightEvent.MapFail, OnMapFail);
 
 		if (_isAlly && UnitsConfig.Instance != null && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
 			EventsAggregator.Units.RemoveListener<ESkillKey>(EUnitEvent.SkillUsage, UseSkill);
@@ -103,7 +107,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		}
 
 		if (unitData.DamageTaken > 0) {
-			_ui.UpdateHealthBar(unitData.DamageTaken > 0f ? (1f * unitData.DamageTaken / unitData.Health) : 1f);
+			_ui.UpdateHealthBar(Mathf.Max(unitData.Health - unitData.DamageTaken, 0) / (unitData.Health * 1f));
 		}
 	}
 
@@ -122,6 +126,9 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void Run() {
+		if (gameObject.name == "Hero_Sniper(Clone)") {
+			Debug.LogWarning("=== Run()");
+		}
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
@@ -132,6 +139,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void StartTargetAttack() {
+		if (gameObject.name == "Hero_Sniper(Clone)") {
+			Debug.LogWarning("=== StartTargetAttack(" + _targetUnit.name + ")");
+		}
+
 		if (CastingSkill) {
 			return;
 		}
@@ -166,6 +177,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnTargetReached(BaseUnitBehaviour nearesTarget) {
+		if (gameObject.name == "Hero_Sniper(Clone)") {
+			Debug.LogWarning("=== OnTargetReached(" + nearesTarget.name + ")");
+		}
+
 		_targetUnit = nearesTarget;
 		StartTargetAttack();
 	}
@@ -198,15 +213,44 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_model.PlayDeathAnimation(OnDeathAnimationEnd);
 	}
 
+	private void OnMapEnd() {
+		if (gameObject.name == "Hero_Sniper(Clone)") {
+			Debug.LogWarning("=== OnMapEnd()");
+		}
+
+		_model.StopCurrentAnimation();
+
+		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
+			UnitData.ActiveSkills.ActiveSkills[i].Break();
+		}
+
+		if (IsInvoking("Run")) {
+			CancelInvoke("Run");
+		}
+
+		StopTargetAttack(true);
+		_targetUnit = null;
+		_unitPathfinder.Reset(true);
+	}
+
 	private IEnumerator AttackTarget() {
+		if (gameObject.name == "Hero_Sniper(Clone)") {
+			Debug.LogWarning("=== AttackTarget()");
+		}
+
 		_lastAttackTime = Time.time;
 
 		_model.PlayAttackAnimation(Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position));
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
-		
-		if (_targetUnit != null && !_targetUnit.UnitData.IsDead) {
+
+		if (_unitPathfinder.CurrentState == EUnitMovementState.WatchEnemy) {
 			yield return _cachedWaitForSeconds;
-			_corTargetAttack = StartCoroutine(AttackTarget());
+
+			if (_targetUnit != null && !_targetUnit.UnitData.IsDead) {
+				_corTargetAttack = StartCoroutine(AttackTarget());
+			} else {
+				_corTargetAttack = null;
+			}
 		}
 	}
 
@@ -239,6 +283,14 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 	private void OnFightResume() {
 
+	}
+
+	private void OnMapComplete() {
+		OnMapEnd();
+	}
+
+	private void OnMapFail() {
+		OnMapEnd();
 	}
 
 	private void OnDeathAnimationEnd() {

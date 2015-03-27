@@ -66,6 +66,23 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		EventsAggregator.Fight.AddListener(EFightEvent.MapFail, OnMapFail);
 	}
 
+	private bool _isStarted = false;
+	private Action _onStart = null;
+	public IEnumerator Start() {
+		_model.SimulateAttack();
+
+		while (_model.Animator.GetCurrentAnimationClipState(0).Length == 0) {
+			yield return null;
+		}
+		_model.SetupWeapon();
+
+		_isStarted = true;
+		if (_onStart != null) {
+			_onStart();
+			_onStart = null;
+		}
+	}
+
 	public void OnDestroy() {
 		EventsAggregator.Units.RemoveListener<BaseUnit, HitInfo>(EUnitEvent.HitReceived, OnHitReceived);
 		EventsAggregator.Units.RemoveListener<BaseUnit>(EUnitEvent.DeathCame, OnUnitDeath);
@@ -122,12 +139,16 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);
 
+		if (IsInvoking("Run")) {
+			CancelInvoke("Run");
+		}
 		Invoke("Run", duration);
 	}
 
 	public void Run() {
-		if (gameObject.name == "Hero_Sniper(Clone)") {
-			Debug.LogWarning("=== Run()");
+		if (!_isStarted) {
+			_onStart += Run;
+			return;
 		}
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
@@ -139,10 +160,6 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void StartTargetAttack() {
-		if (gameObject.name == "Hero_Sniper(Clone)") {
-			Debug.LogWarning("=== StartTargetAttack(" + _targetUnit.name + ")");
-		}
-
 		if (CastingSkill) {
 			return;
 		}
@@ -177,10 +194,6 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnTargetReached(BaseUnitBehaviour nearesTarget) {
-		if (gameObject.name == "Hero_Sniper(Clone)") {
-			Debug.LogWarning("=== OnTargetReached(" + nearesTarget.name + ")");
-		}
-
 		_targetUnit = nearesTarget;
 		StartTargetAttack();
 	}
@@ -214,10 +227,6 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnMapEnd() {
-		if (gameObject.name == "Hero_Sniper(Clone)") {
-			Debug.LogWarning("=== OnMapEnd()");
-		}
-
 		_model.StopCurrentAnimation();
 
 		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
@@ -234,10 +243,6 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private IEnumerator AttackTarget() {
-		if (gameObject.name == "Hero_Sniper(Clone)") {
-			Debug.LogWarning("=== AttackTarget()");
-		}
-
 		_lastAttackTime = Time.time;
 
 		_model.PlayAttackAnimation(Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position));

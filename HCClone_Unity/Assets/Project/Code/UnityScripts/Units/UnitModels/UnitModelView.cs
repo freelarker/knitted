@@ -23,6 +23,9 @@ public class UnitModelView : MonoBehaviour {
 
 	[SerializeField]
 	private Animator _animator;
+	public Animator Animator {
+		get { return _animator; }
+	}
 
 	private float _gunStanceOffset = 0.44f;
 	private float _rifleStanceOffset = 0.13f;
@@ -102,7 +105,6 @@ public class UnitModelView : MonoBehaviour {
 			weaponInstance.transform.localRotation = Quaternion.identity;
 
 			_weaponViewRH = weaponInstance.GetComponent<WeaponView>();
-			_weaponViewRH.Setup(transform.parent);
 		}
 		if (_weaponBoneLeft != null && lhWeaponResource != null) {
 			GameObject weaponInstance = GameObject.Instantiate(lhWeaponResource) as GameObject;
@@ -111,7 +113,6 @@ public class UnitModelView : MonoBehaviour {
 			weaponInstance.transform.localRotation = Quaternion.identity;
 
 			_weaponViewLH = weaponInstance.GetComponent<WeaponView>();
-			_weaponViewLH.Setup(transform.parent);
 		}
 
 		//armor
@@ -125,6 +126,20 @@ public class UnitModelView : MonoBehaviour {
 			SwitchMesh(bodyArmorInstance.GetComponent<MeshFilter>().mesh, bodyArmorInstance.GetComponent<MeshRenderer>().material, _bodyArmorMeshRenderer);
 			GameObject.Destroy(bodyArmorInstance);
 		}
+	}
+
+	public void SetupWeapon() {
+		if (_weaponViewRH != null) {
+			_weaponViewRH.Setup(transform);
+		}
+		if (_weaponViewLH != null) {
+			_weaponViewLH.Setup(transform);
+		}
+	}
+
+	public void SimulateAttack() {
+		_animator.speed = 0f;
+		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 	}
 
 	private void SwitchMesh(Mesh sourceMesh, Material sourceMaterial, SkinnedMeshRenderer target) {
@@ -174,21 +189,17 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	public void PlayAttackAnimation(float distanceToTarget) {
-		int mas = _animator.GetInteger("MAS");
-
-		_animator.speed = 0f;
+		_animator.speed = _attackAnimationSpeed;
 		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 		_animator.SetInteger("MAS", _mainAnimationState[_animAttack]);
 
 		distanceToTarget -= _weaponStanceOffset;
 		if (_weaponViewRH != null) {
-			_weaponViewRH.Attack(distanceToTarget, mas == _mainAnimationState[_animAttack]);
+			_weaponViewRH.Attack(distanceToTarget);
 		}
 		if (_weaponViewLH != null) {
-			_weaponViewLH.Attack(distanceToTarget, mas == _mainAnimationState[_animAttack]);
+			_weaponViewLH.Attack(distanceToTarget);
 		}
-
-		_animator.speed = _attackAnimationSpeed;
 	}
 
 	public void PlayDeathAnimation(Action onAnimationEnd) {

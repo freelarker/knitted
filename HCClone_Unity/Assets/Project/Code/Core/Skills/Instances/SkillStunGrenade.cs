@@ -38,6 +38,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 		if (target != null) {
 			CreateGrenade();
 			if (_grenadeController != null && !_grenadeController.IsInFlight) {
+				(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 				_lastUsageTime = Time.time;
 
 				ThrowGrenade(target);
@@ -46,13 +47,9 @@ public class SkillStunGrenade : BaseUnitSkill {
 	}
 
 	protected override void EndUsage() {
-		Clear();
+		_caster = null;
 
 		//TODO: start icon cooldown
-	}
-
-	protected override void Clear() {
-		base.Clear();
 	}
 
 	public override void OnCasterStunned() { }

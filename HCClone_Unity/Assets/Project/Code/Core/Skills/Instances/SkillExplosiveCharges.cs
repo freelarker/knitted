@@ -40,6 +40,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 	protected override void StartUsage() {
 		base.StartUsage();
 
+		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_shotsLeft = (int)_skillParameters.Duration;
 
 		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);

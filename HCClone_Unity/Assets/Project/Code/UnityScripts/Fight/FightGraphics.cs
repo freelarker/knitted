@@ -60,6 +60,7 @@ public class FightGraphics {
 		for (int i = 0; i < playerSoldiersList.Length; i++) {
 			if (!playerSoldiersList[i].IsDead) {
 				bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerSoldiersList[i].Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
+				bub.gameObject.name = "Ally_" + playerSoldiersList[i] + " (" + i + ")";
 				unitsList[i] = bub;
 
 				LoadItemsResources(_allyItemsGraphicsResources, playerSoldiersList[i].Data.Key, bub.ModelView, playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_RHand), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_LHand), playerSoldiersList[i].Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
@@ -70,6 +71,7 @@ public class FightGraphics {
 		BaseHero playerHero = Global.Instance.Player.Heroes.Current;
 		if (!playerHero.IsDead) {
 			bub = (GameObject.Instantiate(_allyUnitsGraphicsResources[playerHero.Data.Key].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
+			bub.gameObject.name = "Ally_" + playerHero.Data.Key;
 			unitsList[unitsList.Length - 1] = bub;
 
 			LoadItemsResources(_allyItemsGraphicsResources, playerHero.Data.Key, bub.ModelView, playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_RHand), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Weapon_LHand), playerHero.Inventory.GetItemInSlot(EUnitEqupmentSlot.Armor));
@@ -90,6 +92,7 @@ public class FightGraphics {
 		//instantiate soldiers
 		for (int i = 0; i < mapData.Units.Length; i++) {
 			bub = (GameObject.Instantiate(_enemyUnitsGraphicsResources[mapData.Units[i]].gameObject) as GameObject).GetComponent<BaseUnitBehaviour>();
+			bub.gameObject.name = "Enemy_" + mapData.Units[i] + " (" + i + ")";
 			unitsList[i] = bub;
 
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);

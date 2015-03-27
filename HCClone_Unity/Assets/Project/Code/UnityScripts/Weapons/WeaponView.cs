@@ -14,16 +14,16 @@ public class WeaponView : MonoBehaviour {
 	[SerializeField]
 	private float _bulletParticleDelay = 0f;
 
-	private float _particleWorldOffset = 0f;
+	private float _particleGunOffset = 0f;
 
 	public void Setup(Transform particleParent) {
-		_tpc.transform.SetParent(particleParent, true);
-		_particleWorldOffset = _particleParent.TransformPoint(_particleParent.localPosition).x;
+		_particleGunOffset = particleParent.InverseTransformPoint(_particleParent.TransformPoint(_particleParent.localPosition)).x;
+		_tpc.transform.parent = particleParent;
 	}
 
-	public void Attack(float distanceToTarget, bool inAttackState) {
+	public void Attack(float distanceToTarget) {
 		if (distanceToTarget > 0f) {
-			StartCoroutine(AttackInternal(distanceToTarget, inAttackState));
+			StartCoroutine(AttackInternal(distanceToTarget));
 		}
 	}
 
@@ -31,16 +31,9 @@ public class WeaponView : MonoBehaviour {
 		_tpc.Particles.Stop(true);
 	}
 
-	private IEnumerator AttackInternal(float distanceToTarget, bool inAttackState) {
-		if (!inAttackState) {
-			//yield return new WaitForEndOfFrame();
-		}
-
-		distanceToTarget -= _particleWorldOffset;
-
-		_tpc.transform.position = _particleParent.position;
-		_tpc.transform.rotation = _particleParent.rotation;
-
+	private IEnumerator AttackInternal(float distanceToTarget) {
+		distanceToTarget -= _particleGunOffset;
+		
 		_tpc.SetParticleDistance(distanceToTarget);
 
 		_tpc.Particles.Simulate(_bulletParticleDelay, true);

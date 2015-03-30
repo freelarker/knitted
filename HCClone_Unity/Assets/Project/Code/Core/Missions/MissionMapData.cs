@@ -15,4 +15,10 @@ public class MissionMapData {
 			return _unitsRO;
 		}
 	}
+
+	[SerializeField]
+	private string _mapBackgroundPath = string.Empty;
+	public string MapBackgroundPath {
+		get { return _mapBackgroundPath; }
+	}
 }

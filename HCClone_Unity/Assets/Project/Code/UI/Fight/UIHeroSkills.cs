@@ -12,7 +12,7 @@ public class UIHeroSkills : MonoBehaviour {
 				if (i >= _skillButtons.Length) {
 					break;
 				}
-				_skillButtons[i].Setup(heroSkills.Skills[i].Key, heroSkills.Skills[i].AggroCrystalsCost);
+				_skillButtons[i].Setup(heroSkills.Skills[i]);
 			}
 		}
 	}

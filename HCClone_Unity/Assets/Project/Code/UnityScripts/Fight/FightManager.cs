@@ -31,6 +31,9 @@ public class FightManager : MonoBehaviour {
 
 	[SerializeField]
 	private UIFight _ui;
+	public UIFight UI {
+		get { return _ui; }
+	}
 
 	private FightGraphics _graphics = new FightGraphics();
 	private FightLogger _logger = new FightLogger();
@@ -63,7 +66,7 @@ public class FightManager : MonoBehaviour {
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
 	}
 
-	public IEnumerator Start() {
+	public void Start() {
 		FightCamera.AdaptMain();
 		FightCamera.AdaptCanvas(GameConstants.DEFAULT_RESOLUTION_WIDTH, _ui.CanvasBG);
 		Utils.UI.AdaptCanvasResolution(GameConstants.DEFAULT_RESOLUTION_WIDTH, GameConstants.DEFAULT_RESOLUTION_HEIGHT, _ui.CanvasUI);
@@ -71,13 +74,13 @@ public class FightManager : MonoBehaviour {
 		if (Global.Instance.CurrentMission.PlanetKey == EPlanetKey.None || Global.Instance.CurrentMission.MissionKey == EMissionKey.None) {
 			//TODO: broadcast message
 			Debug.LogError("Wrong mission info");
-			//return;
-			yield break;
+			return;
+			//yield break;	//???
 		}
 
 		_currentMissionData = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
 
-		yield return null;
+		//yield return null;	//???
 
 		StartFightPreparations();
 	}

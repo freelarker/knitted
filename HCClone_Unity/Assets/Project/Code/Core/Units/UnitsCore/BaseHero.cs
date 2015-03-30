@@ -28,7 +28,7 @@ public class BaseHero : BaseUnit {
 		get { return _aggroCrystals; }
 		private set {
 			_aggroCrystals = (value < 0 ? 0 : (value > AggroCrystalsMaximum ? AggroCrystalsMaximum : value));
-			EventsAggregator.Units.Broadcast<int>(EUnitEvent.AggroCrystalsUpdate, _aggroCrystals);
+			EventsAggregator.Units.Broadcast<int, int>(EUnitEvent.AggroCrystalsUpdate, _aggroCrystals, AggroCrystalsMaximum);
 		}
 	}
 

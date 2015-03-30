@@ -4,6 +4,7 @@ using UnityEngine;
 public class FightGraphics {
 	private Dictionary<EUnitKey, BaseUnitBehaviour> _allyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
 	private Dictionary<EUnitKey, BaseUnitBehaviour> _enemyUnitsGraphicsResources = new Dictionary<EUnitKey, BaseUnitBehaviour>();
+	private Sprite _backgroundResource = null;
 
 	private Dictionary<EItemKey, GameObject[]> _allyItemsGraphicsResources = new Dictionary<EItemKey, GameObject[]>();
 	private Dictionary<EItemKey, GameObject[]> _enemyItemsGraphicsResources = new Dictionary<EItemKey, GameObject[]>();
@@ -41,7 +42,9 @@ public class FightGraphics {
 	}
 
 	private void InstantiateBackground(MissionMapData mapData) {
-		//TODO: instantiate background
+		if (_backgroundResource != null) {
+			FightManager.SceneInstance.UI.ImgMapBackground.sprite = _backgroundResource;
+		}
 	}
 
 	private void InstantiateAllyUnits() {
@@ -114,7 +117,9 @@ public class FightGraphics {
 	}
 
 	private void LoadBackgroundResources(MissionMapData mapData) {
-		//TODO: load background resources
+		if (!mapData.MapBackgroundPath.Equals(string.Empty)) {
+			_backgroundResource = UIResourcesManager.Instance.GetResource<Sprite>(string.Format("{0}/{1}", GameConstants.Paths.UI_MAP_BACKGROUND_RESOURCES, mapData.MapBackgroundPath));
+		}
 	}
 
 	private void LoadAllyUnitsResources() {
@@ -247,7 +252,11 @@ public class FightGraphics {
 			_enemyUnits = null;
 		}
 
-		//TODO: destroy background
+		if (_backgroundResource != null) {
+			if (FightManager.SceneInstance != null && FightManager.SceneInstance.UI != null && FightManager.SceneInstance.UI.ImgMapBackground != null) {
+				FightManager.SceneInstance.UI.ImgMapBackground.sprite = null;
+			}
+		}
 	}
 
 	private void UnloadResources(bool fullUnload) {
@@ -258,7 +267,11 @@ public class FightGraphics {
 		}
 		_enemyUnitsGraphicsResources.Clear();
 		_enemyItemsGraphicsResources.Clear();
-		//TODO: free background resources
+
+		if (_backgroundResource != null) {
+			UIResourcesManager.Instance.FreeResource(_backgroundResource);
+			_backgroundResource = null;
+		}
 
 		Resources.UnloadUnusedAssets();
 	}

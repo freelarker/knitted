@@ -3,6 +3,8 @@
 	ClipDischarge,		//разрядить обойму
 	ExplosiveCharges,	//разрывные снаряды
 	StunGrenade,		//оглушающая граната
+	Skill3,		//temp
+	Skill4		//temp
 }
 
 public enum ESkillType {

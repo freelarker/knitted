@@ -21,6 +21,9 @@ public static class GameConstants {
 
 		public static string UI_UNIT_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Units", UI_RESOURCES); } }
 		public static string UI_ITEM_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Items", UI_RESOURCES); } }
+		public static string UI_ABILITY_ICONS_RESOURCES { get { return string.Format("{0}/Icons/Skills", UI_RESOURCES); } }
+
+		public static string UI_MAP_BACKGROUND_RESOURCES = "Maps/Backgrounds";
 
 		public class Prefabs {
 			public static string UI_UNIT { get { return string.Format("{0}/UnitUI", UI_RESOURCES); } }

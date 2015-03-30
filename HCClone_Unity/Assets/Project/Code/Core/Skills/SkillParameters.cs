@@ -153,4 +153,10 @@ public class SkillParameters {
 	public float ModCritDamageMultiplierPercents {
 		get { return _modCritDamageMultiplierPercents; }
 	}
+
+	[SerializeField]
+	protected string _iconPath = string.Empty;
+	public string IconPath {
+		get { return _iconPath; }
+	}
 }

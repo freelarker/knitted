@@ -14,6 +14,12 @@ public class UIFight : MonoBehaviour {
 	}
 
 	[SerializeField]
+	private Image _imgMapBackground;
+	public Image ImgMapBackground {
+		get { return _imgMapBackground; }
+	}
+
+	[SerializeField]
 	private Button _btnPause;
 	[SerializeField]
 	private Button _btnWithdraw;

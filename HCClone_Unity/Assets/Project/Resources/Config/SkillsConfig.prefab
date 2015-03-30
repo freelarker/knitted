@@ -67,6 +67,7 @@ MonoBehaviour:
       _modDamageSpeedPercents: 0
       _modCritChancePercents: 0
       _modCritDamageMultiplierPercents: 0
+      _iconPath: hero1_skill0
     - _key: 2
       _aggroCrystalsCost: 5
       _targetSelectionRequired: 0
@@ -92,6 +93,7 @@ MonoBehaviour:
       _modDamageSpeedPercents: 0
       _modCritChancePercents: 0
       _modCritDamageMultiplierPercents: 0
+      _iconPath: hero1_skill1
     - _key: 3
       _aggroCrystalsCost: 5
       _targetSelectionRequired: 0
@@ -117,6 +119,59 @@ MonoBehaviour:
       _modDamageSpeedPercents: 0
       _modCritChancePercents: 0
       _modCritDamageMultiplierPercents: 0
+      _iconPath: hero1_skill2
+    - _key: 4
+      _aggroCrystalsCost: 0
+      _targetSelectionRequired: 0
+      _canCastOnSelf: 0
+      _skillTarget: 11
+      _castTime: 0
+      _cooldownTime: 0
+      _resetAttackTimer: 0
+      _duration: 0
+      _radius: 0
+      _nativeDamage: 0
+      _modHealthAmount: 0
+      _modArmorAmount: 0
+      _modDamageAmount: 0
+      _modDamageRangeAmount: 0
+      _modDamageSpeedAmount: 0
+      _modCritChanceAmount: 0
+      _modCritDamageMultiplierAmount: 0
+      _modHealthPercents: 0
+      _modArmorPercents: 0
+      _modDamagePercents: 0
+      _modDamageRangePercents: 0
+      _modDamageSpeedPercents: 0
+      _modCritChancePercents: 0
+      _modCritDamageMultiplierPercents: 0
+      _iconPath: hero1_skill3
+    - _key: 5
+      _aggroCrystalsCost: 0
+      _targetSelectionRequired: 0
+      _canCastOnSelf: 0
+      _skillTarget: 11
+      _castTime: 0
+      _cooldownTime: 0
+      _resetAttackTimer: 0
+      _duration: 0
+      _radius: 0
+      _nativeDamage: 0
+      _modHealthAmount: 0
+      _modArmorAmount: 0
+      _modDamageAmount: 0
+      _modDamageRangeAmount: 0
+      _modDamageSpeedAmount: 0
+      _modCritChanceAmount: 0
+      _modCritDamageMultiplierAmount: 0
+      _modHealthPercents: 0
+      _modArmorPercents: 0
+      _modDamagePercents: 0
+      _modDamageRangePercents: 0
+      _modDamageSpeedPercents: 0
+      _modCritChancePercents: 0
+      _modCritDamageMultiplierPercents: 0
+      _iconPath: hero1_skill4
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -210,6 +210,12 @@ public class UnitModelView : MonoBehaviour {
 		StartCoroutine(DeathAnimationEndWaiter(onAnimationEnd));
 	}
 
+	public void PlayWinAnimation() {
+		//TODO: win animation
+		_animator.speed = 0f;
+		_animator.StopPlayback();
+	}
+
 	private IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
 		yield return null;
 		yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);

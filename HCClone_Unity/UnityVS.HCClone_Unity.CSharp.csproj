@@ -168,6 +168,7 @@
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightCamera.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightGraphics.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightManager.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Fight\FightStatus.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\CityConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\ItemsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\MissionsConfig.cs" />

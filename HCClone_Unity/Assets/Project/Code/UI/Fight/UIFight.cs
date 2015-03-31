@@ -23,6 +23,8 @@ public class UIFight : MonoBehaviour {
 	private Button _btnPause;
 	[SerializeField]
 	private Button _btnWithdraw;
+	[SerializeField]
+	private Button _btnNextMap;
 
 	[SerializeField]
 	private Button _btnAbility1;
@@ -35,8 +37,30 @@ public class UIFight : MonoBehaviour {
 	[SerializeField]
 	private Button _btnAbility5;
 
+	public void Awake() {
+		EventsAggregator.Fight.AddListener(EFightEvent.MapComplete, OnMapComplete);
+	}
+
 	public void Start() {
 		_btnPause.onClick.AddListener(FightManager.SceneInstance.TogglePause);
 		_btnWithdraw.onClick.AddListener(FightManager.SceneInstance.Withdraw);
+		_btnNextMap.onClick.AddListener(NextMap);
+
+		_btnNextMap.gameObject.SetActive(false);
+	}
+
+	public void OnDestroy() {
+		EventsAggregator.Fight.RemoveListener(EFightEvent.MapComplete, OnMapComplete);
+	}
+
+	private void NextMap() {
+		_btnNextMap.gameObject.SetActive(false);
+		FightManager.SceneInstance.NextMap();
+	}
+
+	private void OnMapComplete() {
+		if (!FightManager.SceneInstance.IsLastMap) {
+			_btnNextMap.gameObject.SetActive(true);
+		}
 	}
 }

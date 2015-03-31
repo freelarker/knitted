@@ -35,11 +35,19 @@ public class FightManager : MonoBehaviour {
 		get { return _ui; }
 	}
 
+	private EFightStatus _status = EFightStatus.None;
+	public EFightStatus Status {
+		get { return _status; }
+	}
+
 	private FightGraphics _graphics = new FightGraphics();
 	private FightLogger _logger = new FightLogger();
 
 	private MissionData _currentMissionData = null;
 	private int _currentMapIndex = 0;
+	public bool IsLastMap {
+		get { return _currentMissionData.MapsCount <= _currentMapIndex + 1; }
+	}
 
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
 		get { return _graphics.AllyUnits; }
@@ -107,11 +115,15 @@ public class FightManager : MonoBehaviour {
 
 	#region map start
 	public void StartFightPreparations() {
+		_status = EFightStatus.Preparation;
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
 		LoadMap();
 	}
 
 	public void LoadMap() {
+		_graphics.Unload(false);
+		_logger.Clear();
+
 		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
 		_graphics.Load(mapData);
 		InitializeUnits(mapData);
@@ -211,6 +223,8 @@ public class FightManager : MonoBehaviour {
 	private IEnumerator RunUnits() {
 		yield return null;
 
+		_status = EFightStatus.InProgress;
+
 		//WARNING! temp
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
 			if (_graphics.AllyUnits[i] != null) {
@@ -226,6 +240,8 @@ public class FightManager : MonoBehaviour {
 
 	#region maps switch
 	public void Withdraw() {
+		_status = EFightStatus.Finished;
+
 		Global.Instance.Network.SaveMissionFailResults();
 
 		_logger.Clear();
@@ -237,6 +253,8 @@ public class FightManager : MonoBehaviour {
 		Global.Instance.CurrentMission.Clear();
 
 		Clear();
+
+		_status = EFightStatus.None;
 
 		//TODO: load correct planet
 		Application.LoadLevel("Planet1");
@@ -253,17 +271,17 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void MapComlete() {
+		_status = EFightStatus.Finished;
+
 		EventsAggregator.Fight.Broadcast(EFightEvent.MapComplete);
 
-		_graphics.Unload(false);
-		
 		EventsAggregator.Network.AddListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
 		Global.Instance.Network.SendFightResults(_logger.ToJSON());
-
-		_logger.Clear();
 	}
 
 	private void MapFail() {
+		_status = EFightStatus.Finished;
+
 		EventsAggregator.Fight.Broadcast(EFightEvent.MapFail);
 
 		Debug.Log("Map fail");
@@ -325,22 +343,28 @@ public class FightManager : MonoBehaviour {
 
 	#region pause
 	public void Pause() {
+		_status = EFightStatus.Paused;
+
 		_isPaused = true;
 		EventsAggregator.Fight.Broadcast(EFightEvent.Pause);
 		Time.timeScale = 0;
 	}
 
 	public void Resume() {
+		_status = EFightStatus.InProgress;
+
 		_isPaused = false;
 		EventsAggregator.Fight.Broadcast(EFightEvent.Resume);
 		Time.timeScale = 1;
 	}
 
 	public void TogglePause() {
-		if (!_isPaused) {
-			Pause();
-		} else {
-			Resume();
+		if (_status == EFightStatus.InProgress) {
+			if (!_isPaused) {
+				Pause();
+			} else {
+				Resume();
+			}
 		}
 	}
 	#endregion
@@ -368,8 +392,12 @@ public class FightManager : MonoBehaviour {
 	private void OnFightResultsCheckServerResponse(bool checkResult) {
 		EventsAggregator.Network.RemoveListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
 
+		if (IsLastMap) {
+			MissionComplete();
+		}
+
 		if (checkResult) {
-			NextMap();
+			//NextMap();
 		} else {
 			//TODO: cripped fight results - show message and return to city without saving fight results
 		}

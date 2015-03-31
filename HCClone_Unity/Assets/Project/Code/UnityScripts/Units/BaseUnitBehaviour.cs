@@ -154,7 +154,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void UseSkill(ESkillKey skillKey) {
-		if (_skills.ContainsKey(skillKey) && _skills[skillKey] != null) {
+		if (FightManager.SceneInstance.Status == EFightStatus.InProgress && _skills.ContainsKey(skillKey) && _skills[skillKey] != null) {
 			_skills[skillKey].Use(this);
 		}
 	}
@@ -227,8 +227,6 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	private void OnMapEnd() {
-		_model.StopCurrentAnimation();
-
 		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
 			UnitData.ActiveSkills.ActiveSkills[i].Break();
 		}
@@ -240,6 +238,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		StopTargetAttack(true);
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);
+
+		_model.PlayWinAnimation();
 	}
 
 	private IEnumerator AttackTarget() {

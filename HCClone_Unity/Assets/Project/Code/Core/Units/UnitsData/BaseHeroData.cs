@@ -9,14 +9,14 @@ public class  BaseHeroData : BaseUnitData {
 	}
 
 	[SerializeField]
-	protected int _baseAggroCrystalsPerAttack = 0;	//base aggro crystals hero receives per attack (without upgrades and level-ups)
-	public int BaseAggroCrystalPerAttack {
+	protected float _baseAggroCrystalsPerAttack = 0;	//base aggro crystals hero receives per attack (without upgrades and level-ups)
+	public float BaseAggroCrystalPerAttack {
 		get { return _baseAggroCrystalsPerAttack; }
 	}
 
 	[SerializeField]
-	protected int _baseAggroCrystalsMaximum = 0;	//base aggro crystals cap (without upgrades and level-ups)
-	public int BaseAggroCrystalsMaximum {
+	protected float _baseAggroCrystalsMaximum = 0;	//base aggro crystals cap (without upgrades and level-ups)
+	public float BaseAggroCrystalsMaximum {
 		get { return _baseAggroCrystalsMaximum; }
 	}
 

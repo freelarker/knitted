@@ -22,13 +22,13 @@ public class BaseHero : BaseUnit {
 
 	public int Leadership { get; private set; }	//hero leadership after all upgrades and level-ups
 	public int Experience { get; private set; }	//hero experience
-	public int AggroCrystalsMaximum { get; private set; }	//aggro crystals cap after all upgrages and level-ups
-	private int _aggroCrystals = 0;	//aggro crystals amount after all upgrades and level-ups
-	public int AggroCrystals {
+	public float AggroCrystalsMaximum { get; private set; }	//aggro crystals cap after all upgrages and level-ups
+	private float _aggroCrystals = 0;	//aggro crystals amount after all upgrades and level-ups
+	public float AggroCrystals {
 		get { return _aggroCrystals; }
 		private set {
 			_aggroCrystals = (value < 0 ? 0 : (value > AggroCrystalsMaximum ? AggroCrystalsMaximum : value));
-			EventsAggregator.Units.Broadcast<int, int>(EUnitEvent.AggroCrystalsUpdate, _aggroCrystals, AggroCrystalsMaximum);
+			EventsAggregator.Units.Broadcast<float, float>(EUnitEvent.AggroCrystalsUpdate, _aggroCrystals, AggroCrystalsMaximum);
 		}
 	}
 

@@ -392,14 +392,13 @@ public class FightManager : MonoBehaviour {
 	private void OnFightResultsCheckServerResponse(bool checkResult) {
 		EventsAggregator.Network.RemoveListener<bool>(ENetworkEvent.FightDataCheckResponse, OnFightResultsCheckServerResponse);
 
-		if (IsLastMap) {
-			MissionComplete();
+		if (!checkResult) {
+			//TODO: cripped fight results - show message and return to city without saving fight results
+			return;
 		}
 
-		if (checkResult) {
-			//NextMap();
-		} else {
-			//TODO: cripped fight results - show message and return to city without saving fight results
+		if (IsLastMap) {
+			MissionComplete();
 		}
 	}
 	#endregion

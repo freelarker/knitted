@@ -53,8 +53,14 @@ public class UIWindowBattleDefeat : UIWindow {
 	}
 
 	private void OnBtnReplayClick() {
-		UIWindowBattlePreview wbp = UIWindowsManager.Instance.GetWindow<UIWindowBattlePreview>(EUIWindowKey.BattlePreview);
-		wbp.Show(_planetKey, _missionKey);
+		ScenesSwitcher.Instance.AddLevelLoadCallback(() => {
+			UIWindowBattlePreview wbp = UIWindowsManager.Instance.GetWindow<UIWindowBattlePreview>(EUIWindowKey.BattlePreview);
+			wbp.Show(_planetKey, _missionKey);
+		}, 2);
+
+		//TODO: load correct planet scene
+		FightManager.SceneInstance.Clear();
+		Application.LoadLevel("Planet1");
 	}
 
 	private void OnWindowHide(UIWindow window) {

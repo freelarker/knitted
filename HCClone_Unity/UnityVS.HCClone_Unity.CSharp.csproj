@@ -177,6 +177,7 @@
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\SkillsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\UnitsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Particles\TracerParticleController.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\ScenesSwitcher\ScenesSwitcher.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitAnimationState.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitModelView.cs" />

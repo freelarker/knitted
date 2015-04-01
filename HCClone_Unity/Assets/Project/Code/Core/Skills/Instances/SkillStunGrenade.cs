@@ -25,6 +25,11 @@ public class SkillStunGrenade : BaseUnitSkill {
 			return;
 		}
 
+		//check already in use
+		if (_isUsing) {
+			return;
+		}
+
 		base.Use(caster);
 		StartUsage();
 	}
@@ -39,7 +44,8 @@ public class SkillStunGrenade : BaseUnitSkill {
 			CreateGrenade();
 			if (_grenadeController != null && !_grenadeController.IsInFlight) {
 				(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
-				_lastUsageTime = Time.time;
+				StartCooldown();
+				_isUsing = true;
 
 				ThrowGrenade(target);
 			}
@@ -48,6 +54,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 
 	protected override void EndUsage() {
 		_caster = null;
+		_isUsing = false;
 
 		//TODO: start icon cooldown
 	}

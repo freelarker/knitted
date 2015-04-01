@@ -32,12 +32,6 @@ public class BaseHero : BaseUnit {
 		}
 	}
 
-
-	
-
-	//TODO: each action will cost different amount of aggro
-	//public int AggroPerAction { get; private set; }
-
 	public BaseHero(BaseHeroData data, int experience) : base(data) {
 		_data = data;
 		AddExperience(experience);
@@ -61,6 +55,10 @@ public class BaseHero : BaseUnit {
 
 	public void UseSkill(SkillParameters skill) {
 		AggroCrystals -= skill.AggroCrystalsCost;
+	}
+
+	public virtual void ResetAggro() {
+		AggroCrystals = 0;
 	}
 
 	protected override Dictionary<EUnitEqupmentSlot, EItemType[]> CreateSlotsData() {

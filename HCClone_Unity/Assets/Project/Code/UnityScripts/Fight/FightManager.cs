@@ -59,11 +59,6 @@ public class FightManager : MonoBehaviour {
 	private int _alliesCount = 0;
 	private int _enemiesCount = 0;
 
-	private bool _isPaused = false;
-	public bool IsPaused {
-		get { return _isPaused; }
-	}
-
 	public void Awake() {
 		_sceneInstance = this;
 
@@ -107,6 +102,7 @@ public class FightManager : MonoBehaviour {
 		_logger.Clear();
 
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
+		Global.Instance.Player.Heroes.Current.ResetAggro();
 
 		Clear();
 	}
@@ -117,6 +113,7 @@ public class FightManager : MonoBehaviour {
 	public void StartFightPreparations() {
 		_status = EFightStatus.Preparation;
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
+		Global.Instance.Player.Heroes.Current.ResetAggro();
 		LoadMap();
 	}
 
@@ -345,7 +342,6 @@ public class FightManager : MonoBehaviour {
 	public void Pause() {
 		_status = EFightStatus.Paused;
 
-		_isPaused = true;
 		EventsAggregator.Fight.Broadcast(EFightEvent.Pause);
 		Time.timeScale = 0;
 	}
@@ -353,18 +349,15 @@ public class FightManager : MonoBehaviour {
 	public void Resume() {
 		_status = EFightStatus.InProgress;
 
-		_isPaused = false;
 		EventsAggregator.Fight.Broadcast(EFightEvent.Resume);
 		Time.timeScale = 1;
 	}
 
 	public void TogglePause() {
 		if (_status == EFightStatus.InProgress) {
-			if (!_isPaused) {
-				Pause();
-			} else {
-				Resume();
-			}
+			Pause();
+		} else if (_status == EFightStatus.Paused) {
+			Resume();
 		}
 	}
 	#endregion

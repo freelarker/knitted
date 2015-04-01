@@ -61,7 +61,7 @@ MonoBehaviour:
     _iconName: hero_1
     _hexIconName: 
     _baseLeadership: 17
-    _baseAggroCrystalsPerAttack: .150000006
+    _baseAggroCrystalsPerAttack: 2.5
     _baseAggroCrystalsMaximum: 35
     _availableItemTypes: []
   - _key: 2

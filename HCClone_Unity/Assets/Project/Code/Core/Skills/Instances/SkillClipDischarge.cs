@@ -15,8 +15,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 		}
 
 		//check aggro price
-		BaseHero heroData = caster.UnitData as BaseHero;
-		if (heroData.AggroCrystals < _skillParameters.AggroCrystalsCost) {
+		if ((caster.UnitData as BaseHero).AggroCrystals < _skillParameters.AggroCrystalsCost) {
 			return;
 		}
 
@@ -31,7 +30,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 		}
 
 		//check already in use
-		if(_shotsLeft != -1) {
+		if (_isUsing) {
 			return;
 		}
 
@@ -50,8 +49,10 @@ public class SkillClipDischarge : BaseUnitSkill {
 	protected override void StartUsage() {
 		base.StartUsage();
 
+		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_shotsLeft = (int)_skillParameters.Duration;
 		_wfs = new WaitForSeconds(0.25f);			//duration betweeen attacks
+		StartCooldown();
 
 		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_caster.StopTargetAttack(true);
@@ -60,17 +61,16 @@ public class SkillClipDischarge : BaseUnitSkill {
 	}
 
 	protected override void EndUsage() {
-		base.EndUsage();
+		if (_caster != null) {
+			base.EndUsage();
 
-		BaseUnitBehaviour caster = _caster;
+			BaseUnitBehaviour caster = _caster;
 
-		GameTimer.Instance.FinishCoroutine(Shoot);
-		Clear();
-		_lastUsageTime = Time.time;
+			GameTimer.Instance.FinishCoroutine(Shoot);
+			Clear();
 
-		caster.StartTargetAttack();
-		
-		//TODO: start visual cooldown (on skill icon)
+			caster.StartTargetAttack();
+		}
 	}
 
 	protected override void Clear() {
@@ -89,7 +89,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 	}
 
 	public override void OnCasterTargetDeath() {
-		Break();
+		EndUsage();
 	}
 
 	#region shooting

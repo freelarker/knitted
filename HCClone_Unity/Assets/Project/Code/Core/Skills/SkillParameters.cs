@@ -9,8 +9,8 @@ public class SkillParameters {
 	}
 
 	[SerializeField]
-	protected int _aggroCrystalsCost = 0;
-	public int AggroCrystalsCost {
+	protected float _aggroCrystalsCost = 0f;
+	public float AggroCrystalsCost {
 		get { return _aggroCrystalsCost; }
 	}
 

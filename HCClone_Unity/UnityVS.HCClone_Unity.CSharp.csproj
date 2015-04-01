@@ -131,6 +131,7 @@
     <Compile Include="Assets\Project\Code\Events\NetworkEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\PlayerEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\SystemEvents.cs" />
+    <Compile Include="Assets\Project\Code\Events\UIEvents.cs" />
     <Compile Include="Assets\Project\Code\Events\UnitEvents.cs" />
     <Compile Include="Assets\Project\Code\Grid\HCCCell.cs" />
     <Compile Include="Assets\Project\Code\Grid\HCCGridController.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Assets\Project\Code\UI\Fight\UIFight.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UIHeroAggro.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UIHeroSkillButton.cs" />
+    <Compile Include="Assets\Project\Code\UI\Fight\UIHeroSkillButtonCooldown.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UIHeroSkills.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UnitUI.cs" />
     <Compile Include="Assets\Project\Code\UI\MissionSelect\UIMissionIcon.cs" />

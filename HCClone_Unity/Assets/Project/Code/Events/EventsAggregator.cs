@@ -16,4 +16,7 @@
 
 	private static EventManager<ECityEvent> _city = new EventManager<ECityEvent>();
 	public static EventManager<ECityEvent> City { get { return _city; } }
+
+	private static EventManager<EUIEvent> _ui = new EventManager<EUIEvent>();
+	public static EventManager<EUIEvent> UI { get { return _ui; } }
 }

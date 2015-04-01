@@ -24,7 +24,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 		}
 
 		//check already in use
-		if (_shotsLeft != -1) {
+		if (_isUsing) {
 			return;
 		}
 
@@ -54,7 +54,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 
 		EventsAggregator.Fight.RemoveListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 
-		//TODO: start icon cooldown
+		StartCooldown();
 	}
 
 	protected override void Clear() {

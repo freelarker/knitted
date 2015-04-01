@@ -5,8 +5,9 @@ public abstract class BaseUnitSkill {
 		get { return _skillParameters; }
 	}
 
-	protected BaseUnitBehaviour _caster;
+	protected BaseUnitBehaviour _caster = null;
 
+	protected bool _isUsing = false;
 	protected float _lastUsageTime = 0f;
 
 	public BaseUnitSkill(SkillParameters skillParameters) {
@@ -19,19 +20,22 @@ public abstract class BaseUnitSkill {
 
 	public virtual void Break() {
 		_caster.UnitData.ActiveSkills.UnregisterSkill(this);
+		_isUsing = false;
 	}
 
 	protected virtual void StartUsage() {
 		_caster.UnitData.ActiveSkills.RegisterSkill(this);
+		_isUsing = true;
 	}
 
 	protected virtual void EndUsage() {
 		_caster.UnitData.ActiveSkills.UnregisterSkill(this);
+		_isUsing = false;
 	}
 
 	protected virtual void Clear() {
 		_caster = null;
-		_lastUsageTime = 0f;
+		_isUsing = false;
 	}
 
 	public virtual void OnCasterStunned() { }
@@ -41,4 +45,11 @@ public abstract class BaseUnitSkill {
 	}
 
 	public virtual void OnCasterTargetDeath() { }
+
+	public virtual void StartCooldown() {
+		_lastUsageTime = UnityEngine.Time.time;
+		if (_caster != null && _caster.UnitData == Global.Instance.Player.Heroes.Current) {
+			EventsAggregator.UI.Broadcast<ESkillKey, float>(EUIEvent.StartSkillCooldown, _skillParameters.Key, _skillParameters.CooldownTime);
+		}
+	}
 }

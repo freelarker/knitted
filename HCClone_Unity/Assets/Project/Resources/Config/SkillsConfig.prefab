@@ -43,7 +43,7 @@ MonoBehaviour:
   - _heroKey: 1
     _skills:
     - _key: 1
-      _aggroCrystalsCost: 0
+      _aggroCrystalsCost: 5
       _targetSelectionRequired: 0
       _canCastOnSelf: 1
       _skillTarget: 2

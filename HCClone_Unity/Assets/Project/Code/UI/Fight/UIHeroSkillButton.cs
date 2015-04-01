@@ -7,15 +7,19 @@ public class UIHeroSkillButton : MonoBehaviour {
 	private Image _imgAbilitiIcon;
 	[SerializeField]
 	private Text _txtAbilityCost;
+	[SerializeField]
+	private UIHeroSkillButtonCooldown _cooldown;
 
 	private Button _buttonComponent;
 
 	private ESkillKey _skillKey = ESkillKey.None;
-	private int _aggroCost = 0;
+	private float _aggroCost = 0;
 
 	public void Awake() {
 		_buttonComponent = gameObject.GetComponent<Button>();
 		_buttonComponent.onClick.AddListener(OnClick);
+
+		EventsAggregator.UI.AddListener<ESkillKey, float>(EUIEvent.StartSkillCooldown, OnSkillCooldownStart);
 	}
 
 	public void OnDestroy() {
@@ -23,6 +27,8 @@ public class UIHeroSkillButton : MonoBehaviour {
 			UIResourcesManager.Instance.FreeResource(_imgAbilitiIcon.sprite);
 			_imgAbilitiIcon.sprite = null;
 		}
+
+		EventsAggregator.UI.RemoveListener<ESkillKey, float>(EUIEvent.StartSkillCooldown, OnSkillCooldownStart);
 	}
 
 	public void Setup(SkillParameters skillParams) {
@@ -47,6 +53,12 @@ public class UIHeroSkillButton : MonoBehaviour {
 			EventsAggregator.Units.Broadcast<ESkillKey>(EUnitEvent.SkillUsage, _skillKey);
 		} else {
 			//TODO: play some red blink animation (unable to cast ability)
+		}
+	}
+
+	private void OnSkillCooldownStart(ESkillKey skillKey, float duration) {
+		if (skillKey == _skillKey) {
+			_cooldown.StartCooldown(duration);
 		}
 	}
 }

@@ -27,7 +27,8 @@ public class ScenesSwitcher : MonoBehaviourSingleton<ScenesSwitcher> {
 		}
 	}
 
-	public void OnDestroy() {
+	public override void OnDestroy() {
+		base.OnDestroy();
 		StopAllCoroutines();
 		_loadActionsList.Clear();
 	}

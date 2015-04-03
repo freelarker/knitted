@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 406820}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base HumanLPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 406822}
   - 137: {fileID: 13706820}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_3_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 406824}
   - 137: {fileID: 13706822}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_3_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 406826}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base HumanRPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - 4: {fileID: 406828}
   - 95: {fileID: 9506820}
   - 114: {fileID: 11406820}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - 114: {fileID: 11433380}
   - 114: {fileID: 11433378}
   - 114: {fileID: 11433376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy_Jawa2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 481118}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LPalmBoneFix
   m_TagString: Untagged
   m_Icon: {fileID: 0}

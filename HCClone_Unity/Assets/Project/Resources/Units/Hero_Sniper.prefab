@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11400952}
   - 114: {fileID: 11400950}
   - 114: {fileID: 11400948}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hero_Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 426298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base HumanLPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 426300}
   - 137: {fileID: 13726298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hero_1_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 426302}
   - 137: {fileID: 13726300}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BodyTopology
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 426304}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base HumanRPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - 4: {fileID: 426306}
   - 95: {fileID: 9526298}
   - 114: {fileID: 11426298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hero_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 494234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LPalmBoneFix
   m_TagString: Untagged
   m_Icon: {fileID: 0}

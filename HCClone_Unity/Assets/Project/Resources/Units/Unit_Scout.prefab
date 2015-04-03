@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11404314}
   - 114: {fileID: 11404312}
   - 114: {fileID: 11404310}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Unit_Scout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 439102}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LPalmBoneFix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 487524}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base HumanLPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 487526}
   - 137: {fileID: 13787524}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_5_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 487528}
   - 137: {fileID: 13787526}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_5_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 487530}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base HumanRPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - 4: {fileID: 487532}
   - 95: {fileID: 9587524}
   - 114: {fileID: 11487524}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}

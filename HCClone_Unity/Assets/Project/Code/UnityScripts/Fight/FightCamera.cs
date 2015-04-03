@@ -42,4 +42,9 @@ public static class FightCamera {
 	public static void AdaptCanvas(float defaultWidth, Canvas canvasBG) {
 		canvasBG.scaleFactor = Screen.width / defaultWidth;
 	}
+
+	public static void AdaptDialog(float defaultWidth, Transform dialogRoot) {
+		float scale = Screen.width / defaultWidth;
+		dialogRoot.localScale = new Vector3(scale, scale, scale);
+	}
 }

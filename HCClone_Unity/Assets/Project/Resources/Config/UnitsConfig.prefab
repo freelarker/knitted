@@ -62,7 +62,7 @@ MonoBehaviour:
     _hexIconName: 
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 2.5
-    _baseAggroCrystalsMaximum: 35
+    _baseAggroCrystalsMaximum: 10
     _availableItemTypes: []
   - _key: 2
     _baseHealth: 100

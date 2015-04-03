@@ -49,6 +49,9 @@ public class FightManager : MonoBehaviour {
 		get { return _currentMissionData.MapsCount <= _currentMapIndex + 1; }
 	}
 
+	public BaseUnitBehaviour AllyHero {
+		get { return _graphics.AllyUnits[_graphics.AllyUnits.Length - 1]; }
+	}
 	public ArrayRO<BaseUnitBehaviour> AllyUnits {
 		get { return _graphics.AllyUnits; }
 	}
@@ -124,6 +127,7 @@ public class FightManager : MonoBehaviour {
 		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
 		_graphics.Load(mapData);
 		InitializeUnits(mapData);
+		PlayFightDialog();
 	}
 
 	private void InitializeUnits(MissionMapData mapData) {
@@ -138,8 +142,6 @@ public class FightManager : MonoBehaviour {
 		InitializeUnitsData(mapData);
 		InitializeUnitsPositions(_graphics.AllyUnits, _allySpawnPoints, _allyUnitsRoot);
 		InitializeUnitsPositions(_graphics.EnemyUnits, _enemySpawnPoints, _enemyUnitsRoot);
-
-		StartCoroutine(RunUnits());
 	}
 
 	private void InitializeUnitsData(MissionMapData mapData) {
@@ -232,6 +234,16 @@ public class FightManager : MonoBehaviour {
 		for (int i = 0; i < _graphics.EnemyUnits.Length; i++) {
 			_graphics.EnemyUnits[i].Run();
 		}
+	}
+	#endregion
+
+	#region dialogues
+	private void PlayFightDialog() {
+		UnitDialogs.Instance.Play(_currentMissionData.Key, OnFightDialogPlayed);
+	}
+
+	private void OnFightDialogPlayed() {
+		StartCoroutine(RunUnits());
 	}
 	#endregion
 

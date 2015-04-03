@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 410098}
   - 114: {fileID: 11492176}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: W_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 410100}
   - 33: {fileID: 3310100}
   - 23: {fileID: 2310100}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: gun_blaster_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 415774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tracer_root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - 198: {fileID: 19831152}
   - 199: {fileID: 19931152}
   - 114: {fileID: 11431152}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: P_TracerGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -28,6 +28,11 @@ public class EditorMenu : MonoBehaviour {
 		Selection.activeObject = InstantiateSingletonPrefab<CityConfig>();
 	}
 
+	[MenuItem("HCClone/Config/Fight dialogs config")]
+	public static void InstantiateFightDialogsConfig() {
+		Selection.activeObject = InstantiateSingletonPrefab<UnitDialogs>();
+	}
+
 	private static GameObject InstantiateSingletonPrefab<T>() where T : MonoBehaviour {
 		GameObject goData = null;
 		T data = (T)FindObjectOfType(typeof(T));

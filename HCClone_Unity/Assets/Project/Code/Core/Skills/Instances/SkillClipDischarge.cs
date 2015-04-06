@@ -42,7 +42,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 	public override void Break() {
 		base.Break();
 
-		GameTimer.Instance.FinishCoroutine(Shoot);
+		GameTimer.Instance.FinishCoroutine(Shoot());
 		Clear();
 	}
 
@@ -57,7 +57,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_caster.StopTargetAttack(true);
 
-		GameTimer.Instance.RunCoroutine(Shoot);
+		GameTimer.Instance.RunCoroutine(Shoot());
 	}
 
 	protected override void EndUsage() {
@@ -66,7 +66,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 
 			BaseUnitBehaviour caster = _caster;
 
-			GameTimer.Instance.FinishCoroutine(Shoot);
+			GameTimer.Instance.FinishCoroutine(Shoot());
 			Clear();
 
 			caster.StartTargetAttack();

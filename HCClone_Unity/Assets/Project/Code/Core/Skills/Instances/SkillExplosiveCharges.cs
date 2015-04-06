@@ -37,7 +37,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 	}
 
 	public override void Break() {
-		GameTimer.Instance.FinishCoroutine(SkillPrepare);
+		GameTimer.Instance.FinishCoroutine(SkillPrepare());
 		EndUsage();
 	}
 
@@ -49,7 +49,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 
 		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 
-		GameTimer.Instance.RunCoroutine(SkillPrepare);
+		GameTimer.Instance.RunCoroutine(SkillPrepare());
 	}
 
 	protected override void EndUsage() {

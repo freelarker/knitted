@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SkillStunGrenade : BaseUnitSkill {
 	private string _grenadePrefabPath = "Skills/StunGrenade_grenade";
@@ -47,7 +48,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 				StartCooldown();
 				_isUsing = true;
 
-				ThrowGrenade(target);
+				GameTimer.Instance.RunCoroutine(ThrowGrenade(target));
 			}
 		}
 	}
@@ -55,8 +56,6 @@ public class SkillStunGrenade : BaseUnitSkill {
 	protected override void EndUsage() {
 		_caster = null;
 		_isUsing = false;
-
-		//TODO: start icon cooldown
 	}
 
 	public override void OnCasterStunned() { }
@@ -90,11 +89,17 @@ public class SkillStunGrenade : BaseUnitSkill {
 			_grenadeView.transform.SetParent(_caster.CachedTransform.parent);
 		}
 		_grenadeView.transform.position = _caster.ModelView.WeaponBoneRight.position;
+		_grenadeView.gameObject.SetActive(false);
 	}
 
-	private void ThrowGrenade(BaseUnitBehaviour target) {
+	private IEnumerator ThrowGrenade(BaseUnitBehaviour target) {
+		_caster.StopTargetAttack(false);
+		_caster.ModelView.PlaySkillAnimation(ESkillKey.StunGrenade);
+
+		yield return new WaitForSeconds(0.35f);
+
 		_grenadeView.Throw(Mathf.Max(Vector3.Distance(_caster.CachedTransform.position, target.CachedTransform.position) * 0.1f, _minThrowTime), _grenadeView.transform.position, target.CachedTransform.position, 2f, OnGrenadeTargetReached);
-		//TODO: play throw animation
+		_caster.StartTargetAttack();
 	}
 
 	private void OnGrenadeTargetReached(Vector3 position) {

@@ -85,12 +85,12 @@ public class GameTimer : MonoBehaviourSingleton<GameTimer> {
 	#endregion
 
 	#region coroutines for external usage
-	public void RunCoroutine(Func<IEnumerator> func) {
-		StartCoroutine(func());
+	public void RunCoroutine(IEnumerator func) {
+		StartCoroutine(func);
 	}
 
-	public void FinishCoroutine(Func<IEnumerator> func) {
-		StopCoroutine(func());
+	public void FinishCoroutine(IEnumerator func) {
+		StopCoroutine(func);
 	}
 	#endregion
 }

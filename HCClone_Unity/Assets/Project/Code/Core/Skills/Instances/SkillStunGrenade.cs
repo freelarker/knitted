@@ -4,7 +4,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 	private string _grenadePrefabPath = "Skills/StunGrenade_grenade";
 	private float _minThrowTime = 0.65f;
 
-	private StunGrenadeController _grenadeController = null;
+	private SkillStunGrenadeView _grenadeView = null;
 
 	public SkillStunGrenade(SkillParameters skillParameters) : base(skillParameters) { }
 
@@ -42,7 +42,7 @@ public class SkillStunGrenade : BaseUnitSkill {
 		BaseUnitBehaviour target = GetFarthestOpponent();
 		if (target != null) {
 			CreateGrenade();
-			if (_grenadeController != null && !_grenadeController.IsInFlight) {
+			if (_grenadeView != null && !_grenadeView.IsInFlight) {
 				(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 				StartCooldown();
 				_isUsing = true;
@@ -81,19 +81,19 @@ public class SkillStunGrenade : BaseUnitSkill {
 	}
 
 	private void CreateGrenade() {
-		if (_grenadeController == null) {
+		if (_grenadeView == null) {
 			GameObject grenadeGO = GameObject.Instantiate(Resources.Load(_grenadePrefabPath) as GameObject) as GameObject;
-			_grenadeController = grenadeGO.GetComponent<StunGrenadeController>();
-			if (_grenadeController == null) {
-				grenadeGO.AddComponent<StunGrenadeController>();
+			_grenadeView = grenadeGO.GetComponent<SkillStunGrenadeView>();
+			if (_grenadeView == null) {
+				grenadeGO.AddComponent<SkillStunGrenadeView>();
 			}
-			_grenadeController.transform.SetParent(_caster.CachedTransform.parent);
+			_grenadeView.transform.SetParent(_caster.CachedTransform.parent);
 		}
-		_grenadeController.transform.position = _caster.ModelView.WeaponBoneRight.position;
+		_grenadeView.transform.position = _caster.ModelView.WeaponBoneRight.position;
 	}
 
 	private void ThrowGrenade(BaseUnitBehaviour target) {
-		_grenadeController.Throw(Mathf.Max(Vector3.Distance(_caster.CachedTransform.position, target.CachedTransform.position) * 0.1f, _minThrowTime), _grenadeController.transform.position, target.CachedTransform.position, 2f, OnGrenadeTargetReached);
+		_grenadeView.Throw(Mathf.Max(Vector3.Distance(_caster.CachedTransform.position, target.CachedTransform.position) * 0.1f, _minThrowTime), _grenadeView.transform.position, target.CachedTransform.position, 2f, OnGrenadeTargetReached);
 		//TODO: play throw animation
 	}
 

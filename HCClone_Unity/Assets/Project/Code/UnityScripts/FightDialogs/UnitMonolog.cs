@@ -22,7 +22,7 @@ public class UnitMonolog : MonoBehaviour {
 
 	public void Awake() {
 		_characterCamera.transform.parent = null;
-		_canvasOverlay.transform.parent = null;
+		_canvasOverlay.transform.SetParent(null, false);
 
 		_rTex = new RenderTexture(512, 512, 24);
 		_rTex.antiAliasing = 1;

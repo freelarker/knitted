@@ -2,6 +2,10 @@
 using UnityEngine;
 
 public class SkillExplosiveCharges : BaseUnitSkill {
+	private string _viewPrefabPath = "Skills/ExplosiveCharges_hitEffect";
+
+	private SkillExplosiveChargesView _skillView = null;
+
 	public SkillExplosiveCharges(SkillParameters skillParameters) : base(skillParameters) { }
 
 	private int _shotsLeft = -1;
@@ -50,6 +54,7 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 
 	protected override void EndUsage() {
 		base.EndUsage();
+
 		Clear();
 
 		EventsAggregator.Fight.RemoveListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
@@ -59,6 +64,11 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 
 	protected override void Clear() {
 		base.Clear();
+
+		if (_skillView != null) {
+			_skillView.End();
+			_skillView = null;
+		}
 
 		_shotsLeft = -1;
 	}
@@ -79,6 +89,12 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 		
 		//TODO: play preparation animation
 		yield return new WaitForSeconds(_skillParameters.CastTime);
+
+		GameObject skillViewGO = GameObject.Instantiate(Resources.Load(_viewPrefabPath) as GameObject) as GameObject;
+		if (skillViewGO != null) {
+			_skillView = skillViewGO.GetComponent<SkillExplosiveChargesView>();
+			_skillView.Run(_caster);
+		}
 
 		_caster.CastingSkill = false;
 		if (_caster.UnitPathfinder.CurrentState == EUnitMovementState.WatchEnemy) {

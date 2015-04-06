@@ -95,9 +95,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 424274}
   - 20: {fileID: 2024276}
-  - 124: {fileID: 12424276}
-  - 92: {fileID: 9224276}
-  - 81: {fileID: 8124276}
   m_Layer: 0
   m_Name: CharacterCamera
   m_TagString: Untagged
@@ -308,20 +305,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 124260}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!81 &8124276
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124270}
-  m_Enabled: 1
---- !u!92 &9224276
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124270}
-  m_Enabled: 1
 --- !u!114 &11407322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -543,8 +526,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -590,13 +573,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!124 &12424276
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124270}
-  m_Enabled: 1
 --- !u!222 &22224270
 CanvasRenderer:
   m_ObjectHideFlags: 1

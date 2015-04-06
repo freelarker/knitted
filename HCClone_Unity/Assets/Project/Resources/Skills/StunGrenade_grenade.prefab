@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404d68f888e74d54097fe11b50be5c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _particlesPrefab: {fileID: 19800002, guid: 611772e351016a94e80bb6d40624a75d, type: 2}
 --- !u!135 &13562888
 SphereCollider:
   m_ObjectHideFlags: 1

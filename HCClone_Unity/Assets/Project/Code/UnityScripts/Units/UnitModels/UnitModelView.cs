@@ -68,6 +68,10 @@ public class UnitModelView : MonoBehaviour {
 		set { _runAnimationSpeed = value / _defaultMovementSpeed; }
 	}
 
+	public float ModelHeight {
+		get { return _bodyArmorMeshRenderer.bounds.size.y + _headArmorMeshRenderer.bounds.size.y; }
+	}
+
 	public void Awake() {
 		if (_animator == null) {
 			_animator = gameObject.GetComponent<Animator>();

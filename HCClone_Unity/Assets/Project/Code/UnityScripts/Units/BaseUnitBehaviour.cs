@@ -44,8 +44,11 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		get { return _cachedTransform; }
 	}
 
+	public float DistanceToTarget {
+		get { return _targetUnit != null ? Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position) : 0f; }
+	}
 	public bool TargetInRange {
-		get { return _targetUnit != null && Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position) <= _unitData.AttackRange; }
+		get { return _targetUnit != null && DistanceToTarget <= _unitData.AttackRange; }
 	}
 
 	private Dictionary<ESkillKey, BaseUnitSkill> _skills;
@@ -245,7 +248,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	private IEnumerator AttackTarget() {
 		_lastAttackTime = Time.time;
 
-		_model.PlayAttackAnimation(Vector3.Distance(_cachedTransform.position, _targetUnit.CachedTransform.position));
+		_model.PlayAttackAnimation(DistanceToTarget);
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
 
 		if (_unitPathfinder.CurrentState == EUnitMovementState.WatchEnemy) {

@@ -11,5 +11,9 @@
 	GetDamage_2,
 
 	Death_FallForward = 31,
-	Death_FallBack
+	Death_FallBack,
+
+	Skill_ClipDischarge = 1000001,
+	Skill_ExplosiveCharges,
+	Skill_StunGrenade
 }

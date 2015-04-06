@@ -5,40 +5,40 @@ using System.Collections;
 
 public class UnitModelView : MonoBehaviour {
 	[SerializeField]
-	private SkinnedMeshRenderer _headArmorMeshRenderer;
+	protected SkinnedMeshRenderer _headArmorMeshRenderer;
 	[SerializeField]
-	private SkinnedMeshRenderer _bodyArmorMeshRenderer;
+	protected SkinnedMeshRenderer _bodyArmorMeshRenderer;
 
 	[SerializeField]
-	private Transform _weaponBoneRight;
+	protected Transform _weaponBoneRight;
 	public Transform WeaponBoneRight {
 		get { return _weaponBoneRight; }
 	}
 
 	[SerializeField]
-	private Transform _weaponBoneLeft;
+	protected Transform _weaponBoneLeft;
 	public Transform WeaponBoneLeft {
 		get { return _weaponBoneLeft; }
 	}
 
 	[SerializeField]
-	private Animator _animator;
+	protected Animator _animator;
 	public Animator Animator {
 		get { return _animator; }
 	}
 
-	private float _gunStanceOffset = 0.44f;
-	private float _rifleStanceOffset = 0.13f;
-	private float _weaponStanceOffset = 0f;
+	protected float _gunStanceOffset = 0.44f;
+	protected float _rifleStanceOffset = 0.13f;
+	protected float _weaponStanceOffset = 0f;
 
-	private WeaponView _weaponViewRH = null;
-	private WeaponView _weaponViewLH = null;
+	protected WeaponView _weaponViewRH = null;
+	protected WeaponView _weaponViewLH = null;
 
-	private EUnitAnimationState _animRun = EUnitAnimationState.Run_Gun;
-	private EUnitAnimationState _animAttack = EUnitAnimationState.Strike_Gun;
-	private EUnitAnimationState _animDeath = EUnitAnimationState.Death_FallForward;
+	protected EUnitAnimationState _animRun = EUnitAnimationState.Run_Gun;
+	protected EUnitAnimationState _animAttack = EUnitAnimationState.Strike_Gun;
+	protected EUnitAnimationState _animDeath = EUnitAnimationState.Death_FallForward;
 
-	private Dictionary<EUnitAnimationState, string> _animationClipName = new Dictionary<EUnitAnimationState, string>() {
+	protected Dictionary<EUnitAnimationState, string> _animationClipName = new Dictionary<EUnitAnimationState, string>() {
 		{ EUnitAnimationState.Run_Gun, "Run_Gun" },
 		{ EUnitAnimationState.Run_Rifle, "Run_Rifle" },
 		{ EUnitAnimationState.GetDamage_1, "GetDamage_1" },
@@ -49,7 +49,7 @@ public class UnitModelView : MonoBehaviour {
 		{ EUnitAnimationState.Death_FallBack, "Death_FallBack" }
 	};
 
-	private Dictionary<EUnitAnimationState, int> _mainAnimationState = new Dictionary<EUnitAnimationState, int>() {
+	protected Dictionary<EUnitAnimationState, int> _mainAnimationState = new Dictionary<EUnitAnimationState, int>() {
 		{ EUnitAnimationState.Run_Gun, 1 },
 		{ EUnitAnimationState.Run_Rifle, 2 },
 		{ EUnitAnimationState.Strike_Gun, 11 },
@@ -58,17 +58,17 @@ public class UnitModelView : MonoBehaviour {
 		{ EUnitAnimationState.Death_FallBack, 32 }
 	};
 
-	private float _runAnimationSpeed = 1f;	//how fast movement animation will play
-	private float _attackAnimationSpeed = 1f;	//how fast attack animation will play
-	//private float _hitAnimationSpeed = 1f;	//how fast hit animation will play
-	private float _deathAnimationSpeed = 1f;	//how death movement animation will play
+	protected float _runAnimationSpeed = 1f;	//how fast movement animation will play
+	protected float _attackAnimationSpeed = 1f;	//how fast attack animation will play
+	//protected float _hitAnimationSpeed = 1f;	//how fast hit animation will play
+	protected float _deathAnimationSpeed = 1f;	//how death movement animation will play
 
-	private float _defaultMovementSpeed = 1.5f;	//how fast (in unity meters) unit will move with default animation speed
+	protected float _defaultMovementSpeed = 1.5f;	//how fast (in unity meters) unit will move with default animation speed
 	public float MovementSpeed {
 		set { _runAnimationSpeed = value / _defaultMovementSpeed; }
 	}
 
-	public float ModelHeight {
+	public virtual float ModelHeight {
 		get { return _bodyArmorMeshRenderer.bounds.size.y + _headArmorMeshRenderer.bounds.size.y; }
 	}
 
@@ -80,7 +80,7 @@ public class UnitModelView : MonoBehaviour {
 		_animDeath = (EUnitAnimationState)UnityEngine.Random.Range(_mainAnimationState[EUnitAnimationState.Death_FallForward], _mainAnimationState[EUnitAnimationState.Death_FallBack]);
 	}
 
-	public void SetWeaponType(EItemKey weaponRKey, EItemKey weaponLKey) {
+	public virtual void SetWeaponType(EItemKey weaponRKey, EItemKey weaponLKey) {
 		if (weaponRKey != EItemKey.None && weaponLKey != EItemKey.None) {
 			//TODO: setup dual animation
 		} else {
@@ -146,7 +146,7 @@ public class UnitModelView : MonoBehaviour {
 		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 	}
 
-	private void SwitchMesh(Mesh sourceMesh, Material sourceMaterial, SkinnedMeshRenderer target) {
+	protected void SwitchMesh(Mesh sourceMesh, Material sourceMaterial, SkinnedMeshRenderer target) {
 		target.sharedMesh = sourceMesh;
 		target.material = sourceMaterial;
 
@@ -172,6 +172,8 @@ public class UnitModelView : MonoBehaviour {
 			StopCurrentAnimation();
 		}
 	}
+
+	public virtual void PlaySkillAnimation(ESkillKey skillKey, params object[] data) { }
 
 	public void PlayRunAnimation() {
 		_animator.speed = _runAnimationSpeed;
@@ -220,7 +222,7 @@ public class UnitModelView : MonoBehaviour {
 		_animator.StopPlayback();
 	}
 
-	private IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
+	protected IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
 		yield return null;
 		yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
 		onAnimationEnd();

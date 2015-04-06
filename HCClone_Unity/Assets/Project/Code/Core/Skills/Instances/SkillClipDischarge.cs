@@ -51,7 +51,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 
 		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_shotsLeft = (int)_skillParameters.Duration;
-		_wfs = new WaitForSeconds(0.25f);			//duration betweeen attacks
+		_wfs = new WaitForSeconds(0.15f);			//duration betweeen attacks
 		StartCooldown();
 
 		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
@@ -94,6 +94,7 @@ public class SkillClipDischarge : BaseUnitSkill {
 
 	#region shooting
 	private IEnumerator Shoot() {
+		_caster.ModelView.PlaySkillAnimation(ESkillKey.ClipDischarge, _caster.DistanceToTarget);
 		while (_shotsLeft > 0) {
 			PerformShot();
 			_shotsLeft--;
@@ -106,7 +107,6 @@ public class SkillClipDischarge : BaseUnitSkill {
 	}
 
 	private void PerformShot() {
-		//TODO: play shot animation
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, _caster, _caster.TargetUnit);
 	}
 	#endregion

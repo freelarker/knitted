@@ -56,8 +56,8 @@ MonoBehaviour:
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
     - _slotName: 1
-      _itemKey: 1000002
-    _prefabName: Hero_Sniper
+      _itemKey: 1000001
+    _prefabName: Hero_Capral
     _iconName: hero_1
     _hexIconName: 
     _baseLeadership: 17

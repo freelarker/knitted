@@ -39,6 +39,7 @@ public class UnitModelView : MonoBehaviour {
 	protected EUnitAnimationState _animDeath = EUnitAnimationState.Death_FallForward;
 
 	protected Dictionary<EUnitAnimationState, string> _animationClipName = new Dictionary<EUnitAnimationState, string>() {
+		{ EUnitAnimationState.Idle, "Idle" },
 		{ EUnitAnimationState.Run_Gun, "Run_Gun" },
 		{ EUnitAnimationState.Run_Rifle, "Run_Rifle" },
 		{ EUnitAnimationState.GetDamage_1, "GetDamage_1" },
@@ -68,7 +69,7 @@ public class UnitModelView : MonoBehaviour {
 		set { _runAnimationSpeed = value / _defaultMovementSpeed; }
 	}
 
-	public virtual float ModelHeight {
+	public float ModelHeight {
 		get { return _bodyArmorMeshRenderer.bounds.size.y + _headArmorMeshRenderer.bounds.size.y; }
 	}
 
@@ -155,7 +156,7 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	#region animations
-	public void StopCurrentAnimation() {
+	public virtual void StopCurrentAnimation() {
 		if (_animator.GetInteger("MAS") == _mainAnimationState[_animAttack]) {
 			if (_weaponViewRH != null) {
 				_weaponViewRH.Stop();
@@ -167,21 +168,25 @@ public class UnitModelView : MonoBehaviour {
 		_animator.StopPlayback();
 	}
 
-	public void StopAttackAnimation() {
+	public virtual void StopAttackAnimation() {
 		if (_animator.GetInteger("MAS") == _mainAnimationState[_animAttack]) {
 			StopCurrentAnimation();
 		}
 	}
 
+	public virtual void PlayIdleAnimation() {
+		_animator.Play(_animationClipName[EUnitAnimationState.Idle]);
+	}
+
 	public virtual void PlaySkillAnimation(ESkillKey skillKey, params object[] data) { }
 
-	public void PlayRunAnimation() {
+	public virtual void PlayRunAnimation() {
 		_animator.speed = _runAnimationSpeed;
 		_animator.Play(_animationClipName[_animRun]);
 		_animator.SetInteger("MAS", _mainAnimationState[_animRun]);
 	}
 
-	public void PlayHitAnimation(int totalHealth, HitInfo hitInfo) {
+	public virtual void PlayHitAnimation(int totalHealth, HitInfo hitInfo) {
 		float healthState1 = totalHealth * 0.75f;
 		float healthState2 = totalHealth * 0.5f;
 		float healthState3 = totalHealth * 0.25f;
@@ -194,7 +199,7 @@ public class UnitModelView : MonoBehaviour {
 		}
 	}
 
-	public void PlayAttackAnimation(float distanceToTarget) {
+	public virtual void PlayAttackAnimation(float distanceToTarget) {
 		_animator.speed = _attackAnimationSpeed;
 		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 		_animator.SetInteger("MAS", _mainAnimationState[_animAttack]);
@@ -208,7 +213,7 @@ public class UnitModelView : MonoBehaviour {
 		}
 	}
 
-	public void PlayDeathAnimation(Action onAnimationEnd) {
+	public virtual void PlayDeathAnimation(Action onAnimationEnd) {
 		_animator.speed = _deathAnimationSpeed;
 		_animator.SetInteger("MAS", _mainAnimationState[_animDeath]);
 		_animator.Play(_animationClipName[_animDeath]);
@@ -216,7 +221,7 @@ public class UnitModelView : MonoBehaviour {
 		StartCoroutine(DeathAnimationEndWaiter(onAnimationEnd));
 	}
 
-	public void PlayWinAnimation() {
+	public virtual void PlayWinAnimation() {
 		//TODO: win animation
 		_animator.speed = 0f;
 		_animator.StopPlayback();

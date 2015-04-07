@@ -48,6 +48,7 @@ public class UnitPathfinding : MonoBehaviour {
 		_movementStateActions.Add(EUnitMovementState.MoveToPrepPoint, MoveToPreparationPoint);
 		_movementStateActions.Add(EUnitMovementState.MoveToAttackPoint, MoveToAttackPoint);
 		_movementStateActions.Add(EUnitMovementState.WatchEnemy, WatchEnemy);
+		_movementStateActions.Add(EUnitMovementState.WaklIntoSunset, MoveForward);
 
 		_cachedTransform = transform;
 		_cachedModelTransform = _model.transform;
@@ -65,9 +66,10 @@ public class UnitPathfinding : MonoBehaviour {
 		_nearestTargetBUB = null;
 		_onTargetReached = null;
 		StopAllCoroutines();
+		_model.transform.localRotation = Quaternion.identity;
 
 		if (full) {
-			_currentState = EUnitMovementState.None;
+			CurrentState = EUnitMovementState.None;
 		}
 	}
 
@@ -114,6 +116,11 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	#region movement
+	public void WalkIntoSunset() {
+		CurrentState = EUnitMovementState.WaklIntoSunset;
+		_model.PlayRunAnimation();
+	}
+
 	public void MoveToTarget(BaseUnitBehaviour self, ArrayRO<BaseUnitBehaviour> possibleTargets, Action<BaseUnitBehaviour> onTargetFound, Action<BaseUnitBehaviour> onTargetReached) {
 		Reset(false);
 
@@ -270,18 +277,12 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 
 		return result;
+	}
 
-		/*
-		if (_gridObject.Path.Count > 0) {
-			Vector3 pos = HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition);
-			_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, pos, Time.deltaTime * _speed);
-			if (Vector3.Distance(_cachedTransform.position, pos) < minDistance) {
-				_gridObject.PathPointReached();
-			}
-			return true;
-		}
-		return false;
-		*/
+	private void MoveForward() {
+		Vector3 destinationPoint = _cachedModelTransform.position + new Vector3(1f, 0f, 0f);
+		_cachedModelTransform.LookAt(destinationPoint);
+		_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, destinationPoint, Time.deltaTime * _speed);
 	}
 	#endregion
 

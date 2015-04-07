@@ -156,6 +156,15 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_unitPathfinder.MoveToTarget(this, _isAlly ? FightManager.SceneInstance.EnemyUnits : FightManager.SceneInstance.AllyUnits, OnTargetFound, OnTargetReached);
 	}
 
+	public void GoToMapEnd() {
+		_unitPathfinder.WalkIntoSunset();
+	}
+
+	public void StopAllActions() {
+		_unitPathfinder.Reset(true);
+		_model.PlayIdleAnimation();
+	}
+
 	public void UseSkill(ESkillKey skillKey) {
 		if (FightManager.SceneInstance.Status == EFightStatus.InProgress && _skills.ContainsKey(skillKey) && _skills[skillKey] != null) {
 			_skills[skillKey].Use(this);
@@ -243,6 +252,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_unitPathfinder.Reset(true);
 
 		_model.PlayWinAnimation();
+		_model.transform.LookAt(_model.transform.position + new Vector3(1f, 0f, 0f));
 	}
 
 	private IEnumerator AttackTarget() {

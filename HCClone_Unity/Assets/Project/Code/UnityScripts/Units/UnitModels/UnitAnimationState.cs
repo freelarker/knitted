@@ -13,6 +13,8 @@
 	Death_FallForward = 31,
 	Death_FallBack,
 
+	Win = 41,
+
 	Skill_ClipDischarge = 1000001,
 	Skill_ExplosiveCharges,
 	Skill_StunGrenade

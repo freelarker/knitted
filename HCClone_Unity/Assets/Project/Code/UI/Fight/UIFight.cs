@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIFight : MonoBehaviour {
@@ -25,17 +26,8 @@ public class UIFight : MonoBehaviour {
 	private Button _btnWithdraw;
 	[SerializeField]
 	private Button _btnNextMap;
-
 	[SerializeField]
-	private Button _btnAbility1;
-	[SerializeField]
-	private Button _btnAbility2;
-	[SerializeField]
-	private Button _btnAbility3;
-	[SerializeField]
-	private Button _btnAbility4;
-	[SerializeField]
-	private Button _btnAbility5;
+	private Image _imgFader;
 
 	public void Awake() {
 		EventsAggregator.Fight.AddListener(EFightEvent.MapComplete, OnMapComplete);
@@ -47,6 +39,8 @@ public class UIFight : MonoBehaviour {
 		_btnNextMap.onClick.AddListener(NextMap);
 
 		_btnNextMap.gameObject.SetActive(false);
+
+		HideFader();
 	}
 
 	public void OnDestroy() {
@@ -55,7 +49,7 @@ public class UIFight : MonoBehaviour {
 
 	private void NextMap() {
 		_btnNextMap.gameObject.SetActive(false);
-		FightManager.SceneInstance.NextMap();
+		FightManager.SceneInstance.PrepareMapSwitch();
 	}
 
 	private void OnMapComplete() {
@@ -63,4 +57,31 @@ public class UIFight : MonoBehaviour {
 			_btnNextMap.gameObject.SetActive(true);
 		}
 	}
+
+	#region fading
+	public void ShowFader(float duration) {
+		StartCoroutine(FadeRoutine(duration));
+	}
+
+	public void HideFader() {
+		_imgFader.enabled = false;
+	}
+
+	private IEnumerator FadeRoutine(float duration) {
+		float startTime = Time.time;
+		float endTime = startTime + duration;
+
+		Color color = _imgFader.color;
+		color.a = 0f;
+		_imgFader.color = color;
+
+		_imgFader.enabled = true;
+
+		while(Time.time < endTime) {
+			yield return null;
+			color.a = (Time.time - startTime) / duration;
+			_imgFader.color = color;
+		}
+	}
+	#endregion
 }

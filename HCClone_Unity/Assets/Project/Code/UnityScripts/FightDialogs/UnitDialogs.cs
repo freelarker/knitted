@@ -10,9 +10,9 @@ public class UnitDialogs : MonoBehaviourResourceSingleton<UnitDialogs> {
 	[SerializeField]
 	private UnitsDialogScene[] _data;
 
-	public UnitsDialogScene GetScene(EMissionKey missionKey) {
+	public UnitsDialogScene GetScene(EMissionKey missionKey, int mapIndex) {
 		for (int i = 0; i < _data.Length; i++) {
-			if (_data[i].MissionKey == missionKey) {
+			if (_data[i].MissionKey == missionKey && _data[i].MapIndex == mapIndex) {
 				return _data[i];
 			}
 		}
@@ -27,8 +27,8 @@ public class UnitDialogs : MonoBehaviourResourceSingleton<UnitDialogs> {
 	private Dictionary<string, UnitMonolog> _monologInstances = null;
 	private UnitMonolog _activeMonologInstance = null;
 
-	public void Play(EMissionKey missionKey, Action callback) {
-		UnitsDialogScene missionScene = GetScene(missionKey);
+	public void Play(EMissionKey missionKey, int mapIndex, Action callback) {
+		UnitsDialogScene missionScene = GetScene(missionKey, mapIndex);
 		if (missionScene == null) {
 			if (callback != null) {
 				callback();

@@ -4,5 +4,6 @@
 	MoveToPrepPoint,
 	MoveToAttackPoint,
 	WatchEnemy,
-	NoEnemy
+	NoEnemy,
+	WaklIntoSunset
 }

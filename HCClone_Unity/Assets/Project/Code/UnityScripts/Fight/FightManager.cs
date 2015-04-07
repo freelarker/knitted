@@ -110,8 +110,6 @@ public class FightManager : MonoBehaviour {
 		Clear();
 	}
 
-	//TODO: stop all skills
-
 	#region map start
 	public void StartFightPreparations() {
 		_status = EFightStatus.Preparation;
@@ -239,7 +237,7 @@ public class FightManager : MonoBehaviour {
 
 	#region dialogues
 	private void PlayFightDialog() {
-		UnitDialogs.Instance.Play(_currentMissionData.Key, OnFightDialogPlayed);
+		UnitDialogs.Instance.Play(_currentMissionData.Key, _currentMapIndex, OnFightDialogPlayed);
 	}
 
 	private void OnFightDialogPlayed() {
@@ -248,6 +246,30 @@ public class FightManager : MonoBehaviour {
 	#endregion
 
 	#region maps switch
+	public void PrepareMapSwitch() {
+		StartCoroutine(MapSwitchPreparationRoutine());
+	}
+
+	private IEnumerator MapSwitchPreparationRoutine() {
+		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
+			if (!_graphics.AllyUnits[i].UnitData.IsDead) {
+				_graphics.AllyUnits[i].GoToMapEnd();
+			}
+		}
+
+		_ui.ShowFader(2f);
+		yield return new WaitForSeconds(2f);
+
+		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
+			if (!_graphics.AllyUnits[i].UnitData.IsDead) {
+				_graphics.AllyUnits[i].StopAllActions();
+			}
+		}
+
+		NextMap();
+		_ui.HideFader();
+	}
+
 	public void Withdraw() {
 		_status = EFightStatus.Finished;
 

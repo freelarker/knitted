@@ -66,6 +66,8 @@ public abstract class MonoBehaviourResourceSingleton<T> : MonoBehaviour where T 
 	}
  
 	public virtual void OnDestroy () {
-		_applicationIsQuitting = true;
+		if (_instance != null) {
+			_applicationIsQuitting = true;
+		}
 	}
 }

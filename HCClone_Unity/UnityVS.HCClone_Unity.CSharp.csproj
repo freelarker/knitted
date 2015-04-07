@@ -220,6 +220,7 @@
     <None Include="Assets\JMO Assets\Cartoon FX\Shaders (Mobile)\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Invert.shader" />
     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
+    <None Include="Assets\Project\SHaders\Mobile_Diffise2Sided.shader" />
     <None Include="C:\Program Files (x86)\Unity 4.6.3\Data\UnityExtensions\Unity\GUISystem\4.6.3\UnityEngine.UI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />

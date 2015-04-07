@@ -5,10 +5,6 @@ public class HeroCapralModelView : UnitModelView {
 	[SerializeField]
 	private float _clipDischargeStanceOffset = 0f;
 
-	public override float ModelHeight {
-		get { return _bodyArmorMeshRenderer.bounds.size.y; }
-	}
-
 	public void Awake() {
 		base.Awake();
 

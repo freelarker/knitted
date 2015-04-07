@@ -73,7 +73,7 @@ MonoBehaviour:
       _targetSelectionRequired: 0
       _canCastOnSelf: 1
       _skillTarget: 2
-      _castTime: 3
+      _castTime: .699999988
       _cooldownTime: 5
       _resetAttackTimer: 1
       _duration: 6

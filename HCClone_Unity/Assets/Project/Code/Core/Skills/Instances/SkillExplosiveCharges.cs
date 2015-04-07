@@ -86,8 +86,8 @@ public class SkillExplosiveCharges : BaseUnitSkill {
 			_caster.StopTargetAttack(true);
 		}
 		_caster.CastingSkill = true;
-		
-		//TODO: play preparation animation
+
+		_caster.ModelView.PlaySkillAnimation(ESkillKey.ExplosiveCharges);
 		yield return new WaitForSeconds(_skillParameters.CastTime);
 
 		GameObject skillViewGO = GameObject.Instantiate(Resources.Load(_viewPrefabPath) as GameObject) as GameObject;

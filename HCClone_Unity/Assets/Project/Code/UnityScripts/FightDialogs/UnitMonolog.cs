@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitMonolog : MonoBehaviour {
-	private Vector3 _cameraOffset = new Vector3(-0.35f, 1.15f, 1f);
+	private Vector3 _cameraOffset = new Vector3(-0.495f, 1.316f, 1.342f);
 
 	[SerializeField]
 	private MeshRenderer _mrCharacterScreen;

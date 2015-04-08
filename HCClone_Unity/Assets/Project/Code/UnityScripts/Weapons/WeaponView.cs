@@ -23,22 +23,16 @@ public class WeaponView : MonoBehaviour {
 
 	public void Attack(float distanceToTarget) {
 		if (distanceToTarget > 0f) {
-			StartCoroutine(AttackInternal(distanceToTarget));
+			distanceToTarget -= _particleGunOffset;
+
+			_tpc.SetParticleDistance(distanceToTarget);
+
+			_tpc.Particles.Simulate(_bulletParticleDelay, true);
+			_tpc.Particles.Play(true);
 		}
 	}
 
 	public void Stop() {
 		_tpc.Particles.Stop(true);
-	}
-
-	private IEnumerator AttackInternal(float distanceToTarget) {
-		distanceToTarget -= _particleGunOffset;
-		
-		_tpc.SetParticleDistance(distanceToTarget);
-
-		_tpc.Particles.Simulate(_bulletParticleDelay, true);
-		_tpc.Particles.Play(true);
-
-		yield break;
 	}
 }

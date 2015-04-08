@@ -27,6 +27,13 @@ public class UnitModelView : MonoBehaviour {
 		get { return _animator; }
 	}
 
+	[SerializeField]
+	protected float _shootPositionTimeOffset = 0f;
+	public float ShootPositionTimeOffset {
+		get { return _shootPositionTimeOffset; }
+	}
+	private WaitForSeconds _wfsAttack;
+
 	protected float _gunStanceOffset = 0.44f;
 	protected float _rifleStanceOffset = 0.13f;
 	protected float _weaponStanceOffset = 0f;
@@ -66,7 +73,7 @@ public class UnitModelView : MonoBehaviour {
 
 	protected float _defaultMovementSpeed = 1.5f;	//how fast (in unity meters) unit will move with default animation speed
 	public float MovementSpeed {
-		set { _runAnimationSpeed = value / _defaultMovementSpeed; }
+		set { /*_runAnimationSpeed = value / _defaultMovementSpeed;*/ }
 	}
 
 	public float ModelHeight {
@@ -79,6 +86,10 @@ public class UnitModelView : MonoBehaviour {
 		}
 
 		_animDeath = (EUnitAnimationState)UnityEngine.Random.Range(_mainAnimationState[EUnitAnimationState.Death_FallForward], _mainAnimationState[EUnitAnimationState.Death_FallBack]);
+
+		if (_shootPositionTimeOffset > 0f) {
+			_wfsAttack = new WaitForSeconds(_shootPositionTimeOffset);
+		}
 	}
 
 	public virtual void SetWeaponType(EItemKey weaponRKey, EItemKey weaponLKey) {
@@ -144,7 +155,7 @@ public class UnitModelView : MonoBehaviour {
 
 	public void SimulateAttack() {
 		_animator.speed = 0f;
-		_animator.Play(_animationClipName[_animAttack], 0, 0f);
+		_animator.Play(_animationClipName[_animAttack], 0, _shootPositionTimeOffset);
 	}
 
 	protected void SwitchMesh(Mesh sourceMesh, Material sourceMaterial, SkinnedMeshRenderer target) {
@@ -203,6 +214,14 @@ public class UnitModelView : MonoBehaviour {
 		_animator.speed = _attackAnimationSpeed;
 		_animator.Play(_animationClipName[_animAttack], 0, 0f);
 		_animator.SetInteger("MAS", _mainAnimationState[_animAttack]);
+
+		StartCoroutine(PlayAttackAnimationInternal(distanceToTarget));
+	}
+
+	private IEnumerator PlayAttackAnimationInternal(float distanceToTarget) {
+		if (_wfsAttack != null) {
+			yield return _wfsAttack;
+		}
 
 		distanceToTarget -= _weaponStanceOffset;
 		if (_weaponViewRH != null) {

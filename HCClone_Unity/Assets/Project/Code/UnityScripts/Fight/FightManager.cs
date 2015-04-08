@@ -252,8 +252,10 @@ public class FightManager : MonoBehaviour {
 
 	private IEnumerator MapSwitchPreparationRoutine() {
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
-			if (!_graphics.AllyUnits[i].UnitData.IsDead) {
-				_graphics.AllyUnits[i].GoToMapEnd();
+			if (_graphics.AllyUnits[i] != null) {
+				if (!_graphics.AllyUnits[i].UnitData.IsDead) {
+					_graphics.AllyUnits[i].GoToMapEnd();
+				}
 			}
 		}
 
@@ -261,8 +263,10 @@ public class FightManager : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 
 		for (int i = 0; i < _graphics.AllyUnits.Length; i++) {
-			if (!_graphics.AllyUnits[i].UnitData.IsDead) {
-				_graphics.AllyUnits[i].StopAllActions();
+			if (_graphics.AllyUnits[i] != null) {
+				if (!_graphics.AllyUnits[i].UnitData.IsDead) {
+					_graphics.AllyUnits[i].StopAllActions();
+				}
 			}
 		}
 

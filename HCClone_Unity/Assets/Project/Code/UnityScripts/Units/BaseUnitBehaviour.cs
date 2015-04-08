@@ -111,7 +111,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_isAlly = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY);
 
 		_attackTime = 1f / unitData.AttackSpeed;
-		_cachedWaitForSeconds = new WaitForSeconds(_attackTime);
+		_cachedWaitForSeconds = new WaitForSeconds(_attackTime - _model.ShootPositionTimeOffset);
 
 		_skills = SkillsConfig.Instance.GetHeroSkillsInstances(_unitData.Data.Key);
 		if (_isAlly && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
@@ -259,6 +259,11 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_lastAttackTime = Time.time;
 
 		_model.PlayAttackAnimation(DistanceToTarget);
+
+		if (_model.WFSAttackDelay != null) {
+			yield return _model.WFSAttackDelay;
+		}
+
 		EventsAggregator.Fight.Broadcast<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, this, _targetUnit);
 
 		if (_unitPathfinder.CurrentState == EUnitMovementState.WatchEnemy) {

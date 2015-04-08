@@ -32,7 +32,10 @@ public class UnitModelView : MonoBehaviour {
 	public float ShootPositionTimeOffset {
 		get { return _shootPositionTimeOffset; }
 	}
-	private WaitForSeconds _wfsAttack;
+	private WaitForSeconds _wfsAttackDelay;
+	public WaitForSeconds WFSAttackDelay {
+		get { return _wfsAttackDelay; }
+	}
 
 	protected float _gunStanceOffset = 0.44f;
 	protected float _rifleStanceOffset = 0.13f;
@@ -88,7 +91,7 @@ public class UnitModelView : MonoBehaviour {
 		_animDeath = (EUnitAnimationState)UnityEngine.Random.Range(_mainAnimationState[EUnitAnimationState.Death_FallForward], _mainAnimationState[EUnitAnimationState.Death_FallBack]);
 
 		if (_shootPositionTimeOffset > 0f) {
-			_wfsAttack = new WaitForSeconds(_shootPositionTimeOffset);
+			_wfsAttackDelay = new WaitForSeconds(_shootPositionTimeOffset);
 		}
 	}
 
@@ -219,8 +222,8 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	private IEnumerator PlayAttackAnimationInternal(float distanceToTarget) {
-		if (_wfsAttack != null) {
-			yield return _wfsAttack;
+		if (_wfsAttackDelay != null) {
+			yield return _wfsAttackDelay;
 		}
 
 		distanceToTarget -= _weaponStanceOffset;

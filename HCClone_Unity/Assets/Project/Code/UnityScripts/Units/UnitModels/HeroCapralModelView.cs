@@ -12,6 +12,8 @@ public class HeroCapralModelView : UnitModelView {
 		_animationClipName.Add(EUnitAnimationState.Skill_ExplosiveCharges, "Skill_ExplosiveCharges");
 		_animationClipName.Add(EUnitAnimationState.Skill_StunGrenade, "Skill_StunGrenade");
 		_animationClipName.Add(EUnitAnimationState.Win, "Waiting");
+
+		_hitAnimations[1] = _hitAnimations[2] = _hitAnimations[3] = "GetDamage_1";
 	}
 
 	public override void SetWeaponType(EItemKey weaponRKey, EItemKey weaponLKey) {

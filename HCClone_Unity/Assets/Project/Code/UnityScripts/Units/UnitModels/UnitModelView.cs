@@ -69,6 +69,12 @@ public class UnitModelView : MonoBehaviour {
 		{ EUnitAnimationState.Death_FallBack, 32 }
 	};
 
+	protected Dictionary<int, string> _hitAnimations = new Dictionary<int, string>() {
+		{ 1, "GetDamage_1" },
+		{ 2, "GetDamage_2" },
+		{ 3, "GetDamage_1" },
+	};
+
 	protected float _runAnimationSpeed = 1f;	//how fast movement animation will play
 	protected float _attackAnimationSpeed = 1f;	//how fast attack animation will play
 	//protected float _hitAnimationSpeed = 1f;	//how fast hit animation will play
@@ -205,12 +211,20 @@ public class UnitModelView : MonoBehaviour {
 		float healthState2 = totalHealth * 0.5f;
 		float healthState3 = totalHealth * 0.25f;
 
-		if ((hitInfo.HealthBefore > healthState1 && hitInfo.HealthAfter < healthState1) ||
-			(hitInfo.HealthBefore > healthState3 && hitInfo.HealthAfter < healthState3)) {
-			_animator.SetTrigger("GetDamage1");
+		int hitAnimationState = 0;
+		if (hitInfo.HealthBefore > healthState1 && hitInfo.HealthAfter < healthState1) {
+			hitAnimationState = 1;
+		} else if (hitInfo.HealthBefore > healthState3 && hitInfo.HealthAfter < healthState3) {
+			hitAnimationState = 2;
 		} else if (hitInfo.HealthBefore > healthState2 && hitInfo.HealthAfter < healthState2) {
-			_animator.SetTrigger("GetDamage2");
+			hitAnimationState = 3;
 		}
+
+		if(_hitAnimations.ContainsKey(hitAnimationState)) {
+			_animator.CrossFade(_hitAnimations[hitAnimationState], 0.2f, 0, 0f);
+		}
+
+		//_animator.SetTrigger("GetDamage1"); //old way
 	}
 
 	public virtual void PlayAttackAnimation(float distanceToTarget) {

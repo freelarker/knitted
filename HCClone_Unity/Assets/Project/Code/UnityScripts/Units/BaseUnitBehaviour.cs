@@ -251,8 +251,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_targetUnit = null;
 		_unitPathfinder.Reset(true);
 
-		_model.PlayWinAnimation();
-		_model.transform.LookAt(_model.transform.position + new Vector3(1f, 0f, 0f));
+		if (_unitData != null && !_unitData.IsDead) {
+			_model.PlayWinAnimation();
+			_model.transform.LookAt(_model.transform.position + new Vector3(1f, 0f, 0f));
+		}
 	}
 
 	private IEnumerator AttackTarget() {

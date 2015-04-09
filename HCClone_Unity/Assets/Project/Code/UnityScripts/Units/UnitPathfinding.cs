@@ -66,7 +66,6 @@ public class UnitPathfinding : MonoBehaviour {
 		_nearestTargetBUB = null;
 		_onTargetReached = null;
 		StopAllCoroutines();
-		_model.transform.localRotation = Quaternion.identity;
 
 		if (full) {
 			CurrentState = EUnitMovementState.None;

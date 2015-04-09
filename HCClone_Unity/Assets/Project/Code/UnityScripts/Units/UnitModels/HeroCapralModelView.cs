@@ -14,6 +14,8 @@ public class HeroCapralModelView : UnitModelView {
 		_animationClipName.Add(EUnitAnimationState.Win, "Waiting");
 
 		_hitAnimations[1] = _hitAnimations[2] = _hitAnimations[3] = "GetDamage_1";
+
+		_animDeath = EUnitAnimationState.Death_FallForward;
 	}
 
 	public override void SetWeaponType(EItemKey weaponRKey, EItemKey weaponLKey) {

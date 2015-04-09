@@ -94,7 +94,7 @@ public class UnitModelView : MonoBehaviour {
 			_animator = gameObject.GetComponent<Animator>();
 		}
 
-		_animDeath = (EUnitAnimationState)UnityEngine.Random.Range(_mainAnimationState[EUnitAnimationState.Death_FallForward], _mainAnimationState[EUnitAnimationState.Death_FallBack]);
+		_animDeath = (EUnitAnimationState)UnityEngine.Random.Range(_mainAnimationState[EUnitAnimationState.Death_FallForward], _mainAnimationState[EUnitAnimationState.Death_FallBack] + 1);
 
 		if (_shootPositionTimeOffset > 0f) {
 			_wfsAttackDelay = new WaitForSeconds(_shootPositionTimeOffset);

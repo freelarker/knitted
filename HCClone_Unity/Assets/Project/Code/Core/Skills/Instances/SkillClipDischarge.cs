@@ -2,6 +2,10 @@
 using UnityEngine;
 
 public class SkillClipDischarge : BaseUnitSkill {
+	private string _viewPrefabPath = "Skills/ClipDischarge_tracers";
+
+	private SkillClipDischargeView _skillView = null;
+
 	public SkillClipDischarge(SkillParameters skillParameters) : base(skillParameters) { }
 
 	private int _shotsLeft = -1;
@@ -56,12 +60,22 @@ public class SkillClipDischarge : BaseUnitSkill {
 		(_caster.UnitData as BaseHero).UseSkill(_skillParameters);
 		_caster.StopTargetAttack(true);
 
+		GameObject skillViewResource = Resources.Load(_viewPrefabPath) as GameObject;
+		if (skillViewResource != null) {
+			_skillView = (GameObject.Instantiate(skillViewResource) as GameObject).GetComponent<SkillClipDischargeView>();
+		}
+
 		GameTimer.Instance.RunCoroutine(Shoot());
 	}
 
 	protected override void EndUsage() {
 		if (_caster != null) {
 			base.EndUsage();
+
+			if (_skillView != null) {
+				GameObject.Destroy(_skillView.gameObject);
+				_skillView = null;
+			}
 
 			BaseUnitBehaviour caster = _caster;
 
@@ -96,6 +110,9 @@ public class SkillClipDischarge : BaseUnitSkill {
 		_caster.ModelView.PlaySkillAnimation(ESkillKey.ClipDischarge, _caster.DistanceToTarget);
 
 		yield return new WaitForSeconds(0.25f);
+		if (_skillView != null) {
+			_skillView.Play(_caster.ModelView.transform, _caster.DistanceToTarget);
+		}
 		while (_shotsLeft > 0) {
 			PerformShot();
 			_shotsLeft--;

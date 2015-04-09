@@ -43,18 +43,10 @@ public class SkillExplosiveChargesView : MonoBehaviour {
 
 	private void OnAttack(BaseUnitBehaviour attacker, BaseUnitBehaviour target) {
 		if (attacker == _caster) {
-			StartCoroutine(PlayExplosion(attacker, target));
+			_particleInstance.transform.localPosition = _particleInstance.transform.parent.InverseTransformPoint(target.transform.position) + new Vector3(0f, target.ModelView.ModelHeight * 0.5f, 0f);
+			_particleInstance.gameObject.SetActive(true);
+			_particleInstance.Simulate(0f);
+			_particleInstance.Play(true);
 		}
-	}
-
-	private IEnumerator PlayExplosion(BaseUnitBehaviour attacker, BaseUnitBehaviour target) {
-		if (attacker.ModelView.WFSAttackDelay != null) {
-			yield return attacker.ModelView.WFSAttackDelay;
-		}
-
-		_particleInstance.transform.localPosition = _particleInstance.transform.parent.InverseTransformPoint(target.transform.position) + new Vector3(0f, target.ModelView.ModelHeight * 0.5f, 0f);
-		_particleInstance.gameObject.SetActive(true);
-		_particleInstance.Simulate(0f);
-		_particleInstance.Play(true);
 	}
 }

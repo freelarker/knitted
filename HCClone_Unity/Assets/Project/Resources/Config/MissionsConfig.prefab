@@ -63,9 +63,9 @@ MonoBehaviour:
       _mineIncome: 0
       _maps:
       - _units: 44420f0044420f0044420f0044420f0044420f00
-        _mapBackgroundPath: battle_background2
+        _mapBackgroundPath: battle1_forest_1
       - _units: 44420f0044420f0045420f00
-        _mapBackgroundPath: battle_background1
+        _mapBackgroundPath: battle1_forest_2
     - _key: 2
       _fuelWinCost: 0
       _fuelLoseCost: 0

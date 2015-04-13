@@ -1,17 +1,35 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(ParticleSystem))]
 public class TracerParticleController : MonoBehaviour {
-	private ParticleSystem _particles = null;
-	public ParticleSystem Particles {
-		get { return _particles; }
-	}
+	private float _speed = 10f;
+
+	private float _timeEnd;
+	private Vector3 _positionEnd;
+
+	private Transform _cachedTransform;
 
 	public void Awake() {
-		_particles = gameObject.GetComponent<ParticleSystem>();
+		_cachedTransform = transform;
 	}
 
-	public void SetParticleDistance(float distance) {
-		_particles.startLifetime = distance / _particles.startSpeed;
+	public void Update() {
+		_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, _positionEnd, _speed * Time.deltaTime);
+
+		if (Time.time >= _timeEnd) {
+			Stop();
+		}
+	}
+
+	public void Play(float distance, Vector3 startPosition) {
+		_cachedTransform.position = startPosition;
+		_positionEnd = _cachedTransform.position + _cachedTransform.forward * distance;
+		_timeEnd = Time.time + distance / _speed;
+
+		gameObject.SetActive(true);
+		
+	}
+
+	public void Stop() {
+		gameObject.SetActive(false);
 	}
 }

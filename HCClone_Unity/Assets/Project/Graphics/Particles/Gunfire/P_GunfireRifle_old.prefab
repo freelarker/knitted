@@ -12,7 +12,7 @@ GameObject:
   - 199: {fileID: 19958028}
   - 114: {fileID: 11458032}
   m_Layer: 0
-  m_Name: P_Gunfire_Rifle
+  m_Name: P_GunfireRifle_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

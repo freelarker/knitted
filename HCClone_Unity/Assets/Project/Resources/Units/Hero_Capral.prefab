@@ -332,7 +332,7 @@ MonoBehaviour:
   _weaponBoneRight: {fileID: 404078}
   _weaponBoneLeft: {fileID: 404080}
   _animator: {fileID: 9504076}
-  _shootPositionTimeOffset: .5
+  _shootPositionTimeOffset: .400000006
   _clipDischargeStanceOffset: 0
 --- !u!137 &13704076
 SkinnedMeshRenderer:

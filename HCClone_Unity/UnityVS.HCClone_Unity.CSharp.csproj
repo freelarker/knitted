@@ -216,6 +216,7 @@
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\MissionsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\SkillsConfig.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\GameConfig\UnitsConfig.cs" />
+    <Compile Include="Assets\Project\Code\UnityScripts\Particles\GunfireParticlesController.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Particles\TracerParticleController.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\ScenesSwitcher\ScenesSwitcher.cs" />
     <Compile Include="Assets\Project\Code\UnityScripts\Skills\SkillClipDischargeView.cs" />

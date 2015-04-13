@@ -24,6 +24,15 @@ public class HeroCapralModelView : UnitModelView {
 		_weaponStanceOffset = _gunStanceOffset;
 	}
 
+	public override void PlayHitAnimation(int totalHealth, HitInfo hitInfo) {
+		if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationClipName[EUnitAnimationState.Skill_ClipDischarge]) ||
+			_animator.GetCurrentAnimatorStateInfo(0).IsName(_animationClipName[EUnitAnimationState.Skill_StunGrenade])) {
+				return;
+		}
+
+		base.PlayHitAnimation(totalHealth, hitInfo);
+	}
+
 	#region animations
 	public override void PlaySkillAnimation(ESkillKey skillKey, params object[] data) {
 		switch (skillKey) {
@@ -43,12 +52,12 @@ public class HeroCapralModelView : UnitModelView {
 		distanceToTarget -= _clipDischargeStanceOffset;
 
 		_animator.Play(_animationClipName[EUnitAnimationState.Skill_ClipDischarge], 0, 0f);
-		if (_weaponViewRH != null) {
-			_weaponViewRH.Attack(distanceToTarget);
+		/*if (_weaponViewRH != null) {
+			_weaponViewRH.PlayShot(distanceToTarget);
 		}
 		if (_weaponViewLH != null) {
-			_weaponViewLH.Attack(distanceToTarget);
-		}
+			_weaponViewLH.PlayShot(distanceToTarget);
+		}*/
 	}
 
 	private void PlaySkillExplosiveChargesAnimation() {

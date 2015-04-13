@@ -42,7 +42,14 @@ public class UnitModelView : MonoBehaviour {
 	protected float _weaponStanceOffset = 0f;
 
 	protected WeaponView _weaponViewRH = null;
+	public WeaponView WeaponRight {
+		get { return _weaponViewRH; }
+	}
+
 	protected WeaponView _weaponViewLH = null;
+	public WeaponView WeaponLeft {
+		get { return _weaponViewLH; }
+	}
 
 	protected EUnitAnimationState _animRun = EUnitAnimationState.Run_Gun;
 	protected EUnitAnimationState _animAttack = EUnitAnimationState.Strike_Gun;
@@ -162,6 +169,15 @@ public class UnitModelView : MonoBehaviour {
 		}
 	}
 
+	public void DisplayWeaponShot(float distanceToTarget, Vector3 leftWeaponPos, Vector3 rightWeaponPos) {
+		if (_weaponViewRH != null) {
+			_weaponViewRH.PlayShotFromPosition(distanceToTarget, rightWeaponPos);
+		}
+		if (_weaponViewLH != null) {
+			_weaponViewLH.PlayShotFromPosition(distanceToTarget, leftWeaponPos);
+		}
+	}
+
 	public void SimulateAttack() {
 		_animator.speed = 0f;
 		_animator.Play(_animationClipName[_animAttack], 0, _shootPositionTimeOffset);
@@ -179,10 +195,10 @@ public class UnitModelView : MonoBehaviour {
 	public virtual void StopCurrentAnimation() {
 		if (_animator.GetInteger("MAS") == _mainAnimationState[_animAttack]) {
 			if (_weaponViewRH != null) {
-				_weaponViewRH.Stop();
+				_weaponViewRH.StopShot();
 			}
 			if (_weaponViewLH != null) {
-				_weaponViewLH.Stop();
+				_weaponViewLH.StopShot();
 			}
 		}
 		_animator.StopPlayback();
@@ -242,10 +258,10 @@ public class UnitModelView : MonoBehaviour {
 
 		distanceToTarget -= _weaponStanceOffset;
 		if (_weaponViewRH != null) {
-			_weaponViewRH.Attack(distanceToTarget);
+			_weaponViewRH.PlayShot(distanceToTarget);
 		}
 		if (_weaponViewLH != null) {
-			_weaponViewLH.Attack(distanceToTarget);
+			_weaponViewLH.PlayShot(distanceToTarget);
 		}
 	}
 
@@ -264,7 +280,6 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	protected IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
-		yield return null;
 		yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
 		onAnimationEnd();
 	}

@@ -39,6 +39,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 459524}
   - 114: {fileID: 11447038}
+  - 114: {fileID: 11405578}
   m_Layer: 8
   m_Name: W_Rifle
   m_TagString: Untagged
@@ -70,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138168}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 70, z: 0}
+  m_LocalPosition: {x: 630, y: 70, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 471256}
@@ -81,8 +82,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152612}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 577, y: 70, z: 0}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
+  m_LocalPosition: {x: 500, y: 70, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 471256}
@@ -141,6 +142,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171256}
   m_Mesh: {fileID: 4300000, guid: 7399c202258793347af2902f5d0ed3ac, type: 3}
+--- !u!114 &11405578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04ca252e80a10e48b15d1ec77aa7670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gunfireParticlePrefab: {fileID: 147798, guid: 647bf6a95499c5c46b8d4e887e434c0a,
+    type: 2}
+  _tracerParticlePrefab: {fileID: 105912, guid: a3e8f4894646eaa4bbaf1522487cbe51,
+    type: 2}
+  _pelletsPerAttack: 3
+  _firstPelletDelay: 0
+  _nextPelletDelay: .0500000007
+  _pelletWorldLength: .140000001
 --- !u!114 &11447038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,9 +174,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tracerParticleParent: {fileID: 438168}
   _gunfireParticleParent: {fileID: 452612}
+  _particlesController: {fileID: 11405578}
+  qweqweqwewqeqwe: 0
   _tracerParticlePrefab: {fileID: 19804254, guid: 95e7c62314f64034fb886a5e4cc226f0,
     type: 2}
-  _gunfireParticlePrefab: {fileID: 19858028, guid: a1c389a6dbad02b48b17746811ffc96f,
+  _gunfireParticlePrefab: {fileID: 147798, guid: 647bf6a95499c5c46b8d4e887e434c0a,
     type: 2}
   _bulletParticleDelay: 0
 --- !u!1001 &100100000

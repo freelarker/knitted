@@ -96,9 +96,12 @@ public class SkillStunGrenade : BaseUnitSkill {
 		_caster.StopTargetAttack(false);
 		_caster.ModelView.PlaySkillAnimation(ESkillKey.StunGrenade);
 
-		yield return new WaitForSeconds(0.35f);
+		yield return new WaitForSeconds(0.55f);
 
 		_grenadeView.Throw(Mathf.Max(Vector3.Distance(_caster.CachedTransform.position, target.CachedTransform.position) * 0.1f, _minThrowTime), _grenadeView.transform.position, target.CachedTransform.position, 2f, OnGrenadeTargetReached);
+
+		yield return new WaitForSeconds(0.3f);
+
 		_caster.StartTargetAttack();
 	}
 

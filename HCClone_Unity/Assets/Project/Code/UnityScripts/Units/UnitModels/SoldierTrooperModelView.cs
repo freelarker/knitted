@@ -24,4 +24,3 @@ public class SoldierTrooperModelView : UnitModelView {
 	}
 	#endregion
 }
-

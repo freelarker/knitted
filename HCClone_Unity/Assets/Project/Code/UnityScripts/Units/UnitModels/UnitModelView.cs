@@ -86,11 +86,12 @@ public class UnitModelView : MonoBehaviour {
 	protected float _attackAnimationSpeed = 1f;	//how fast attack animation will play
 	//protected float _hitAnimationSpeed = 1f;	//how fast hit animation will play
 	protected float _deathAnimationSpeed = 1f;	//how death movement animation will play
-
 	protected float _defaultMovementSpeed = 1.5f;	//how fast (in unity meters) unit will move with default animation speed
 	public float MovementSpeed {
 		set { /*_runAnimationSpeed = value / _defaultMovementSpeed;*/ }
 	}
+
+	private float _defaultModelScaleFactor = 2f;
 
 	public float ModelHeight {
 		get { return _bodyArmorMeshRenderer.bounds.size.y + _headArmorMeshRenderer.bounds.size.y; }
@@ -129,12 +130,15 @@ public class UnitModelView : MonoBehaviour {
 	}
 
 	public void SetupGraphics(GameObject rhWeaponResource, GameObject lhWeaponResource, GameObject headArmorResource, GameObject bodyArmorResource) {
+		float scaleFix = transform.localScale.x / _defaultModelScaleFactor;
+
 		//weapon
 		if (_weaponBoneRight != null && rhWeaponResource != null) {
 			GameObject weaponInstance = GameObject.Instantiate(rhWeaponResource) as GameObject;
 			weaponInstance.transform.parent = _weaponBoneRight;
 			weaponInstance.transform.localPosition = Vector3.zero;
 			weaponInstance.transform.localRotation = Quaternion.identity;
+			weaponInstance.transform.localScale *= scaleFix;
 
 			_weaponViewRH = weaponInstance.GetComponent<WeaponView>();
 		}
@@ -143,11 +147,13 @@ public class UnitModelView : MonoBehaviour {
 			weaponInstance.transform.parent = _weaponBoneLeft;
 			weaponInstance.transform.localPosition = Vector3.zero;
 			weaponInstance.transform.localRotation = Quaternion.identity;
+			weaponInstance.transform.localScale *= scaleFix;
 
 			_weaponViewLH = weaponInstance.GetComponent<WeaponView>();
 		}
 
 		//armor
+		//TODO: maybe armor will need scale fixes
 		if (_headArmorMeshRenderer != null && headArmorResource != null) {
 			GameObject headArmorInstance = GameObject.Instantiate(headArmorResource) as GameObject;
 			SwitchMesh(headArmorInstance.GetComponent<MeshFilter>().mesh, headArmorInstance.GetComponent<MeshRenderer>().material, _headArmorMeshRenderer);

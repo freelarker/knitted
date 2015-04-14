@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class TracerParticleController : MonoBehaviour {
-	private float _speed = 10f;
+	private float _speed = 15f;
 
 	private float _timeEnd;
 	private Vector3 _positionEnd;

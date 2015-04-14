@@ -16,6 +16,9 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		get { return _model; }
 	}
 
+	[SerializeField]
+	private Vector3 _healthBarPosition = new Vector3(0f, 1.2f, 0f);
+
 	private UnitUI _ui;
 
 	private BaseUnit _unitData = null;
@@ -121,7 +124,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		if (_ui == null) {
 			_ui = (GameObject.Instantiate(uiResource) as GameObject).GetComponent<UnitUI>();
 			_ui.transform.SetParent(transform, false);
-			_ui.transform.localPosition = new Vector3(0f, 1.2f, 0f);
+			_ui.transform.localPosition = _healthBarPosition;
 		} else {
 			_ui.Reset();
 		}

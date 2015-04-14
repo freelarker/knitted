@@ -30,4 +30,10 @@ public class UnitDialodEntity {
 	public string PrefabPath {
 		get { return _prefabPath; }
 	}
+
+	[SerializeField]
+	private Vector3 _cameraOffset = new Vector3(-0.495f, 1.316f, 1.342f);
+	public Vector3 CameraOffset {
+		get { return _cameraOffset; }
+	}
 }

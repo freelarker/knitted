@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitMonolog : MonoBehaviour {
-	private Vector3 _cameraOffset = new Vector3(-0.495f, 1.316f, 1.342f);
-
 	[SerializeField]
 	private MeshRenderer _mrCharacterScreen;
 	[SerializeField]
@@ -56,11 +54,11 @@ public class UnitMonolog : MonoBehaviour {
 
 		//target camera to speaker
 		if (dialogData.Speaker == EFightDialogSpeaker.PlayerHero) {
-			_characterCamera.transform.position = FightManager.SceneInstance.AllyHero.transform.position + _cameraOffset;
+			_characterCamera.transform.position = FightManager.SceneInstance.AllyHero.transform.position + dialogData.CameraOffset;
 		} else if(dialogData.Speaker == EFightDialogSpeaker.EnemyUnit && dialogData.UnitKey != EUnitKey.Idle) {
 			for (int i = 0; i < FightManager.SceneInstance.EnemyUnits.Length; i++) {
 				if (FightManager.SceneInstance.EnemyUnits[i].UnitData.Data.Key == dialogData.UnitKey) {
-					_characterCamera.transform.position = FightManager.SceneInstance.EnemyUnits[i].transform.position + _cameraOffset;
+					_characterCamera.transform.position = FightManager.SceneInstance.EnemyUnits[i].transform.position + dialogData.CameraOffset;
 				}
 			}
 		}

@@ -120,7 +120,7 @@ Transform:
   m_GameObject: {fileID: 114746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5999999, y: 2.5999999, z: 2.5999999}
   m_Children:
   - {fileID: 414748}
   - {fileID: 414750}
@@ -275,6 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitPathfinder: {fileID: 11478014}
   _model: {fileID: 11414754}
+  _healthBarPosition: {x: 0, y: 1.45000005, z: 0}
 --- !u!137 &13714752
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

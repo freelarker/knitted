@@ -157,6 +157,7 @@ MonoBehaviour:
     type: 2}
   _tracerParticlePrefab: {fileID: 105912, guid: a3e8f4894646eaa4bbaf1522487cbe51,
     type: 2}
+  _explosionPrefab: {fileID: 128670, guid: a16195b57bb62bd4f9348316184ab908, type: 2}
   _pelletsPerAttack: 3
   _firstPelletDelay: 0
   _nextPelletDelay: .0500000007
@@ -175,12 +176,6 @@ MonoBehaviour:
   _tracerParticleParent: {fileID: 438168}
   _gunfireParticleParent: {fileID: 452612}
   _particlesController: {fileID: 11405578}
-  qweqweqwewqeqwe: 0
-  _tracerParticlePrefab: {fileID: 19804254, guid: 95e7c62314f64034fb886a5e4cc226f0,
-    type: 2}
-  _gunfireParticlePrefab: {fileID: 147798, guid: 647bf6a95499c5c46b8d4e887e434c0a,
-    type: 2}
-  _bulletParticleDelay: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

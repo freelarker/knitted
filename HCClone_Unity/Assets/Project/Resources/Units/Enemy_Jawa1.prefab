@@ -233,6 +233,9 @@ MonoBehaviour:
   _weaponBoneRight: {fileID: 440966}
   _weaponBoneLeft: {fileID: 457008}
   _animator: {fileID: 9540972}
+  _shootPositionTimeOffset: 0
+  _gunStanceOffset: .600000024
+  _rifleStanceOffset: .129999995
 --- !u!114 &11478878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,6 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitPathfinder: {fileID: 11478880}
   _model: {fileID: 11440972}
+  _healthBarPosition: {x: 0, y: 1.20000005, z: 0}
 --- !u!114 &11478880
 MonoBehaviour:
   m_ObjectHideFlags: 1

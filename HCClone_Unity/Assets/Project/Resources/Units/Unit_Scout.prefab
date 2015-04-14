@@ -234,6 +234,8 @@ MonoBehaviour:
   _weaponBoneLeft: {fileID: 414754}
   _animator: {fileID: 9514754}
   _shootPositionTimeOffset: .319999993
+  _gunStanceOffset: .75
+  _rifleStanceOffset: .129999995
 --- !u!114 &11478012
 MonoBehaviour:
   m_ObjectHideFlags: 1

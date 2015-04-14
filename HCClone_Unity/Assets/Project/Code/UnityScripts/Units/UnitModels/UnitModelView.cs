@@ -37,7 +37,9 @@ public class UnitModelView : MonoBehaviour {
 		get { return _wfsAttackDelay; }
 	}
 
+	[SerializeField]
 	protected float _gunStanceOffset = 0.44f;
+	[SerializeField]
 	protected float _rifleStanceOffset = 0.13f;
 	protected float _weaponStanceOffset = 0f;
 

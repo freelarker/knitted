@@ -3,10 +3,22 @@ using System.Collections;
 using System;
 
 public class GunfireParticlesController : MonoBehaviour {
+	private static Transform _explosionsRoot;
+	private static Transform ExplosionsRoot {
+		get {
+			if (_explosionsRoot == null) {
+				_explosionsRoot = new GameObject("Explosions").transform;
+			}
+			return _explosionsRoot;
+		}
+	}
+
 	[SerializeField]
 	private GameObject _gunfireParticlePrefab;
 	[SerializeField]
 	private GameObject _tracerParticlePrefab;
+	[SerializeField]
+	private GameObject _explosionPrefab;
 	
 	[SerializeField]
 	private int _pelletsPerAttack = 1;
@@ -23,12 +35,16 @@ public class GunfireParticlesController : MonoBehaviour {
 
 	private GameObject _gunfireParticleInstance;
 	private TracerParticleController[] _tracerParticleInstances;
+	private GameObject _explosionInstance;
 
 	private WaitForSeconds _wfsGunfireDuration;
 	private WaitForSeconds _wfsFirstPellek;
 	private WaitForSeconds _wfsNextPellek;
+	private WaitForSeconds _wfsExplosionDuration;
 
 	private Transform _tracersRoot;
+
+	private Coroutine _explosionRoutine;
 
 	public void Awake() {
 		_wfsGunfireDuration = new WaitForSeconds(0.075f);
@@ -38,6 +54,7 @@ public class GunfireParticlesController : MonoBehaviour {
 		if(_nextPelletDelay > 0f) {
 			_wfsNextPellek = new WaitForSeconds(_nextPelletDelay);
 		}
+		_wfsExplosionDuration = new WaitForSeconds(0.085f);
 	}
 
 	public void Setup(Transform gunfireRoot, Transform tracersRoot, float pelletStartOffset) {
@@ -51,6 +68,10 @@ public class GunfireParticlesController : MonoBehaviour {
 		_gunfireParticleInstance.SetActive(false);
 
 		ExtendPelletsPool();
+
+		_explosionInstance = (GameObject.Instantiate(_explosionPrefab) as GameObject);
+		_explosionInstance.transform.SetParent(ExplosionsRoot);
+		_explosionInstance.SetActive(false);
 	}
 
 	public void Play(float distanceToTarget) {
@@ -70,6 +91,7 @@ public class GunfireParticlesController : MonoBehaviour {
 		for (int i = 0; i < _tracerParticleInstances.Length; i++) {
 			_tracerParticleInstances[i].gameObject.SetActive(false);
 		}
+		_explosionInstance.SetActive(false);
 	}
 
 	private IEnumerator PlayInternal(float distanceToTarget, Vector3 pelletStartPosition) {
@@ -86,7 +108,7 @@ public class GunfireParticlesController : MonoBehaviour {
 				currentPellet = GetFreePellet();
 			}
 
-			currentPellet.Play(distanceToTarget, pelletStartPosition);
+			currentPellet.Play(distanceToTarget, pelletStartPosition, PlayExplosion);
 			_gunfireParticleInstance.SetActive(true);
 			yield return _wfsGunfireDuration;
 			_gunfireParticleInstance.SetActive(false);
@@ -95,6 +117,22 @@ public class GunfireParticlesController : MonoBehaviour {
 				yield return _wfsNextPellek;
 			}
 		}
+	}
+
+	private void PlayExplosion(Vector3 position) {
+		if (_explosionRoutine != null) {
+			StopCoroutine(_explosionRoutine);
+		}
+		_explosionRoutine = StartCoroutine(PlayExplosionInternal(position));
+	}
+
+	private IEnumerator PlayExplosionInternal(Vector3 position) {
+		_explosionInstance.transform.position = position;
+		_explosionInstance.SetActive(true);
+		yield return _wfsExplosionDuration;
+		_explosionInstance.SetActive(false);
+
+		_explosionRoutine = null;
 	}
 
 	private void ExtendPelletsPool() {

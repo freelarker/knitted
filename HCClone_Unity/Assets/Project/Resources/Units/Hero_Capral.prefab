@@ -334,6 +334,8 @@ MonoBehaviour:
   _weaponBoneLeft: {fileID: 404080}
   _animator: {fileID: 9504076}
   _shootPositionTimeOffset: .400000006
+  _gunStanceOffset: 1.04999995
+  _rifleStanceOffset: .129999995
   _clipDischargeStanceOffset: 0
 --- !u!137 &13704076
 SkinnedMeshRenderer:

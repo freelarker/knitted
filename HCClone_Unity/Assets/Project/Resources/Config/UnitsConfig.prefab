@@ -96,7 +96,7 @@ MonoBehaviour:
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
-    - _slotName: 2
+    - _slotName: 1
       _itemKey: 1000001
     _prefabName: Unit_Scout
     _iconName: Soldiers/npc_5_icon

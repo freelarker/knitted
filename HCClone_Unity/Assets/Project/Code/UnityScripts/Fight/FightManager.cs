@@ -190,11 +190,11 @@ public class FightManager : MonoBehaviour {
 					//sort soldiers
 					int insertIndex = sotrtedSoldiersList.Count;
 					for (int j = 0; j < sotrtedSoldiersList.Count; j++) {
-						if (sotrtedSoldiersList[j].UnitData.AttackRange > units[i].UnitData.AttackRange) {
+						if (units[i].UnitData.AttackRange > sotrtedSoldiersList[j].UnitData.AttackRange) {
 							insertIndex = j;
 							break;
 						} else if (sotrtedSoldiersList[j].UnitData.AttackRange == units[i].UnitData.AttackRange) {
-							if (sotrtedSoldiersList[j].UnitData.Health > units[i].UnitData.Health) {	//TODO: compare level
+							if (units[i].UnitData.Health > sotrtedSoldiersList[j].UnitData.Health) {	//TODO: compare level
 								insertIndex = j;
 								break;
 							}

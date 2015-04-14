@@ -15,6 +15,8 @@
 
 	Win = 41,
 
+	Condition_Stun = 101,
+
 	Skill_ClipDischarge = 1000001,
 	Skill_ExplosiveCharges,
 	Skill_StunGrenade

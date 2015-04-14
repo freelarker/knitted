@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 409048}
   - 95: {fileID: 9509056}
   - 114: {fileID: 11453884}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_trooper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409050}
   - 137: {fileID: 13709054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_trooper_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409052}
   - 137: {fileID: 13709056}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_trooper_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 409054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_trooperLPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 409056}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: npc_trooperRPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 449480}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: weaponRBoneFixer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

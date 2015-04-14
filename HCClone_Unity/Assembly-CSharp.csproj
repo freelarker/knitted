@@ -216,6 +216,7 @@
      <Compile Include="Assets\Project\Code\UnityScripts\Skills\SkillStunGrenadeView.cs" />
      <Compile Include="Assets\Project\Code\UnityScripts\Units\BaseUnitBehaviour.cs" />
      <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\HeroCapralModelView.cs" />
+     <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\SoldierScoutModelView.cs" />
      <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\SoldierTrooperModelView.cs" />
      <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitAnimationState.cs" />
      <Compile Include="Assets\Project\Code\UnityScripts\Units\UnitModels\UnitModelView.cs" />

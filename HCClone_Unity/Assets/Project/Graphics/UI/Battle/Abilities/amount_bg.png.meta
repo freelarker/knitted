@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8f01990d13220f541acfd3c70694b4bb
+guid: a88fb295a40c36a47b84551a4cd5ebcf
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -43,5 +43,5 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: AtlasBattle_skills
+  spritePackingTag: 
   userData: 

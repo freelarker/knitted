@@ -281,6 +281,11 @@ public class UnitModelView : MonoBehaviour {
 		StartCoroutine(DeathAnimationEndWaiter(onAnimationEnd));
 	}
 
+	protected IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
+		yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
+		onAnimationEnd();
+	}
+
 	public virtual void PlayWinAnimation() {
 		//TODO: win animation
 		_animator.speed = 0f;
@@ -289,9 +294,6 @@ public class UnitModelView : MonoBehaviour {
 
 	public virtual void PlaySpeakAnimation() { }
 
-	protected IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
-		yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
-		onAnimationEnd();
-	}
+	public virtual void PlayStunAnimation() { }
 	#endregion
 }

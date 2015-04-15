@@ -136,7 +136,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	}
 
 	public void Stun(float duration) {
-		//TODO: play stun animation
+		_model.PlayStunAnimation();
 
 		for (int i = 0; i < UnitData.ActiveSkills.ActiveSkills.Count; i++) {
 			UnitData.ActiveSkills.ActiveSkills[i].OnCasterStunned();

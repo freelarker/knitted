@@ -48,11 +48,6 @@ MonoBehaviour:
       _text: I can speak!
       _prefabPath: FightDialogs/UnitMonolog
       _cameraOffset: {x: -.519999981, y: 1.60000002, z: 1.19000006}
-    - _speaker: 1
-      _unitKey: 1000004
-      _text: Stop mumbling and fight!
-      _prefabPath: FightDialogs/UnitMonolog
-      _cameraOffset: {x: -.495000005, y: 1.31599998, z: 1.34200001}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

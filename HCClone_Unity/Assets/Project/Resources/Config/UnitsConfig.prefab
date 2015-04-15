@@ -132,7 +132,7 @@ MonoBehaviour:
     _aggroCrystalsForDeathToEnemy: 0
     _aggroCrystalsForDeathToAlly: 0
     _baseEquipment:
-    - _slotName: 2
+    - _slotName: 1
       _itemKey: 1000001
     _prefabName: Enemy_Jawa1
     _iconName: Jawas/unit_jawa1

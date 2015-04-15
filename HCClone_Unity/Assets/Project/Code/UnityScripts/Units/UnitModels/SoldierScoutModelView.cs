@@ -23,5 +23,9 @@ public class SoldierScoutModelView : UnitModelView {
 	public override void PlayWinAnimation() {
 		_animator.Play(_animationClipName[EUnitAnimationState.Win], 0, 0f);
 	}
+
+	public override void PlayStunAnimation() {
+		_animator.Play(_animationClipName[EUnitAnimationState.Condition_Stun], 0, 0f);
+	}
 	#endregion
 }

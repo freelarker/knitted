@@ -6,7 +6,9 @@ public class UIWindowBattleDefeat : UIWindow {
 	private Text _lblExpAmount;
 
 	[SerializeField]
-	private Image _imgHero;
+	private Image _imgHeroBG;
+	[SerializeField]
+	private Image _imgHeroFG;
 
 	[SerializeField]
 	private Button _btnPlay;
@@ -37,9 +39,19 @@ public class UIWindowBattleDefeat : UIWindow {
 		if (md != null) {
 			_lblExpAmount.text = string.Format("+ {0}", md.RewardExperienceWin);
 
+			Sprite heroBackIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitBGIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+			if (heroBackIconResource != null) {
+				_imgHeroBG.sprite = heroBackIconResource;
+				_imgHeroBG.enabled = true;
+			} else {
+				_imgHeroBG.enabled = false;
+			}
 			Sprite heroIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
 			if (heroIconResource != null) {
-				_imgHero.sprite = heroIconResource;
+				_imgHeroFG.sprite = heroIconResource;
+				_imgHeroFG.enabled = true;
+			} else {
+				_imgHeroFG.enabled = false;
 			}
 		}
 	}
@@ -71,8 +83,12 @@ public class UIWindowBattleDefeat : UIWindow {
 		_lblExpAmount.text = "+ 0";
 
 		//hero
-		if (_imgHero.sprite != null) {
-			_imgHero.sprite = null;
+		if (_imgHeroBG.sprite != null) {
+			_imgHeroBG.sprite = null;
+			UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitBGIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+		}
+		if (_imgHeroFG.sprite != null) {
+			_imgHeroFG.sprite = null;
 			UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
 		}
 	}

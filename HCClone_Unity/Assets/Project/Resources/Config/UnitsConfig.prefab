@@ -58,7 +58,7 @@ MonoBehaviour:
     - _slotName: 1
       _itemKey: 1000001
     _prefabName: Hero_Capral
-    _iconName: hero_1
+    _iconName: Heroes/hero_1
     _hexIconName: 
     _baseLeadership: 17
     _baseAggroCrystalsPerAttack: 2.5

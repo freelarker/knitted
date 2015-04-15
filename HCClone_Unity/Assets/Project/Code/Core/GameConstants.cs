@@ -50,6 +50,14 @@ public static class GameConstants {
 			return string.Format("{0}/{1}", UI_UNIT_ICONS_RESOURCES, iconName);
 		}
 
+		public static string GetUnitBGIconResourcePath(EUnitKey unitKey) {
+			return GetUnitBGIconResourcePath(UnitsConfig.Instance.GetSoldierData(unitKey).IconName);
+		}
+
+		public static string GetUnitBGIconResourcePath(string iconName) {
+			return string.Format("{0}/{1}_bg", UI_UNIT_ICONS_RESOURCES, iconName);
+		}
+
 		public static string GetLootIconResourcePath(EItemKey itemKey) {
 			return GetLootIconResourcePath(ItemsConfig.Instance.GetItem(itemKey).IconName);
 		}

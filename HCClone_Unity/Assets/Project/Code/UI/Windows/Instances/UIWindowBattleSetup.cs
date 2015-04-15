@@ -9,7 +9,9 @@ public class UIWindowBattleSetup : UIWindow {
 	private Text _txtPlayerLeadershipAmount;
 
 	[SerializeField]
-	private Image _imgHero;
+	private Image _imgHeroBG;
+	[SerializeField]
+	private Image _imgHeroFG;
 	[SerializeField]
 	private Button _btnHiredSoldier;
 	[SerializeField]
@@ -92,9 +94,19 @@ public class UIWindowBattleSetup : UIWindow {
 	}
 
 	private void SetupHiredUnits() {
-		Sprite heroIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
-		if (heroIconResource != null) {
-			_imgHero.sprite = heroIconResource;
+		Sprite heroIconBGResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitBGIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+		if (heroIconBGResource != null) {
+			_imgHeroBG.sprite = heroIconBGResource;
+			_imgHeroBG.enabled = true;
+		} else {
+			_imgHeroBG.enabled = false;
+		}
+		Sprite heroIconFGResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+		if (heroIconFGResource != null) {
+			_imgHeroFG.sprite = heroIconFGResource;
+			_imgHeroFG.enabled = true;
+		} else {
+			_imgHeroFG.enabled = false;
 		}
 
 		float hiredSoldierImageWidth = _btnHiredSoldier.image.rectTransform.rect.width;
@@ -200,6 +212,17 @@ public class UIWindowBattleSetup : UIWindow {
 	private void OnWindowHide(UIWindow window) {
 		_planetKey = EPlanetKey.None;
 		_missionKey = EMissionKey.None;
+
+		//hero
+		if (_imgHeroBG.sprite != null) {
+			_imgHeroBG.sprite = null;
+			UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitBGIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+		}
+		if (_imgHeroFG.sprite != null) {
+			_imgHeroFG.sprite = null;
+			UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitIconResourcePath(Global.Instance.Player.Heroes.Current.Data.IconName));
+		}
+
 
 		//TODO: free resources and clear data
 	}

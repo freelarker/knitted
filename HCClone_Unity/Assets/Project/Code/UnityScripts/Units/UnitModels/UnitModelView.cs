@@ -287,6 +287,8 @@ public class UnitModelView : MonoBehaviour {
 		_animator.StopPlayback();
 	}
 
+	public virtual void PlaySpeakAnimation() { }
+
 	protected IEnumerator DeathAnimationEndWaiter(Action onAnimationEnd) {
 		yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
 		onAnimationEnd();

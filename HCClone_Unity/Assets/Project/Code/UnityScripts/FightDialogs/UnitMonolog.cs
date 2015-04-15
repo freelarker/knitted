@@ -55,6 +55,7 @@ public class UnitMonolog : MonoBehaviour {
 		//target camera to speaker
 		if (dialogData.Speaker == EFightDialogSpeaker.PlayerHero) {
 			_characterCamera.transform.position = FightManager.SceneInstance.AllyHero.transform.position + dialogData.CameraOffset;
+			FightManager.SceneInstance.AllyHero.ModelView.PlaySpeakAnimation();
 		} else if(dialogData.Speaker == EFightDialogSpeaker.EnemyUnit && dialogData.UnitKey != EUnitKey.Idle) {
 			for (int i = 0; i < FightManager.SceneInstance.EnemyUnits.Length; i++) {
 				if (FightManager.SceneInstance.EnemyUnits[i].UnitData.Data.Key == dialogData.UnitKey) {

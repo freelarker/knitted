@@ -77,9 +77,9 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	public IEnumerator Start() {
 		_model.SimulateAttack();
 
-		while (_model.Animator.GetCurrentAnimationClipState(0).Length == 0) {
+		//while (_model.Animator.GetCurrentAnimationClipState(0).Length == 0) {
 			yield return null;
-		}
+		//}
 		_model.SetupWeapon();
 
 		_isStarted = true;

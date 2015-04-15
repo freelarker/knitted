@@ -213,6 +213,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110244884
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Speak
+  m_Speed: .5
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400016, guid: 6b2efec99dc7281458f1b6d5fde5d642, type: 3}
+  m_ParentStateMachine: {fileID: 110761484}
+  m_Position: {x: -348, y: 144, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110261398
 State:
   m_ObjectHideFlags: 3
@@ -276,6 +291,7 @@ StateMachine:
   - {fileID: 110261398}
   - {fileID: 110237018}
   - {fileID: 110201046}
+  - {fileID: 110244884}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:

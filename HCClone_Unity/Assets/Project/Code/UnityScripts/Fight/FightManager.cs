@@ -125,7 +125,7 @@ public class FightManager : MonoBehaviour {
 		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
 		_graphics.Load(mapData);
 		InitializeUnits(mapData);
-		PlayFightDialog();
+		StartCoroutine(PlayFightDialog());
 	}
 
 	private void InitializeUnits(MissionMapData mapData) {
@@ -236,7 +236,9 @@ public class FightManager : MonoBehaviour {
 	#endregion
 
 	#region dialogues
-	private void PlayFightDialog() {
+	private IEnumerator PlayFightDialog() {
+		yield return null;
+		yield return null;
 		UnitDialogs.Instance.Play(_currentMissionData.Key, _currentMapIndex, OnFightDialogPlayed);
 	}
 

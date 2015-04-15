@@ -12,6 +12,7 @@ public class HeroCapralModelView : UnitModelView {
 		_animationClipName.Add(EUnitAnimationState.Skill_ExplosiveCharges, "Skill_ExplosiveCharges");
 		_animationClipName.Add(EUnitAnimationState.Skill_StunGrenade, "Skill_StunGrenade");
 		_animationClipName.Add(EUnitAnimationState.Win, "Waiting");
+		_animationClipName.Add(EUnitAnimationState.Speak_1, "Speak");
 
 		_hitAnimations[1] = _hitAnimations[2] = _hitAnimations[3] = "GetDamage_1";
 
@@ -70,6 +71,11 @@ public class HeroCapralModelView : UnitModelView {
 
 	public override void PlayWinAnimation() {
 		_animator.Play(_animationClipName[EUnitAnimationState.Win], 0, 0f);
+	}
+
+	public override void PlaySpeakAnimation() {
+		_animator.speed = 1f;
+		_animator.Play(_animationClipName[EUnitAnimationState.Speak_1]);
 	}
 	#endregion
 }

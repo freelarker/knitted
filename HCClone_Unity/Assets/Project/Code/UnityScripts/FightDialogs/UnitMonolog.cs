@@ -64,12 +64,21 @@ public class UnitMonolog : MonoBehaviour {
 		}
 
 		//position self
-		Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.2f, Screen.height * 0.5f, Camera.main.nearClipPlane));
-		worldPos.z += 1f;
-		if (dialogData.Speaker != EFightDialogSpeaker.PlayerHero) {
-			worldPos.x *= -1f;
+		float screenWidthOffset = 0f;
+		switch (dialogData.Speaker) {
+			case EFightDialogSpeaker.PlayerHero:
+				screenWidthOffset = 0.2f;
+				break;
+			case EFightDialogSpeaker.EnemyUnit:
+				screenWidthOffset = 0.85f;
+				break;
 		}
+
+		Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * screenWidthOffset, Screen.height * 0.5f, Camera.main.nearClipPlane));
+		worldPos.z += 1f;
+
 		transform.position = worldPos;
+		transform.localRotation = Quaternion.Euler(GameConstants.CAMERA_ROTATION);
 
 		_lblText.text = dialogData.Text;
 		gameObject.SetActive(true);

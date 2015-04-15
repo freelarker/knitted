@@ -2522,8 +2522,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 966710166}
-  m_LocalRotation: {x: .21643962, y: 0, z: 0, w: .976296008}
-  m_LocalPosition: {x: 0, y: 4.80000019, z: -10}
+  m_LocalRotation: {x: .214587957, y: .127432212, z: -.0282510407, w: .967943668}
+  m_LocalPosition: {x: -2.75, y: 4.80000019, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1351422663}
@@ -4315,7 +4315,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1942187810}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

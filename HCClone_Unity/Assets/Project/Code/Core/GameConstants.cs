@@ -3,6 +3,7 @@
 public static class GameConstants {
 	public const int DEFAULT_RESOLUTION_WIDTH = 2048;
 	public const int DEFAULT_RESOLUTION_HEIGHT = 1152;
+	public static Vector3 CAMERA_ROTATION { get { return new Vector3(0f, 15f, 0f); } }
 
 	public class Scenes {
 		public const string CITY = "City";

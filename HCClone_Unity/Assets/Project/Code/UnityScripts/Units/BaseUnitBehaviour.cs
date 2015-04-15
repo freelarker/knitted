@@ -125,6 +125,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 			_ui = (GameObject.Instantiate(uiResource) as GameObject).GetComponent<UnitUI>();
 			_ui.transform.SetParent(transform, false);
 			_ui.transform.localPosition = _healthBarPosition;
+			_ui.transform.localRotation = Quaternion.Euler(GameConstants.CAMERA_ROTATION);
 		} else {
 			_ui.Reset();
 		}

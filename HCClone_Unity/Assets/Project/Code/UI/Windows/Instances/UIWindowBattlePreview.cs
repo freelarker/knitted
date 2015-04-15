@@ -22,9 +22,9 @@ public class UIWindowBattlePreview : UIWindow {
 	private Text _txtLootCaption;
 
 	[SerializeField]
-	private Image _imgEnemy;
+	private UIBattlePreviewUnitInfo _iconEnemy;
 	[SerializeField]
-	private float _offsetImageEnemy = 20f;
+	private float _offsetImageEnemy = 40f;
 
 	[SerializeField]
 	private Image _imgLoot;
@@ -40,7 +40,7 @@ public class UIWindowBattlePreview : UIWindow {
 	private EMissionKey _missionKey = EMissionKey.None;
 
 	private EUnitKey[] _enemies = null;
-	private Image[] _enemyImages = null;
+	private UIBattlePreviewUnitInfo[] _enemyIcons = null;
 
 	private EItemKey[] _lootItems = null;
 	private Image[] _lootItemImages = null;
@@ -94,7 +94,7 @@ public class UIWindowBattlePreview : UIWindow {
 	}
 
 	private void SetupEnemies(MissionData md) {
-		float enemyImageWidth = _imgEnemy.transform.GetChild(0).GetComponent<RectTransform>().rect.width;
+		float enemyImageWidth = _iconEnemy.UnitBG.transform.GetComponent<RectTransform>().rect.width;
 
 		List<EUnitKey> unitKeys = new List<EUnitKey>();
 		MissionMapData mmd = null;
@@ -108,20 +108,15 @@ public class UIWindowBattlePreview : UIWindow {
 		}
 		_enemies = unitKeys.ToArray();
 
-		_enemyImages = new Image[_enemies.Length];
-		_enemyImages[0] = _imgEnemy;
+		_enemyIcons = new UIBattlePreviewUnitInfo[_enemies.Length];
+		_enemyIcons[0] = _iconEnemy;
 		for (int i = 0; i < _enemies.Length; i++) {
 			if (i > 0) {
-				_enemyImages[i] = (GameObject.Instantiate(_imgEnemy.gameObject) as GameObject).GetComponent<Image>();
-				_enemyImages[i].transform.SetParent(_imgEnemy.transform.parent, false);
-				_enemyImages[i].rectTransform.anchoredPosition = _imgEnemy.rectTransform.anchoredPosition + new Vector2(i * (enemyImageWidth + _offsetImageEnemy), 0f);
+				_enemyIcons[i] = (GameObject.Instantiate(_iconEnemy.gameObject) as GameObject).GetComponent<UIBattlePreviewUnitInfo>();
+				_enemyIcons[i].transform.SetParent(_iconEnemy.transform.parent, false);
+				_enemyIcons[i].UnitBG.rectTransform.anchoredPosition = _iconEnemy.UnitBG.rectTransform.anchoredPosition + new Vector2(i * (enemyImageWidth + _offsetImageEnemy), 0f);
 			}
-
-			Image enemyIcon = _enemyImages[i];
-			Sprite enemyIconResource = UIResourcesManager.Instance.GetResource<Sprite>(GameConstants.Paths.GetUnitIconResourcePath(_enemies[i]));
-			if (enemyIconResource != null) {
-				enemyIcon.sprite = enemyIconResource;
-			}
+			_enemyIcons[i].Setup(_enemies[i]);
 		}
 	}
 
@@ -171,15 +166,14 @@ public class UIWindowBattlePreview : UIWindow {
 		//clear enemies
 		if (_enemies != null) {
 			for (int i = 0; i < _enemies.Length; i++) {
-				_enemyImages[i].sprite = null;
+				_enemyIcons[i].Clear();
 				if (i > 0) {
-					GameObject.Destroy(_enemyImages[i].gameObject);
+					GameObject.Destroy(_enemyIcons[i].gameObject);
 				}
-				UIResourcesManager.Instance.FreeResource(GameConstants.Paths.GetUnitIconResourcePath(_enemies[i]));
 			}
 		}
 		_enemies = null;
-		_enemyImages = null;
+		_enemyIcons = null;
 
 		//clear loot
 		if (_lootItems != null) {

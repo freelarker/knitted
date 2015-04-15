@@ -190,6 +190,7 @@
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroInfo.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroesList.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\UIBarracksUnitInfo.cs" />
+     <Compile Include="Assets\Project\Code\UI\Windows\UIBattlePreviewUnitInfo.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\UIBattleSetupUnitInfo.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\UIResourcesManager.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\UIWindow.cs" />

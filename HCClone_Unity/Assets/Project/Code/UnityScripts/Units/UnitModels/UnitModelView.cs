@@ -191,6 +191,24 @@ public class UnitModelView : MonoBehaviour {
 		_animator.Play(_animationClipName[_animAttack], 0, _shootPositionTimeOffset);
 	}
 
+	public void UpdateProjectileColor(Color color) {
+		if (_weaponViewLH != null) {
+			_weaponViewLH.UpdateProjectileColor(color);
+		}
+		if (_weaponViewRH != null) {
+			_weaponViewRH.UpdateProjectileColor(color);
+		}
+	}
+
+	public void ResetProjectileColor() {
+		if (_weaponViewLH != null) {
+			_weaponViewLH.ResetProjectileColor();
+		}
+		if (_weaponViewRH != null) {
+			_weaponViewRH.ResetProjectileColor();
+		}
+	}
+
 	protected void SwitchMesh(Mesh sourceMesh, Material sourceMaterial, SkinnedMeshRenderer target) {
 		target.sharedMesh = sourceMesh;
 		target.material = sourceMaterial;

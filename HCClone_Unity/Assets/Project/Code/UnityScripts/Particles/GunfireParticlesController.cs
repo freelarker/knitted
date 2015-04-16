@@ -30,6 +30,9 @@ public class GunfireParticlesController : MonoBehaviour {
 	[SerializeField]
 	private float _pelletWorldLength = 0;
 
+	[SerializeField]
+	private Color _defaultProjectileColor = Color.white;
+
 	private float _pelletStartOffset = 0f;
 	private int _pelletExtendAmount = 4;
 
@@ -92,6 +95,16 @@ public class GunfireParticlesController : MonoBehaviour {
 			_tracerParticleInstances[i].gameObject.SetActive(false);
 		}
 		_explosionInstance.SetActive(false);
+	}
+
+	public void UpdateProjectileColor(Color color) {
+		for (int i = 0; i < _tracerParticleInstances.Length; i++) {
+			_tracerParticleInstances[i].UpdateColor(color);
+		}
+	}
+
+	public void ResetProjectileColor() {
+		UpdateProjectileColor(_defaultProjectileColor);
 	}
 
 	private IEnumerator PlayInternal(float distanceToTarget, Vector3 pelletStartPosition) {

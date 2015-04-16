@@ -12,8 +12,15 @@ public class TracerParticleController : MonoBehaviour {
 
 	private Action<Vector3> _flightEndCallback;
 
+	private Mesh[] _meshes;
+
 	public void Awake() {
 		_cachedTransform = transform;
+
+		_meshes = new Mesh[_cachedTransform.childCount];
+		for (int i = 0; i < _cachedTransform.childCount; i++) {
+			_meshes[i] = _cachedTransform.GetChild(i).GetComponent<MeshFilter>().mesh;
+		}
 	}
 
 	public void Update() {
@@ -46,5 +53,18 @@ public class TracerParticleController : MonoBehaviour {
 
 	public void Stop() {
 		gameObject.SetActive(false);
+	}
+
+	public void UpdateColor(Color color) {
+		for (int i = 0; i < _meshes.Length; i++) {
+			Vector3[] vertices = _meshes[i].vertices;
+			Color[] colors = new Color[vertices.Length];
+
+			for (var j = 0; j < vertices.Length; j++) {
+				colors[j] = color;
+			}
+
+			_meshes[i].colors = colors;
+		}
 	}
 }

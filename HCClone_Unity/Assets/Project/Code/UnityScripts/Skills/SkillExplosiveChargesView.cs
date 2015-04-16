@@ -5,6 +5,9 @@ public class SkillExplosiveChargesView : MonoBehaviour {
 	[SerializeField]
 	private ParticleSystem _particlePrefab;
 
+	[SerializeField]
+	private Color _projectilesColor = Color.red;
+
 	private ParticleSystem _particleInstance;
 	private BaseUnitBehaviour _caster;
 
@@ -33,10 +36,14 @@ public class SkillExplosiveChargesView : MonoBehaviour {
 		transform.SetParent(_caster.transform);
 		transform.localPosition = Vector3.zero;
 
+		_caster.ModelView.UpdateProjectileColor(_projectilesColor);
+
 		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnAttack);
 	}
 
 	public void End() {
+		_caster.ModelView.ResetProjectileColor();
+
 		StopAllCoroutines();
 		GameObject.Destroy(gameObject);
 	}

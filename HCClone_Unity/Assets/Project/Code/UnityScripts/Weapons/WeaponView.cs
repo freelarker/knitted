@@ -34,4 +34,12 @@ public class WeaponView : MonoBehaviour {
 	public void StopShot() {
 		_particlesController.Stop();
 	}
+
+	public void UpdateProjectileColor(Color color) {
+		_particlesController.UpdateProjectileColor(color);
+	}
+
+	public void ResetProjectileColor() {
+		_particlesController.ResetProjectileColor();
+	}
 }

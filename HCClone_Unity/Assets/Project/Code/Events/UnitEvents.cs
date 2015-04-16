@@ -1,5 +1,8 @@
 ﻿public enum EUnitEvent {
 	Idle = 0,
+
+	ReadyToFight,
+
 	HitTarget,
 	HitReceived,
 

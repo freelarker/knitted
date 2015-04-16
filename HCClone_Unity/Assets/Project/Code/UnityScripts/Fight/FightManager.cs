@@ -62,11 +62,14 @@ public class FightManager : MonoBehaviour {
 	private int _alliesCount = 0;
 	private int _enemiesCount = 0;
 
+	private int _rtfUnitsAmount = 0;
+
 	public void Awake() {
 		_sceneInstance = this;
 
 		HCCGridController.Instance.Initialize((int)(-HCCGridView.Instance.ZeroPoint.x / HCCGridView.Instance.TileSize) * 2, (int)(-HCCGridView.Instance.ZeroPoint.z / HCCGridView.Instance.TileSize) * 2);
 
+		EventsAggregator.Units.AddListener<BaseUnitBehaviour>(EUnitEvent.ReadyToFight, OnUnitReadyToFight);
 		EventsAggregator.Fight.AddListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
 		EventsAggregator.Fight.AddListener<BaseUnit>(EFightEvent.EnemyDeath, OnEnemyDeath);
@@ -95,6 +98,8 @@ public class FightManager : MonoBehaviour {
 		if (!Global.IsInitialized) {
 			return;
 		}
+
+		EventsAggregator.Units.RemoveListener<BaseUnitBehaviour>(EUnitEvent.ReadyToFight, OnUnitReadyToFight);
 
 		EventsAggregator.Fight.RemoveListener<BaseUnitBehaviour, BaseUnitBehaviour>(EFightEvent.PerformAttack, OnUnitAttack);
 		EventsAggregator.Fight.RemoveListener<BaseUnit>(EFightEvent.AllyDeath, OnAllyDeath);
@@ -129,9 +134,11 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void InitializeUnits(MissionMapData mapData) {
+		_rtfUnitsAmount = 0;
+
 		_alliesCount = 1;	//hero
 		for (int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
-			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
+			if (Global.Instance.CurrentMission.SelectedSoldiers[i] != null && !Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
 				_alliesCount++;
 			}
 		}
@@ -146,7 +153,7 @@ public class FightManager : MonoBehaviour {
 		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
 			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
-				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);	//TODO: get BaseSoldier from city
+				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
 			}
 		}
 
@@ -237,8 +244,9 @@ public class FightManager : MonoBehaviour {
 
 	#region dialogues
 	private IEnumerator PlayFightDialog() {
-		yield return null;
-		yield return null;
+		while (_rtfUnitsAmount < _alliesCount + _enemiesCount) {
+			yield return null;
+		}
 		UnitDialogs.Instance.Play(_currentMissionData.Key, _currentMapIndex, OnFightDialogPlayed);
 	}
 
@@ -433,6 +441,10 @@ public class FightManager : MonoBehaviour {
 		if (IsLastMap) {
 			MissionComplete();
 		}
+	}
+
+	private void OnUnitReadyToFight(BaseUnitBehaviour bub) {
+		_rtfUnitsAmount++;
 	}
 	#endregion
 }

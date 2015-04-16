@@ -77,9 +77,9 @@ public class BaseUnitBehaviour : MonoBehaviour {
 	public IEnumerator Start() {
 		_model.SimulateAttack();
 
-		//while (_model.Animator.GetCurrentAnimationClipState(0).Length == 0) {
+		while (_model.Animator.GetCurrentAnimationClipState(0).Length == 0) {
 			yield return null;
-		//}
+		}
 		_model.SetupWeapon();
 
 		_isStarted = true;
@@ -87,6 +87,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 			_onStart();
 			_onStart = null;
 		}
+
+		EventsAggregator.Units.Broadcast<BaseUnitBehaviour>(EUnitEvent.ReadyToFight, this);
 	}
 
 	public void OnDestroy() {
@@ -132,6 +134,10 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 		if (unitData.DamageTaken > 0) {
 			_ui.UpdateHealthBar(Mathf.Max(unitData.Health - unitData.DamageTaken, 0) / (unitData.Health * 1f));
+		}
+
+		if (_isStarted) {
+			EventsAggregator.Units.Broadcast<BaseUnitBehaviour>(EUnitEvent.ReadyToFight, this);
 		}
 	}
 

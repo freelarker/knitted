@@ -27,6 +27,8 @@ public class FightGraphics {
 	public void Load(MissionMapData mapData) {
 		LoadResources(mapData);
 		InstantiateGraphics(mapData);
+
+		LoadingScreen.Instance.SetProgress(0.25f);
 	}
 
 	public void Unload(bool fullUnload) {

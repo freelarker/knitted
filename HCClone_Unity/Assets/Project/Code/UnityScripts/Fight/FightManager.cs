@@ -124,6 +124,8 @@ public class FightManager : MonoBehaviour {
 	}
 
 	public void LoadMap() {
+		LoadingScreen.Instance.SetProgress(0.1f);
+
 		_graphics.Unload(false);
 		_logger.Clear();
 
@@ -150,10 +152,16 @@ public class FightManager : MonoBehaviour {
 	}
 
 	private void InitializeUnitsData(MissionMapData mapData) {
+		float unitInitializationStep = (0.9f - 0.25f) / (_alliesCount + _enemiesCount);
+		float currentLoadPercentage = 0.25f;
+
 		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
 			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
 				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
+
+				currentLoadPercentage += unitInitializationStep;
+				LoadingScreen.Instance.SetProgress(currentLoadPercentage);
 			}
 		}
 
@@ -165,6 +173,9 @@ public class FightManager : MonoBehaviour {
 			} else {
 				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades
 			}
+
+			currentLoadPercentage += unitInitializationStep;
+			LoadingScreen.Instance.SetProgress(currentLoadPercentage);
 		}
 	}
 
@@ -244,9 +255,13 @@ public class FightManager : MonoBehaviour {
 
 	#region dialogues
 	private IEnumerator PlayFightDialog() {
+		LoadingScreen.Instance.SetProgress(1f);
+
 		while (_rtfUnitsAmount < _alliesCount + _enemiesCount) {
 			yield return null;
 		}
+
+		LoadingScreen.Instance.Hide();
 		UnitDialogs.Instance.Play(_currentMissionData.Key, _currentMapIndex, OnFightDialogPlayed);
 	}
 

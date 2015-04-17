@@ -202,6 +202,8 @@ public class UIWindowBattleSetup : UIWindow {
 		}
 		Global.Instance.CurrentMission.SelectedSoldiers = new ArrayRO<BaseSoldier>(soldiers.ToArray());
 
+		LoadingScreen.Instance.Show();
+		LoadingScreen.Instance.SetProgress(0f);
 		Application.LoadLevel(GameConstants.Scenes.FIGHT);
 	}
 

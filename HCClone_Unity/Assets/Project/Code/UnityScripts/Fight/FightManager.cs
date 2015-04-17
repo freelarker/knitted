@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FightManager : MonoBehaviour {
+	private enum EFightPreparationStep {
+		None = 0,
+		Begin,
+		MapGraphicsLoad,
+		MapGraphicsLoaded,
+		InitializeUnits,
+		InitializeUnitsGraphics,
+		UnitsGraphicsInitialized,
+		UnitsInitialized,
+		End
+	}
+
 	private static FightManager _sceneInstance = null;
 	public static FightManager SceneInstance {
 		get { return _sceneInstance; }
@@ -64,6 +76,8 @@ public class FightManager : MonoBehaviour {
 
 	private int _rtfUnitsAmount = 0;
 
+	private EFightPreparationStep _fightPreparationStep = EFightPreparationStep.None;
+
 	public void Awake() {
 		_sceneInstance = this;
 
@@ -117,25 +131,39 @@ public class FightManager : MonoBehaviour {
 
 	#region map start
 	public void StartFightPreparations() {
+		_fightPreparationStep = EFightPreparationStep.Begin;
 		_status = EFightStatus.Preparation;
 		Global.Instance.Player.Heroes.Current.ResetDamageTaken();
 		Global.Instance.Player.Heroes.Current.ResetAggro();
-		LoadMap();
+		StartCoroutine(LoadMap());
 	}
 
-	public void LoadMap() {
+	public IEnumerator LoadMap() {
 		LoadingScreen.Instance.SetProgress(0.1f);
 
 		_graphics.Unload(false);
 		_logger.Clear();
 
 		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
+
+		_fightPreparationStep = EFightPreparationStep.MapGraphicsLoad;
 		_graphics.Load(mapData);
-		InitializeUnits(mapData);
+		yield return null;
+		_fightPreparationStep = EFightPreparationStep.MapGraphicsLoaded;
+
+		StartCoroutine(InitializeUnits(mapData));
+		while (_fightPreparationStep != EFightPreparationStep.UnitsInitialized) {
+			yield return null;
+		}
+		_fightPreparationStep = EFightPreparationStep.End;
+
 		StartCoroutine(PlayFightDialog());
+		_ui.HideFader();
 	}
 
-	private void InitializeUnits(MissionMapData mapData) {
+	private IEnumerator InitializeUnits(MissionMapData mapData) {
+		_fightPreparationStep = EFightPreparationStep.InitializeUnits;
+
 		_rtfUnitsAmount = 0;
 
 		_alliesCount = 1;	//hero
@@ -146,12 +174,19 @@ public class FightManager : MonoBehaviour {
 		}
 		_enemiesCount = _graphics.EnemyUnits.Length;
 
-		InitializeUnitsData(mapData);
+		StartCoroutine(InitializeUnitsData(mapData));
+		while (_fightPreparationStep != EFightPreparationStep.UnitsGraphicsInitialized) {
+			yield return null;
+		}
 		InitializeUnitsPositions(_graphics.AllyUnits, _allySpawnPoints, _allyUnitsRoot);
 		InitializeUnitsPositions(_graphics.EnemyUnits, _enemySpawnPoints, _enemyUnitsRoot);
+
+		_fightPreparationStep = EFightPreparationStep.UnitsInitialized;
 	}
 
-	private void InitializeUnitsData(MissionMapData mapData) {
+	private IEnumerator InitializeUnitsData(MissionMapData mapData) {
+		_fightPreparationStep = EFightPreparationStep.InitializeUnitsGraphics;
+
 		float unitInitializationStep = (0.9f - 0.25f) / (_alliesCount + _enemiesCount);
 		float currentLoadPercentage = 0.25f;
 
@@ -162,6 +197,8 @@ public class FightManager : MonoBehaviour {
 
 				currentLoadPercentage += unitInitializationStep;
 				LoadingScreen.Instance.SetProgress(currentLoadPercentage);
+
+				yield return null;
 			}
 		}
 
@@ -176,7 +213,11 @@ public class FightManager : MonoBehaviour {
 
 			currentLoadPercentage += unitInitializationStep;
 			LoadingScreen.Instance.SetProgress(currentLoadPercentage);
+
+			yield return null;
 		}
+
+		_fightPreparationStep = EFightPreparationStep.UnitsGraphicsInitialized;
 	}
 
 	private void InitializeUnitsPositions(ArrayRO<BaseUnitBehaviour> units, Transform[] spawnPoints, Transform unitsRoot) {
@@ -296,7 +337,6 @@ public class FightManager : MonoBehaviour {
 		}
 
 		NextMap();
-		_ui.HideFader();
 	}
 
 	public void Withdraw() {
@@ -324,7 +364,7 @@ public class FightManager : MonoBehaviour {
 		_currentMapIndex++;
 
 		if (_currentMapIndex < _currentMissionData.MapsCount) {
-			LoadMap();
+			StartCoroutine(LoadMap());
 		} else {
 			MissionComplete();
 		}

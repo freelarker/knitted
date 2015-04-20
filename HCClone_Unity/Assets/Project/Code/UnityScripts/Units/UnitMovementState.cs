@@ -5,5 +5,6 @@
 	MoveToAttackPoint,
 	WatchEnemy,
 	NoEnemy,
+	LookIntoSunset,
 	WaklIntoSunset
 }

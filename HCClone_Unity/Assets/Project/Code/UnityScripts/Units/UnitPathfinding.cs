@@ -13,6 +13,7 @@ public class UnitPathfinding : MonoBehaviour {
 	private int _searchesPerSecond = 2;
 	private float _minDistanceToTargetUnit = 1f;
 	private float _speed = 1f;
+	private float _rotationSpeed = 5f;
 
 	private EHCCGridDirection _freePointDirection = EHCCGridDirection.None;
 	private HCCGridPoint _freePointDirectionVector = HCCGridPoint.Zero;
@@ -48,6 +49,7 @@ public class UnitPathfinding : MonoBehaviour {
 		_movementStateActions.Add(EUnitMovementState.MoveToPrepPoint, MoveToPreparationPoint);
 		_movementStateActions.Add(EUnitMovementState.MoveToAttackPoint, MoveToAttackPoint);
 		_movementStateActions.Add(EUnitMovementState.WatchEnemy, WatchEnemy);
+		_movementStateActions.Add(EUnitMovementState.LookIntoSunset, LookForward);
 		_movementStateActions.Add(EUnitMovementState.WaklIntoSunset, MoveForward);
 
 		_cachedTransform = transform;
@@ -115,6 +117,10 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	#region movement
+	public void LookIntoSunset() {
+		CurrentState = EUnitMovementState.LookIntoSunset;
+	}
+
 	public void WalkIntoSunset() {
 		CurrentState = EUnitMovementState.WaklIntoSunset;
 		_model.PlayRunAnimation();
@@ -196,7 +202,8 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 
 		if (_gridObject.Path.Count > 0) {
-			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+			_cachedModelTransform.localRotation = Quaternion.Lerp(_cachedModelTransform.localRotation, Quaternion.LookRotation(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition) - _cachedTransform.position), _rotationSpeed * Time.deltaTime);
+			//_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 	}
 
@@ -218,7 +225,8 @@ public class UnitPathfinding : MonoBehaviour {
 		}
 
 		if(_gridObject.Path.Count > 0) {
-			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+			_cachedModelTransform.localRotation = Quaternion.Lerp(_cachedModelTransform.localRotation, Quaternion.LookRotation(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition) - _cachedTransform.position), _rotationSpeed * Time.deltaTime);
+			//_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 	}
 
@@ -234,7 +242,8 @@ public class UnitPathfinding : MonoBehaviour {
 
 		PerformMovement();
 		if (_gridObject.Path.Count > 0) {
-			_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
+			_cachedModelTransform.localRotation = Quaternion.Lerp(_cachedModelTransform.localRotation, Quaternion.LookRotation(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition) - _cachedTransform.position), _rotationSpeed * Time.deltaTime);
+			//_cachedModelTransform.LookAt(HCCGridController.Instance.GridView.GridToWorldPos(_gridObject.Path[0].GridPosition));
 		}
 
 		BaseUnitBehaviour nearestTargetInRange = GetNearestTargetInRange();
@@ -258,7 +267,8 @@ public class UnitPathfinding : MonoBehaviour {
 	}
 
 	private void WatchEnemy() {
-		_cachedModelTransform.LookAt(_nearestTarget.transform);
+		_cachedModelTransform.localRotation = Quaternion.Lerp(_cachedModelTransform.localRotation, Quaternion.LookRotation(_nearestTarget.transform.position - _cachedTransform.position), _rotationSpeed * Time.deltaTime);
+		//_cachedModelTransform.LookAt(_nearestTarget.transform);
 	}
 
 	private bool PerformMovement(float minDistance = 0.6f) {
@@ -278,9 +288,14 @@ public class UnitPathfinding : MonoBehaviour {
 		return result;
 	}
 
+	private void LookForward() {
+		_cachedModelTransform.localRotation = Quaternion.Lerp(_cachedModelTransform.localRotation, Quaternion.LookRotation(new Vector3(1f, 0f, 0f)), _rotationSpeed * Time.deltaTime);
+	}
+
 	private void MoveForward() {
 		Vector3 destinationPoint = _cachedModelTransform.position + new Vector3(1f, 0f, 0f);
-		_cachedModelTransform.LookAt(destinationPoint);
+		_cachedModelTransform.localRotation = Quaternion.Lerp(_cachedModelTransform.localRotation, Quaternion.LookRotation(new Vector3(1f, 0f, 0f)), _rotationSpeed * Time.deltaTime);
+		//_cachedModelTransform.LookAt(destinationPoint);
 		_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, destinationPoint, Time.deltaTime * _speed);
 	}
 	#endregion

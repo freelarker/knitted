@@ -263,7 +263,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 
 		if (_unitData != null && !_unitData.IsDead) {
 			_model.PlayWinAnimation();
-			_model.transform.LookAt(_model.transform.position + new Vector3(1f, 0f, 0f));
+			_unitPathfinder.LookIntoSunset();
 		}
 	}
 

@@ -14,10 +14,18 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 
 		{ EUIWindowKey.HeroesList, GameConstants.Paths.Prefabs.UI_WIN_HEROES_LIST },
 		{ EUIWindowKey.HeroInfo, GameConstants.Paths.Prefabs.UI_WIN_HERO_INFO },
+
+		{ EUIWindowKey.PvPModeSelect, GameConstants.Paths.Prefabs.UI_WIN_PVP_MODE_SELECT },
+		{ EUIWindowKey.PvPBattleSetup, GameConstants.Paths.Prefabs.UI_WIN_PVP_BATTLE_SETUP },
+
+		{ EUIWindowKey.PlanetOverlay, GameConstants.Paths.Prefabs.UI_WIN_PLANET_OVERAY },
 	};
 
 	private List<UIWindow> _activeWindows = new List<UIWindow>();
 	private UIWindow _activeWindow = null;
+	public UIWindow ActiveWindow {
+		get { return _activeWindow; }
+	}
 
 	public T GetWindow<T>(EUIWindowKey windowKey) where T : UIWindow {
 		UIWindow window = GetWindow(windowKey);

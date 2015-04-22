@@ -14,4 +14,9 @@
 
 	HeroesList = 200,
 	HeroInfo,
+
+	PvPModeSelect = 301,
+	PvPBattleSetup,
+
+	PlanetOverlay = 1001,
 }

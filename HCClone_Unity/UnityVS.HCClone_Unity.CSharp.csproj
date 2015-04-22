@@ -190,6 +190,7 @@
     <Compile Include="Assets\Project\Code\UI\LoadingScreen\LoadingScreen.cs" />
     <Compile Include="Assets\Project\Code\UI\MainMenu\UIMainMenu.cs" />
     <Compile Include="Assets\Project\Code\UI\MissionSelect\UIMissionIcon.cs" />
+    <Compile Include="Assets\Project\Code\UI\MissionSelect\UIPlanet.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\EUIWindowDisplayAction.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleDefeat.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattlePreview.cs" />
@@ -199,6 +200,9 @@
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowCityBarracks.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroesList.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowPlanetOverlay.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowPvPBattleSetup.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowPvPModeSelect.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBarracksUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBattlePreviewUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBattleSetupUnitInfo.cs" />

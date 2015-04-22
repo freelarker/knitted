@@ -39,6 +39,11 @@ public static class GameConstants {
 
 			public static string UI_WIN_HEROES_LIST { get { return string.Format("{0}/City/WndHeroesList", UI_WINDOWS_RESOURCES); } }
 			public static string UI_WIN_HERO_INFO { get { return string.Format("{0}/City/WndHeroInfo", UI_WINDOWS_RESOURCES); } }
+
+			public static string UI_WIN_PVP_MODE_SELECT { get { return string.Format("{0}/PvP/WndPvPModeSelect", UI_WINDOWS_RESOURCES); } }
+			public static string UI_WIN_PVP_BATTLE_SETUP { get { return string.Format("{0}/PvP/WndPvPBattleSetup", UI_WINDOWS_RESOURCES); } }
+
+			public static string UI_WIN_PLANET_OVERAY { get { return string.Format("{0}/Missions/WndPlanetOverlay", UI_WINDOWS_RESOURCES); } }
 		}
 
 		#region auxiliary

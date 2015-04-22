@@ -23,11 +23,20 @@ public class UIMainMenu : MonoBehaviour {
 	}
 
 	public void Start() {
-		_btnCampaign.onClick.AddListener(OnCampaignClick);
+		Global.Instance.Initialize();
+
+		_btnCampaign.onClick.AddListener(OnBtnCampaignClick);
+		_btnArena.onClick.AddListener(OnBtnArenaClick);
 	}
 
-	private void OnCampaignClick() {
+	#region listeners
+	private void OnBtnCampaignClick() {
 		//TODO: load last planet's scene
 		Application.LoadLevel("Planet1");
 	}
+
+	private void OnBtnArenaClick() {
+		UIWindowsManager.Instance.GetWindow<UIWindowPvPModeSelect>(EUIWindowKey.PvPModeSelect).Show();
+	}
+	#endregion
 }

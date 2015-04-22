@@ -35,6 +35,7 @@ public class UIMainMenu : MonoBehaviour {
 		_btnCampaign.onClick.AddListener(OnBtnCampaignClick);
 		_btnArena.onClick.AddListener(OnBtnArenaClick);
 		_btnSets.onClick.AddListener(OnBtnSetsClick);
+		_btnShop.onClick.AddListener(OnBtnShopClick);
 		_btnHeroes.onClick.AddListener(OnBtnHeroesClick);
 		_btnSquad.onClick.AddListener(OnBtnSquadClick);
 
@@ -77,6 +78,10 @@ public class UIMainMenu : MonoBehaviour {
 
 	private void OnBtnSetsClick() {
 		UIWindowsManager.Instance.GetWindow<UIWindowSets>(EUIWindowKey.Sets).Show();
+	}
+
+	private void OnBtnShopClick() {
+		UIWindowsManager.Instance.GetWindow<UIWindowShop>(EUIWindowKey.Shop).Show();
 	}
 
 	private void OnBtnHeroesClick() {

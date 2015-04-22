@@ -14,6 +14,8 @@ public class UIWindowSets : UIWindow {
 	}
 
 	public void Start() {
+		_btnTrooper.gameObject.SetActive(UIWindowShop._trooperPurchased);
+
 		_btnTrooper.onClick.AddListener(OnBtnTrooperClick);
 		_btnBack.onClick.AddListener(OnBtnBackClick);
 		_btnUnitUnlocked.onClick.AddListener(OnBtnUnitUnlockedClickClick);
@@ -21,9 +23,8 @@ public class UIWindowSets : UIWindow {
 
 	#region listeners
 	private void OnBtnTrooperClick() {
-		if (Global.Instance.Player.City.GetBuilding(ECityBuildingKey.Barracks).Level < 2) {
+		if (UIWindowShop._trooperPurchased && Global.Instance.Player.City.GetBuilding(ECityBuildingKey.Barracks).Level < 2) {
 			Global.Instance.Player.City.StartConstruction(ECityBuildingKey.Barracks);
-			Global.Instance.Player.Resources.Minerals -= 10;
 
 			_btnTrooper.interactable = false;
 

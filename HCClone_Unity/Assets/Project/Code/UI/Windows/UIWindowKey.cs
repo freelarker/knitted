@@ -19,6 +19,7 @@
 	PvPBattleSetup,
 
 	Sets = 401,
+	Shop,
 
 	PlanetOverlay = 1001,
 }

@@ -188,6 +188,7 @@
     <Compile Include="Assets\Project\Code\UI\Fight\UIHeroSkills.cs" />
     <Compile Include="Assets\Project\Code\UI\Fight\UnitUI.cs" />
     <Compile Include="Assets\Project\Code\UI\LoadingScreen\LoadingScreen.cs" />
+    <Compile Include="Assets\Project\Code\UI\MainMenu\UIMainMenu.cs" />
     <Compile Include="Assets\Project\Code\UI\MissionSelect\UIMissionIcon.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\EUIWindowDisplayAction.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBattleDefeat.cs" />

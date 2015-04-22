@@ -104,6 +104,7 @@
      <Compile Include="Assets\Project\Code\Core\City\Requirements\CBConstructionRequirement.cs" />
      <Compile Include="Assets\Project\Code\Core\City\Requirements\ConstructionBuildingRequirement.cs" />
      <Compile Include="Assets\Project\Code\Core\Fight\FightLogger.cs" />
+     <Compile Include="Assets\Project\Code\Core\Fight\FightMode.cs" />
      <Compile Include="Assets\Project\Code\Core\GameConstants.cs" />
      <Compile Include="Assets\Project\Code\Core\Global.cs" />
      <Compile Include="Assets\Project\Code\Core\Items\BaseItem.cs" />

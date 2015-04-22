@@ -204,6 +204,8 @@ public class UIWindowBattleSetup : UIWindow {
 
 		LoadingScreen.Instance.Show();
 		LoadingScreen.Instance.SetProgress(0f);
+
+		FightManager.Setup(EFightMode.Campaign, MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey));
 		Application.LoadLevel(GameConstants.Scenes.FIGHT);
 	}
 

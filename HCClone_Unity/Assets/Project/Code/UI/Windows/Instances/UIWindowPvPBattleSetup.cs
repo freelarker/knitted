@@ -191,7 +191,31 @@ public class UIWindowPvPBattleSetup : UIWindow {
 
 	#region button listeners
 	private void OnBtnPlayClick() {
-		Debug.Log("PvP map will be loaded... In future");
+		List<BaseSoldier> soldiers = new List<BaseSoldier>();
+		for (int i = 0; i < _hiredSoldiers.Length; i++) {
+			if (_hiredSoldiers[i] >= 0) {
+				soldiers.Add(new BaseSoldier(_availableSoldiers[_hiredSoldiers[i]]));
+			}
+		}
+		Global.Instance.CurrentMission.SelectedSoldiers = new ArrayRO<BaseSoldier>(soldiers.ToArray());
+
+		//setup random units and map
+		EUnitKey[] availableUnits = new EUnitKey[] { EUnitKey.Scout, EUnitKey.Trooper, EUnitKey.Jawa_1 };
+		string[] availableMaps = new string[] { "battle1_forest_1", "battle1_forest_2" };
+
+		EUnitKey[] units = new EUnitKey[Random.Range(1, 6)];
+		units[0] = EUnitKey.Hero_Sniper;
+		for (int i = 1; i < units.Length; i++) {
+			units[i] = availableUnits[Random.Range(0, availableUnits.Length)];
+		}
+
+		MissionMapData mmd = new MissionMapData(units, availableMaps[Random.Range(0, availableMaps.Length)]);
+		MissionData md = new MissionData(EMissionKey.None, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new MissionMapData[] { mmd });
+		FightManager.Setup(EFightMode.PvP, md);
+
+		LoadingScreen.Instance.Show();
+		LoadingScreen.Instance.SetProgress(0f);
+		Application.LoadLevel("Fight");
 	}
 
 	private void OnBtnBackClick() {

@@ -21,4 +21,11 @@ public class MissionMapData {
 	public string MapBackgroundPath {
 		get { return _mapBackgroundPath; }
 	}
+
+	public MissionMapData() { }
+
+	public MissionMapData(EUnitKey[] units, string mapBackgroundPath) {
+		_units = units;
+		_mapBackgroundPath = mapBackgroundPath;
+	}
 }

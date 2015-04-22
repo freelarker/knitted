@@ -15,10 +15,19 @@ public class FightManager : MonoBehaviour {
 		End
 	}
 
+	#region static
 	private static FightManager _sceneInstance = null;
 	public static FightManager SceneInstance {
 		get { return _sceneInstance; }
 	}
+
+	private static EFightMode _fightMode = EFightMode.Campaign;
+	private static MissionData _missionData = null;
+	public static void Setup(EFightMode fightMode, MissionData missionData) {
+		_fightMode = fightMode;
+		_missionData = missionData;
+	}
+	#endregion
 
 	[SerializeField]
 	private Transform _allyUnitsRoot;
@@ -55,10 +64,9 @@ public class FightManager : MonoBehaviour {
 	private FightGraphics _graphics = new FightGraphics();
 	private FightLogger _logger = new FightLogger();
 
-	private MissionData _currentMissionData = null;
 	private int _currentMapIndex = 0;
 	public bool IsLastMap {
-		get { return _currentMissionData.MapsCount <= _currentMapIndex + 1; }
+		get { return _missionData.MapsCount <= _currentMapIndex + 1; }
 	}
 
 	public BaseUnitBehaviour AllyHero {
@@ -94,14 +102,12 @@ public class FightManager : MonoBehaviour {
 		FightCamera.AdaptCanvas(GameConstants.DEFAULT_RESOLUTION_WIDTH, _ui.CanvasBG);
 		Utils.UI.AdaptCanvasResolution(GameConstants.DEFAULT_RESOLUTION_WIDTH, GameConstants.DEFAULT_RESOLUTION_HEIGHT, _ui.CanvasUI);
 
-		if (Global.Instance.CurrentMission.PlanetKey == EPlanetKey.None || Global.Instance.CurrentMission.MissionKey == EMissionKey.None) {
+		if (_missionData == null) {
 			//TODO: broadcast message
 			Debug.LogError("Wrong mission info");
 			return;
 			//yield break;	//???
 		}
-
-		_currentMissionData = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
 
 		//yield return null;	//???
 
@@ -144,7 +150,7 @@ public class FightManager : MonoBehaviour {
 		_graphics.Unload(false);
 		_logger.Clear();
 
-		MissionMapData mapData = _currentMissionData.GetMap(_currentMapIndex);
+		MissionMapData mapData = _missionData.GetMap(_currentMapIndex);
 
 		_fightPreparationStep = EFightPreparationStep.MapGraphicsLoad;
 		_graphics.Load(mapData);
@@ -303,7 +309,7 @@ public class FightManager : MonoBehaviour {
 		}
 
 		LoadingScreen.Instance.Hide();
-		UnitDialogs.Instance.Play(_currentMissionData.Key, _currentMapIndex, OnFightDialogPlayed);
+		UnitDialogs.Instance.Play(_missionData.Key, _currentMapIndex, OnFightDialogPlayed);
 	}
 
 	private void OnFightDialogPlayed() {
@@ -346,9 +352,9 @@ public class FightManager : MonoBehaviour {
 
 		_logger.Clear();
 
-		Global.Instance.Player.Resources.Fuel -= _currentMissionData.FuelLoseCost;
-		Global.Instance.Player.Resources.Credits -= _currentMissionData.CreditsLoseCost;
-		Global.Instance.Player.Resources.Minerals -= _currentMissionData.MineralsLoseCost;
+		Global.Instance.Player.Resources.Fuel -= _missionData.FuelLoseCost;
+		Global.Instance.Player.Resources.Credits -= _missionData.CreditsLoseCost;
+		Global.Instance.Player.Resources.Minerals -= _missionData.MineralsLoseCost;
 
 		Global.Instance.CurrentMission.Clear();
 
@@ -363,7 +369,7 @@ public class FightManager : MonoBehaviour {
 	public void NextMap() {
 		_currentMapIndex++;
 
-		if (_currentMapIndex < _currentMissionData.MapsCount) {
+		if (_currentMapIndex < _missionData.MapsCount) {
 			StartCoroutine(LoadMap());
 		} else {
 			MissionComplete();
@@ -392,52 +398,74 @@ public class FightManager : MonoBehaviour {
 
 	#region mission results
 	private void MissionComplete() {
-		//TODO: show win screen, remove player resources, save progress
-		Global.Instance.Network.SaveMissionSuccessResults();
-		Global.Instance.Player.StoryProgress.SaveProgress(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+		switch (_fightMode) {
+			case EFightMode.Campaign:
+				//TODO: show win screen, remove player resources, save progress
+				Global.Instance.Network.SaveMissionSuccessResults();
+				Global.Instance.Player.StoryProgress.SaveProgress(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 
-		Global.Instance.Player.Resources.Fuel += -_currentMissionData.FuelWinCost + _currentMissionData.RewardFuel;
-		Global.Instance.Player.Resources.Credits += -_currentMissionData.CreditsWinCost + _currentMissionData.RewardCredits;
-		Global.Instance.Player.Resources.Minerals += -_currentMissionData.MineralsWinCost + _currentMissionData.RewardMinerals;
+				_logger.Clear();
 
-		Global.Instance.Player.Heroes.Current.AddExperience(_currentMissionData.RewardExperienceWin);
+				Global.Instance.Player.Resources.Fuel += -_missionData.FuelWinCost + _missionData.RewardFuel;
+				Global.Instance.Player.Resources.Credits += -_missionData.CreditsWinCost + _missionData.RewardCredits;
+				Global.Instance.Player.Resources.Minerals += -_missionData.MineralsWinCost + _missionData.RewardMinerals;
 
-		//TODO: get items from server
-		MissionData md = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
-		for (int i = 0; i < md.RewardItems.Length; i++) {
-			if (Random.Range(0, 101) < md.RewardItems[i].DropChance) {
-				Global.Instance.Player.Inventory.AddItem(ItemsConfig.Instance.GetItem(md.RewardItems[i].ItemKey));
-			}
+				Global.Instance.Player.Heroes.Current.AddExperience(_missionData.RewardExperienceWin);
+
+				//TODO: get items from server
+				MissionData md = MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey);
+				for (int i = 0; i < md.RewardItems.Length; i++) {
+					if (Random.Range(0, 101) < md.RewardItems[i].DropChance) {
+						Global.Instance.Player.Inventory.AddItem(ItemsConfig.Instance.GetItem(md.RewardItems[i].ItemKey));
+					}
+				}
+
+				Global.Instance.Player.StoryProgress.RegisterAttemptUsage(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+
+				UIWindowsManager.Instance.GetWindow<UIWindowBattleVictory>(EUIWindowKey.BattleVictory).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+
+				Global.Instance.CurrentMission.Clear();
+				break;
+			case EFightMode.PvP:
+				_logger.Clear();
+				Global.Instance.CurrentMission.Clear();
+				Application.LoadLevel("MainMenu");
+				break;
 		}
 
-		Global.Instance.Player.StoryProgress.RegisterAttemptUsage(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
-
-		UIWindowsManager.Instance.GetWindow<UIWindowBattleVictory>(EUIWindowKey.BattleVictory).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
-
-		Global.Instance.CurrentMission.Clear();
 	}
 
 	private void MissionFail() {
-		//TODO: show lose screen, remove player resources, save progress
-		Global.Instance.Network.SaveMissionFailResults();
+		switch (_fightMode) {
+			case EFightMode.Campaign:
+				//TODO: show lose screen, remove player resources, save progress
+				Global.Instance.Network.SaveMissionFailResults();
 
-		_logger.Clear();
+				_logger.Clear();
 
-		Global.Instance.Player.Resources.Fuel -= _currentMissionData.FuelLoseCost;
-		Global.Instance.Player.Resources.Credits -= _currentMissionData.CreditsLoseCost;
-		Global.Instance.Player.Resources.Minerals -= _currentMissionData.MineralsLoseCost;
+				Global.Instance.Player.Resources.Fuel -= _missionData.FuelLoseCost;
+				Global.Instance.Player.Resources.Credits -= _missionData.CreditsLoseCost;
+				Global.Instance.Player.Resources.Minerals -= _missionData.MineralsLoseCost;
 
-		Global.Instance.Player.Heroes.Current.AddExperience(_currentMissionData.RewardExperienceLose);
+				Global.Instance.Player.Heroes.Current.AddExperience(_missionData.RewardExperienceLose);
 
-		UIWindowsManager.Instance.GetWindow<UIWindowBattleDefeat>(EUIWindowKey.BattleDefeat).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
+				UIWindowsManager.Instance.GetWindow<UIWindowBattleDefeat>(EUIWindowKey.BattleDefeat).Show(Global.Instance.CurrentMission.PlanetKey, Global.Instance.CurrentMission.MissionKey);
 
-		Global.Instance.CurrentMission.Clear();
+				Global.Instance.CurrentMission.Clear();
+				break;
+			case EFightMode.PvP:
+				_logger.Clear();
+				Global.Instance.CurrentMission.Clear();
+				Application.LoadLevel("MainMenu");
+				break;
+		}
 	}
 
 	public void Clear() {
 		_graphics.Unload(true);
-		_currentMissionData = null;
 		_currentMapIndex = 0;
+
+		_missionData = null;
 	}
 	#endregion
 

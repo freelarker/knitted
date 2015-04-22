@@ -117,6 +117,7 @@ public class UnitsSelectGUI : MonoBehaviour {
 		Global.Instance.CurrentMission.MissionKey = EMissionKey.PlanetA_Test1;
 		Global.Instance.CurrentMission.SelectedSoldiers = new ArrayRO<BaseSoldier>(soldiers);
 
+		FightManager.Setup(EFightMode.Campaign, MissionsConfig.Instance.GetPlanet(Global.Instance.CurrentMission.PlanetKey).GetMission(Global.Instance.CurrentMission.MissionKey));
 		Application.LoadLevel("Fight");
 	}
 }

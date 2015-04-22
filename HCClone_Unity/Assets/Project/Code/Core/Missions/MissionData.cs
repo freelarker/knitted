@@ -107,6 +107,24 @@ public class MissionData {
 		get { return _maps.Length; }
 	}
 
+	public MissionData() { }
+
+	public MissionData(EMissionKey key, int fuelWinCost, int fuelLoseCost, int creditsWinCost, int creditsLoseCost, int mineralsWinCost, int mineralsLoseCost, int rewardExperienceWin, int rewardExperienceLose, int rewardFuel, int rewardCredits, int rewardMinerals, MissionMapData[] maps) {
+		_key = key;
+		_fuelWinCost = fuelWinCost;
+		_fuelLoseCost = fuelLoseCost;
+		_creditsWinCost = creditsWinCost;
+		_creditsLoseCost = creditsLoseCost;
+		_mineralsWinCost = mineralsWinCost;
+		_mineralsLoseCost = mineralsLoseCost;
+		_rewardExperienceWin = rewardExperienceWin;
+		_rewardExperienceLose = rewardExperienceLose;
+		_rewardFuel = rewardFuel;
+		_rewardCredits = rewardCredits;
+		_rewardMinerals = rewardMinerals;
+		_maps = maps;
+	}
+
 	public MissionMapData GetMap(int index) {
 		return index >= 0 || index < _maps.Length ? _maps[index] : null;
 	}

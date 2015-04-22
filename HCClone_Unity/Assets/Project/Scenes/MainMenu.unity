@@ -540,6 +540,9 @@ MonoBehaviour:
   _btnShop: {fileID: 403602781}
   _btnHeroes: {fileID: 26681729}
   _btnSquad: {fileID: 1441423525}
+  _lblCredits: {fileID: 1634953054}
+  _lblMinerals: {fileID: 51122464}
+  _lblFuel: {fileID: 871318765}
 --- !u!1 &278038335
 GameObject:
   m_ObjectHideFlags: 0

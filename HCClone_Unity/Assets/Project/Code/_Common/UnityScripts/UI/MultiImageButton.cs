@@ -15,30 +15,50 @@ public class MultiImageButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
 	}
 
 	public void OnPointerEnter(PointerEventData eventData) {
+		if (!_myButton.interactable) {
+			return;
+		}
+
 		for (int i = 0; i < _affectedImages.Length; i++) {
 			_affectedImages[i].CrossFadeColor(_myButton.colors.highlightedColor, _myButton.colors.fadeDuration, true, true);
 		}
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
+		if (!_myButton.interactable) {
+			return;
+		}
+
 		for (int i = 0; i < _affectedImages.Length; i++) {
 			_affectedImages[i].CrossFadeColor(_myButton.colors.normalColor, _myButton.colors.fadeDuration, true, true);
 		}
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
+		if (!_myButton.interactable) {
+			return;
+		}
+
 		for (int i = 0; i < _affectedImages.Length; i++) {
 			_affectedImages[i].CrossFadeColor(_myButton.colors.pressedColor, _myButton.colors.fadeDuration, true, true);
 		}
 	}
 
 	public void OnPointerUp(PointerEventData eventData) {
+		if (!_myButton.interactable) {
+			return;
+		}
+
 		for (int i = 0; i < _affectedImages.Length; i++) {
 			_affectedImages[i].CrossFadeColor(_myButton.colors.highlightedColor, _myButton.colors.fadeDuration, true, true);
 		}
 	}
 
 	public void OnPointerClick(PointerEventData eventData) {
+		if (!_myButton.interactable) {
+			return;
+		}
+
 		//unimplemented
 	}
 }

@@ -52,6 +52,7 @@ public class UIWindowCityBarracks : UIWindow {
 #endif
 
 		AddDisplayAction(EUIWindowDisplayAction.PreShow, SetupUnits);
+		AddDisplayAction(EUIWindowDisplayAction.PostShow, (UIWindow window) => { ArrangeUnitImages(); });
 		AddDisplayAction(EUIWindowDisplayAction.PostHide, ClearUnits);
 	}
 
@@ -84,7 +85,6 @@ public class UIWindowCityBarracks : UIWindow {
 			_unitImages[i].Setup(playerUnitKeys[i]);
 		}
 		ArrangeUnitImages();
-
 		ShowSoldierInfo(0);
 	}
 

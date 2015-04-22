@@ -12,11 +12,13 @@
 
 	CityBuildingUpgrade = 176,
 
-	HeroesList = 200,
+	HeroesList = 201,
 	HeroInfo,
 
 	PvPModeSelect = 301,
 	PvPBattleSetup,
+
+	Sets = 401,
 
 	PlanetOverlay = 1001,
 }

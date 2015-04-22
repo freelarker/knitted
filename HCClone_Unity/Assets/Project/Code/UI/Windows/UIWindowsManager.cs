@@ -18,6 +18,8 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 		{ EUIWindowKey.PvPModeSelect, GameConstants.Paths.Prefabs.UI_WIN_PVP_MODE_SELECT },
 		{ EUIWindowKey.PvPBattleSetup, GameConstants.Paths.Prefabs.UI_WIN_PVP_BATTLE_SETUP },
 
+		{ EUIWindowKey.Sets, GameConstants.Paths.Prefabs.UI_WIN_SETS },
+
 		{ EUIWindowKey.PlanetOverlay, GameConstants.Paths.Prefabs.UI_WIN_PLANET_OVERAY },
 	};
 

@@ -1096,7 +1096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f4b3bf4a4ff294699d13b7956685d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowKey: 200
+  _windowKey: 201
   _btnBack: {fileID: 11489674}
   _btnHero: {fileID: 11423936}
 --- !u!114 &11489668

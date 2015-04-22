@@ -27,6 +27,7 @@ public class UIMainMenu : MonoBehaviour {
 
 		_btnCampaign.onClick.AddListener(OnBtnCampaignClick);
 		_btnArena.onClick.AddListener(OnBtnArenaClick);
+		_btnHeroes.onClick.AddListener(OnBtnHeroesClick);
 	}
 
 	#region listeners
@@ -37,6 +38,10 @@ public class UIMainMenu : MonoBehaviour {
 
 	private void OnBtnArenaClick() {
 		UIWindowsManager.Instance.GetWindow<UIWindowPvPModeSelect>(EUIWindowKey.PvPModeSelect).Show();
+	}
+
+	private void OnBtnHeroesClick() {
+		UIWindowsManager.Instance.GetWindow<UIWindowHeroesList>(EUIWindowKey.HeroesList).Show();
 	}
 	#endregion
 }

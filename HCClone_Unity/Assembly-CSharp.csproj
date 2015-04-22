@@ -191,6 +191,7 @@
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowBuildingUpgrade.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowCityBarracks.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroInfo.cs" />
+     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroInfo_old.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowHeroesList.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowPlanetOverlay.cs" />
      <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowPvPBattleSetup.cs" />

@@ -214,7 +214,7 @@ public class FightManager : MonoBehaviour {
 			if (bud is BaseHeroData) {
 				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy hero inventory
 			} else {
-				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades
+				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData, 1), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades
 			}
 
 			currentLoadPercentage += unitInitializationStep;

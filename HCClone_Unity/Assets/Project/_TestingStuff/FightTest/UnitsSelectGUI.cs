@@ -110,7 +110,7 @@ public class UnitsSelectGUI : MonoBehaviour {
 
 		BaseSoldier[] soldiers = new BaseSoldier[_hiredUnits.Count];
 		for (int i = 0; i < soldiers.Length; i++) {
-			soldiers[i] = new BaseSoldier(UnitsConfig.Instance.GetSoldierData(_hiredUnits[i]));
+			soldiers[i] = new BaseSoldier(UnitsConfig.Instance.GetSoldierData(_hiredUnits[i]), Global.Instance.Player.City.GetSoldierUpgradesInfo(_hiredUnits[i]).Level);
 		}
 
 		Global.Instance.CurrentMission.PlanetKey = EPlanetKey.PlanetA;

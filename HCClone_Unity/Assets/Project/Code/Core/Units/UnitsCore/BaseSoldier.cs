@@ -7,7 +7,8 @@ public class BaseSoldier : BaseUnit {
 		get { return _data; }
 	}
 
-	public BaseSoldier(BaseSoldierData data) : base(data) {
+	public BaseSoldier(BaseSoldierData data, int level) : base(data) {
 		_data = data;
+		Level = level;
 	}
 }

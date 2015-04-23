@@ -197,7 +197,7 @@ public class UIWindowBattleSetup : UIWindow {
 		List<BaseSoldier> soldiers = new List<BaseSoldier>();
 		for (int i = 0; i < _hiredSoldiers.Length; i++) {
 			if (_hiredSoldiers[i] >= 0) {
-				soldiers.Add(new BaseSoldier(_availableSoldiers[_hiredSoldiers[i]]));
+				soldiers.Add(new BaseSoldier(_availableSoldiers[_hiredSoldiers[i]], Global.Instance.Player.City.GetSoldierUpgradesInfo(_availableSoldiers[_hiredSoldiers[i]].Key).Level));
 			}
 		}
 		Global.Instance.CurrentMission.SelectedSoldiers = new ArrayRO<BaseSoldier>(soldiers.ToArray());

@@ -89,7 +89,7 @@ public class UIMainMenu : MonoBehaviour {
 	}
 
 	private void OnBtnSquadClick() {
-		UIWindowsManager.Instance.GetWindow<UIWindowCityBarracks>(EUIWindowKey.CityBarracks).Show();
+		UIWindowsManager.Instance.GetWindow<UIWindowUpgrades>(EUIWindowKey.Upgrades).Show();
 	}
 	#endregion
 }

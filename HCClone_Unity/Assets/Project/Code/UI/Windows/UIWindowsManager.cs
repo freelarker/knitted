@@ -20,6 +20,7 @@ public class UIWindowsManager : MonoBehaviourSingleton<UIWindowsManager> {
 
 		{ EUIWindowKey.Sets, GameConstants.Paths.Prefabs.UI_WIN_SETS },
 		{ EUIWindowKey.Shop, GameConstants.Paths.Prefabs.UI_WIN_SHOP },
+		{ EUIWindowKey.Upgrades, GameConstants.Paths.Prefabs.UI_WIN_UPGRADES },
 
 		{ EUIWindowKey.PlanetOverlay, GameConstants.Paths.Prefabs.UI_WIN_PLANET_OVERAY },
 	};

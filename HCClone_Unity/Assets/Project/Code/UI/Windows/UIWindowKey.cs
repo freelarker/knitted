@@ -20,6 +20,7 @@
 
 	Sets = 401,
 	Shop,
+	Upgrades,
 
 	PlanetOverlay = 1001,
 }

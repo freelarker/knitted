@@ -9,17 +9,6 @@ public class BaseHero : BaseUnit {
 		get { return _data; }
 	}
 
-	protected int _level = 1;	//hero level
-	public int Level {
-		get { return _level; }
-		set {
-			if (value > _level) {
-				_level = value;
-				RecalculateParams();
-			}
-		}
-	}
-
 	public int Leadership { get; private set; }	//hero leadership after all upgrades and level-ups
 	public int Experience { get; private set; }	//hero experience
 	public float AggroCrystalsMaximum { get; private set; }	//aggro crystals cap after all upgrages and level-ups

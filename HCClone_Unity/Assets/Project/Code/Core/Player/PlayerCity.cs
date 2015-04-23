@@ -108,9 +108,19 @@ public class PlayerCity {
 
 	public SoldierUpgradesInfo GetSoldierUpgradesInfo(EUnitKey unitKey) {
 		if (!_unitUpgrades.ContainsKey(unitKey)) {
-			_unitUpgrades.Add(unitKey, new SoldierUpgradesInfo(unitKey, 1, 1));
+			_unitUpgrades.Add(unitKey, new SoldierUpgradesInfo(unitKey));
 		}
 		return _unitUpgrades[unitKey];
+	}
+
+	public void SoldierLevelUp(EUnitKey unitKey) {
+		GetSoldierUpgradesInfo(unitKey).LevelUp();
+	}
+
+	public void SetSoldierLevel(EUnitKey unitKey, int level) {
+		for (int i = GetSoldierUpgradesInfo(unitKey).Level; i < level; i++) {
+			GetSoldierUpgradesInfo(unitKey).LevelUp();
+		}
 	}
 	#endregion
 

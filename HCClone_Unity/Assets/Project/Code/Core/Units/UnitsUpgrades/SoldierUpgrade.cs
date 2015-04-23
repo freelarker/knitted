@@ -21,13 +21,20 @@ public class SoldierUpgrade {
 	}
 
 	public SoldierUpgradeLevel GetUpgradeLevel(int level) {
-		if (_levelsData != null) {
-			for (int i = 0; i < _levelsData.Length; i++) {
-				if (_levelsData[i].Level == level) {
-					return _levelsData[i];
-				}
-			}
+		if (_levelsData != null && _levelsData.Length >= level) {
+			return _levelsData[level - 1];
 		}
 		return null;
+	}
+
+	public SoldierUpgradeLevel GetTotalLevelUpgrades(int level) {
+		int modDamage = 0;
+		if (_levelsData != null) {
+			for (int i = 0; i < Mathf.Min(_levelsData.Length, level); i++) {
+				modDamage += _levelsData[i].ModifierDamage;
+			}
+		}
+
+		return new SoldierUpgradeLevel(modDamage);
 	}
 }

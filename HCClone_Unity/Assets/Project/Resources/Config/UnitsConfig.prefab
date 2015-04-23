@@ -157,7 +157,31 @@ MonoBehaviour:
     _hexIconName: 
     _leadershipCost: 0
     _creditsCost: 0
-  _soldierUpgrades: []
+  _soldierUpgrades:
+  - _soldierKey: 1000001
+    _levelsData:
+    - _modifierDamage: 0
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 0
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+  - _soldierKey: 1000002
+    _levelsData:
+    - _modifierDamage: 0
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 0
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
+    - _modifierDamage: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

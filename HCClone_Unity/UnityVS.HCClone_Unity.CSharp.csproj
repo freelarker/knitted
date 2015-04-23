@@ -207,10 +207,12 @@
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowPvPModeSelect.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowSets.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowShop.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\Instances\UIWindowUpgrades.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBarracksUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBattlePreviewUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIBattleSetupUnitInfo.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIResourcesManager.cs" />
+    <Compile Include="Assets\Project\Code\UI\Windows\UIUnitUpgrade.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindow.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindowKey.cs" />
     <Compile Include="Assets\Project\Code\UI\Windows\UIWindowsManager.cs" />

@@ -8,6 +8,17 @@ public abstract class BaseUnit {
 		get { return _data; }
 	}
 
+	protected int _level = 1;
+	public int Level {
+		get { return _level; }
+		set {
+			if (value > _level) {
+				_level = value;
+				RecalculateParams();
+			}
+		}
+	}
+
 	public int Health { get; private set; }	//health amount after all upgrades applied
 	public int Armor { get; private set; }	//armor amount after all upgrades applied
 	public int ArmorDamageAbsorb { get; private set; }	//how much damage will be absorbed by armor all upgrades applied
@@ -107,6 +118,14 @@ public abstract class BaseUnit {
 		CritChance = _data.BaseCritChance;
 		CritDamageMultiplier = _data.BaseCritDamageMultiplier;
 
+		//levels bonuses
+		SoldierUpgrade soldierUpgradesData = UnitsConfig.Instance.GetSoldierUpgrades(_data.Key);
+		if (soldierUpgradesData != null) {
+			SoldierUpgradeLevel upgradesLevelData = UnitsConfig.Instance.GetSoldierUpgrades(_data.Key).GetTotalLevelUpgrades(_level);
+			Damage += upgradesLevelData.ModifierDamage;
+		}
+
+		//equipment bonuses
 		ArrayRO<EUnitEqupmentSlot> equipmentSlots = UnitsConfig.Instance.GetUnitEquipmentSlots(this);
 		BaseItem itemData = null;
 		for (int i = 0; i < equipmentSlots.Length; i++) {

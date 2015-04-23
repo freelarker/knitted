@@ -110,7 +110,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_ui = null;
 	}
 
-	public void Setup(BaseUnit unitData, string tag, GameObject uiResource) {
+	public void Setup(BaseUnit unitData, Dictionary<ESkillKey, BaseUnitSkill> skills, string tag, GameObject uiResource) {
 		_unitData = unitData;
 		gameObject.tag = tag;
 		_isAlly = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY);
@@ -118,7 +118,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_attackTime = 1f / unitData.AttackSpeed;
 		_cachedWaitForSeconds = new WaitForSeconds(_attackTime - _model.ShootPositionTimeOffset);
 
-		_skills = SkillsConfig.Instance.GetHeroSkillsInstances(_unitData.Data.Key);
+		_skills = skills != null ? skills : new Dictionary<ESkillKey, BaseUnitSkill>();
+
 		if (_isAlly && UnitsConfig.Instance.IsHero(_unitData.Data.Key)) {
 			EventsAggregator.Units.AddListener<ESkillKey>(EUnitEvent.SkillUsage, UseSkill);
 		}

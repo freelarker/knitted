@@ -133,6 +133,7 @@
     <Compile Include="Assets\Project\Code\Core\Network\NetworkManager.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerCity.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Player\PlayerHeroSkills.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerHeroes.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\PlayerResources.cs" />
@@ -142,7 +143,7 @@
     <Compile Include="Assets\Project\Code\Core\Player\Utils\PlayerBuildingConstructor.cs" />
     <Compile Include="Assets\Project\Code\Core\Player\Utils\PlayerFuelRefresher.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\BaseUnitSkill.cs" />
-    <Compile Include="Assets\Project\Code\Core\Skills\HeroSkillsData.cs" />
+    <Compile Include="Assets\Project\Code\Core\Skills\HeroUniqueSkillsData.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillClipDischarge.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillExplosiveCharges.cs" />
     <Compile Include="Assets\Project\Code\Core\Skills\Instances\SkillStunGrenade.cs" />

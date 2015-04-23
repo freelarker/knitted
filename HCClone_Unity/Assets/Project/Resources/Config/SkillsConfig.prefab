@@ -39,19 +39,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc3f015f3ae0274181871e0556c5a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroSkills:
+  _heroesUniqueSkills:
   - _heroKey: 1
-    _skills:
-    - _key: 1
+    _skill:
+      _key: 1
       _aggroCrystalsCost: 5
       _targetSelectionRequired: 0
-      _canCastOnSelf: 1
-      _skillTarget: 2
+      _canCastOnSelf: 0
+      _skillTarget: 0
       _castTime: 0
-      _cooldownTime: 3
-      _resetAttackTimer: 1
+      _cooldownTime: 2
+      _resetAttackTimer: 0
       _duration: 3
-      _radius: 2
+      _radius: 0
       _nativeDamage: 0
       _modHealthAmount: 0
       _modArmorAmount: 0
@@ -62,116 +62,65 @@ MonoBehaviour:
       _modCritDamageMultiplierAmount: 0
       _modHealthPercents: 0
       _modArmorPercents: 0
-      _modDamagePercents: 1.5
+      _modDamagePercents: 2
       _modDamageRangePercents: 0
       _modDamageSpeedPercents: 0
       _modCritChancePercents: 0
       _modCritDamageMultiplierPercents: 0
       _iconPath: hero1_skill0
-    - _key: 2
-      _aggroCrystalsCost: 5
-      _targetSelectionRequired: 0
-      _canCastOnSelf: 1
-      _skillTarget: 2
-      _castTime: .699999988
-      _cooldownTime: 5
-      _resetAttackTimer: 1
-      _duration: 6
-      _radius: 3
-      _nativeDamage: 0
-      _modHealthAmount: 0
-      _modArmorAmount: 0
-      _modDamageAmount: 0
-      _modDamageRangeAmount: 0
-      _modDamageSpeedAmount: 0
-      _modCritChanceAmount: 0
-      _modCritDamageMultiplierAmount: 0
-      _modHealthPercents: 0
-      _modArmorPercents: 0
-      _modDamagePercents: 1.5
-      _modDamageRangePercents: 0
-      _modDamageSpeedPercents: 0
-      _modCritChancePercents: 0
-      _modCritDamageMultiplierPercents: 0
-      _iconPath: hero1_skill1
-    - _key: 3
-      _aggroCrystalsCost: 5
-      _targetSelectionRequired: 0
-      _canCastOnSelf: 0
-      _skillTarget: 11
-      _castTime: 0
-      _cooldownTime: 5
-      _resetAttackTimer: 0
-      _duration: 2
-      _radius: 3
-      _nativeDamage: 0
-      _modHealthAmount: 0
-      _modArmorAmount: 0
-      _modDamageAmount: 0
-      _modDamageRangeAmount: 0
-      _modDamageSpeedAmount: 0
-      _modCritChanceAmount: 0
-      _modCritDamageMultiplierAmount: 0
-      _modHealthPercents: 0
-      _modArmorPercents: 0
-      _modDamagePercents: 0
-      _modDamageRangePercents: 0
-      _modDamageSpeedPercents: 0
-      _modCritChancePercents: 0
-      _modCritDamageMultiplierPercents: 0
-      _iconPath: hero1_skill2
-    - _key: 4
-      _aggroCrystalsCost: 0
-      _targetSelectionRequired: 0
-      _canCastOnSelf: 0
-      _skillTarget: 11
-      _castTime: 0
-      _cooldownTime: 0
-      _resetAttackTimer: 0
-      _duration: 0
-      _radius: 0
-      _nativeDamage: 0
-      _modHealthAmount: 0
-      _modArmorAmount: 0
-      _modDamageAmount: 0
-      _modDamageRangeAmount: 0
-      _modDamageSpeedAmount: 0
-      _modCritChanceAmount: 0
-      _modCritDamageMultiplierAmount: 0
-      _modHealthPercents: 0
-      _modArmorPercents: 0
-      _modDamagePercents: 0
-      _modDamageRangePercents: 0
-      _modDamageSpeedPercents: 0
-      _modCritChancePercents: 0
-      _modCritDamageMultiplierPercents: 0
-      _iconPath: hero1_skill3
-    - _key: 5
-      _aggroCrystalsCost: 0
-      _targetSelectionRequired: 0
-      _canCastOnSelf: 0
-      _skillTarget: 11
-      _castTime: 0
-      _cooldownTime: 0
-      _resetAttackTimer: 0
-      _duration: 0
-      _radius: 0
-      _nativeDamage: 0
-      _modHealthAmount: 0
-      _modArmorAmount: 0
-      _modDamageAmount: 0
-      _modDamageRangeAmount: 0
-      _modDamageSpeedAmount: 0
-      _modCritChanceAmount: 0
-      _modCritDamageMultiplierAmount: 0
-      _modHealthPercents: 0
-      _modArmorPercents: 0
-      _modDamagePercents: 0
-      _modDamageRangePercents: 0
-      _modDamageSpeedPercents: 0
-      _modCritChancePercents: 0
-      _modCritDamageMultiplierPercents: 0
-      _iconPath: hero1_skill4
+  _skillsData:
+  - _key: 2
+    _aggroCrystalsCost: 5
+    _targetSelectionRequired: 0
+    _canCastOnSelf: 0
+    _skillTarget: 0
+    _castTime: .75
+    _cooldownTime: 5
+    _resetAttackTimer: 0
+    _duration: 6
+    _radius: 3
+    _nativeDamage: 0
+    _modHealthAmount: 0
+    _modArmorAmount: 0
+    _modDamageAmount: 0
+    _modDamageRangeAmount: 0
+    _modDamageSpeedAmount: 0
+    _modCritChanceAmount: 0
+    _modCritDamageMultiplierAmount: 0
+    _modHealthPercents: 0
+    _modArmorPercents: 0
+    _modDamagePercents: 1.5
+    _modDamageRangePercents: 0
+    _modDamageSpeedPercents: 0
+    _modCritChancePercents: 0
+    _modCritDamageMultiplierPercents: 0
+    _iconPath: hero1_skill1
+  - _key: 3
+    _aggroCrystalsCost: 5
+    _targetSelectionRequired: 0
+    _canCastOnSelf: 0
+    _skillTarget: 0
+    _castTime: 0
+    _cooldownTime: 10
+    _resetAttackTimer: 0
+    _duration: 3
+    _radius: 3
+    _nativeDamage: 0
+    _modHealthAmount: 0
+    _modArmorAmount: 0
+    _modDamageAmount: 0
+    _modDamageRangeAmount: 0
+    _modDamageSpeedAmount: 0
+    _modCritChanceAmount: 0
+    _modCritDamageMultiplierAmount: 0
+    _modHealthPercents: 0
+    _modArmorPercents: 0
+    _modDamagePercents: 0
+    _modDamageRangePercents: 0
+    _modDamageSpeedPercents: 0
+    _modCritChancePercents: 0
+    _modCritDamageMultiplierPercents: 0
+    _iconPath: hero1_skill2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

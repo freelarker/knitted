@@ -196,10 +196,24 @@ public class FightManager : MonoBehaviour {
 		float unitInitializationStep = (0.9f - 0.25f) / (_alliesCount + _enemiesCount);
 		float currentLoadPercentage = 0.25f;
 
-		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
+		//get player hero skills
+		Dictionary<ESkillKey, BaseUnitSkill> playerHeroSkills = new Dictionary<ESkillKey, BaseUnitSkill>();
+		SkillParameters skillParams = SkillsConfig.Instance.HetHeroSkillParameters(Global.Instance.Player.Heroes.Current.Data.Key);
+		if (skillParams != null) {
+			playerHeroSkills.Add(skillParams.Key, SkillsConfig.Instance.GetSkillInstance(skillParams));
+		}
+		ListRO<ESkillKey> playerHeroSkillKeys = Global.Instance.Player.HeroSkills.GetHeroSkills(Global.Instance.Player.Heroes.Current.Data.Key);
+		for (int i = 0; i < playerHeroSkillKeys.Count; i++) {
+			skillParams = SkillsConfig.Instance.GetSkillParameters(playerHeroSkillKeys[i]);
+			if (skillParams != null) {
+				playerHeroSkills.Add(skillParams.Key, SkillsConfig.Instance.GetSkillInstance(skillParams));
+			}
+		}
+
+		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, playerHeroSkills, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
 			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
-				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
+				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], null, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);	//TODO: setup units skills
 
 				currentLoadPercentage += unitInitializationStep;
 				LoadingScreen.Instance.SetProgress(currentLoadPercentage);
@@ -212,9 +226,9 @@ public class FightManager : MonoBehaviour {
 		for (int i = 0; i < mapData.Units.Length; i++) {
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			if (bud is BaseHeroData) {
-				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy hero inventory
+				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), null, GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy hero inventory, hero skills
 			} else {
-				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData, 1), GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades
+				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData, 1), null, GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades, unit skills
 			}
 
 			currentLoadPercentage += unitInitializationStep;

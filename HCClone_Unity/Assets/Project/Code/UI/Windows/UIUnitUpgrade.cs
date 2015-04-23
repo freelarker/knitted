@@ -10,6 +10,8 @@ public class UIUnitUpgrade : MonoBehaviour {
 	[SerializeField]
 	private Text _lblUnitLevel;
 	[SerializeField]
+	private Text _lblUnitInfo;
+	[SerializeField]
 	private Image _imgUnitIcon;
 
 	private EUnitKey _unitKey;
@@ -40,5 +42,14 @@ public class UIUnitUpgrade : MonoBehaviour {
 
 	private void UpdateUnitInfo() {
 		_lblUnitLevel.text = Global.Instance.Player.City.GetSoldierUpgradesInfo(_unitKey).Level.ToString();
+
+		int innateDamage = UnitsConfig.Instance.GetSoldierData(_unitKey).BaseDamage;
+		BaseItem lHandWeapon = ItemsConfig.Instance.GetItem(UnitsConfig.Instance.GetSoldierData(_unitKey).GetBaseItemInSlot(EUnitEqupmentSlot.Weapon_LHand));
+		BaseItem rHandWeapon = ItemsConfig.Instance.GetItem(UnitsConfig.Instance.GetSoldierData(_unitKey).GetBaseItemInSlot(EUnitEqupmentSlot.Weapon_RHand));
+		int weaponDamage = lHandWeapon != null ? lHandWeapon.ModDamage : (rHandWeapon != null ? rHandWeapon.ModDamage : 0);
+
+		int levelsDamage = UnitsConfig.Instance.GetSoldierUpgrades(_unitKey).GetTotalLevelUpgrades(Global.Instance.Player.City.GetSoldierUpgradesInfo(_unitKey).Level).ModifierDamage;
+
+		_lblUnitInfo.text = "Base damage: " + (innateDamage + weaponDamage) + "\nLevel-ups damage: " + levelsDamage + "\n-----\nTotal damage: " + (innateDamage + weaponDamage + levelsDamage);
 	}
 }

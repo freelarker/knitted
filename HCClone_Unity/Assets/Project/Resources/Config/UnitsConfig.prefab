@@ -163,7 +163,7 @@ MonoBehaviour:
     - _modifierDamage: 0
     - _modifierDamage: 1
     - _modifierDamage: 1
-    - _modifierDamage: 0
+    - _modifierDamage: 1
     - _modifierDamage: 1
     - _modifierDamage: 1
     - _modifierDamage: 1
@@ -175,7 +175,7 @@ MonoBehaviour:
     - _modifierDamage: 0
     - _modifierDamage: 1
     - _modifierDamage: 1
-    - _modifierDamage: 0
+    - _modifierDamage: 1
     - _modifierDamage: 1
     - _modifierDamage: 1
     - _modifierDamage: 1

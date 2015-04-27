@@ -27,8 +27,10 @@
 	}
 
 	public void Initialize() {
-		Player.Load();
-
-		_isInitialized = true;
+		if (!_isInitialized) {
+			UnityEngine.Application.targetFrameRate = 44;
+			Player.Load();
+			_isInitialized = true;
+		}
 	}
 }

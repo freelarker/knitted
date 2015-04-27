@@ -3,8 +3,66 @@ using System.Collections.Generic;
 using System;
 
 public class HCCPathfinder {
+	private class OpenSet<T> where T : class {
+		private T[] _data;
+		private int _length = 0;
+		public int Length {
+			get { return _length; }
+		}
+
+		public OpenSet(int capacity) {
+			_data = new T[capacity];
+		}
+
+		public T this[int i] {
+			get {
+				if (i < 0 || i >= _length) {
+					throw new ArgumentOutOfRangeException();
+				}
+
+				return _data[i];
+			}
+		}
+
+		public void Add(T item) {
+			if (_length >= _data.Length) {
+				throw new OverflowException();
+			}
+
+			_data[_length] = item;
+			_length++;
+		}
+
+		public void RemoveAt(int index) {
+			if (index < 0 || index >= _length) {
+				throw new ArgumentOutOfRangeException();
+			}
+
+			_data[index] = _data[_length - 1];
+			_data[_length - 1] = null;
+			_length--;
+		}
+
+		public int IndexOf(T item) {
+			for (int i = 0; i < _length; i++) {
+				if (_data[i].Equals(item)) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		public void Clear() {
+			for (int i = 0; i < _length; i++) {
+				_data[i] = null;
+			}
+			_length = 0;
+		}
+	}
+
 	private HCCGridData _gridData = null;
 
+	private OpenSet<HCCCell> _openSet = null;
 	private HCCCell[,] _closedSet = null;
 	private HCCCell[,] _cameFrom = null;
 	private float[,] _gScore = null;
@@ -16,6 +74,7 @@ public class HCCPathfinder {
 	public HCCPathfinder(HCCGridData gridData) {
 		_gridData = gridData;
 
+		_openSet = new OpenSet<HCCCell>(_gridData.XSize * _gridData.ZSize);
 		_closedSet = new HCCCell[_gridData.XSize, _gridData.ZSize];
 		_cameFrom = new HCCCell[_gridData.XSize, _gridData.ZSize];
 		_gScore = new float[_gridData.XSize, _gridData.ZSize];
@@ -23,19 +82,19 @@ public class HCCPathfinder {
 	}
 
 	public List<HCCCell> FindPath(HCCGridObject self, HCCGridObject target) {
-		HCCGridRect selfGridRect = self.GridRect;
+		HCCGridRect selfGridRect;
 
 		HCCGridPoint start = HCCGridController.Instance.GridView.WorldToGridPos(self.transform.position);
 		HCCGridPoint end = HCCGridController.Instance.GridView.WorldToGridPos(target.transform.position);
 
-		List<HCCCell> openSet = new List<HCCCell>() { _gridData.GetCell(start.X, start.Z) };
+		_openSet.Add(_gridData.GetCell(start.X, start.Z));
 		_gScore[start.X, start.Z] = 0f;
 		_fScore[start.X, start.Z] = _gScore[start.X, start.Z] + HeuristicCost(start, end);
 
 		HCCCell currentCell = null;
-		while (openSet.Count > 0) {
-			int currentIndex = GetLowestFScoreIndex(openSet);
-			currentCell = openSet[currentIndex];
+		while (_openSet.Length > 0) {
+			int currentIndex = GetLowestFScoreIndex(_openSet);
+			currentCell = _openSet[currentIndex];
 
 			//if destination reached
 			//if (currentCell.GridPosition.X == end.X && currentCell.GridPosition.Z == end.Z) {
@@ -44,14 +103,16 @@ public class HCCPathfinder {
 			//	return result;
 			//}
 			//project update 4: move only to rects interception - 1 step
-			if (target.GridRect.Interacts(self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(currentCell.GridPosition)))) {
+			//if (target.GridRect.Interacts(self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(currentCell.GridPosition)))) {
+			if (target.GridRect.Interacts(self.GridRectAtPoint(currentCell.GridPosition))) {
 				List<HCCCell> result = ReconstructPath(currentCell.GridPosition);
 				result.RemoveAt(result.Count - 1);
 				Cleanup();
 				return result;
 			}
 
-			openSet.RemoveAt(currentIndex);
+			_openSet[currentIndex].inOpenSet = false;
+			_openSet.RemoveAt(currentIndex);
 			_closedSet[currentCell.GridPosition.X, currentCell.GridPosition.Z] = currentCell;
 
 			for (int i = currentCell.GridPosition.X - 1; i <= currentCell.GridPosition.X + 1; i++) {
@@ -73,7 +134,8 @@ public class HCCPathfinder {
 
 					//project update 2: pass all objects except self, target and excluded
 					bool blockNeighbour = false;
-					selfGridRect = self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(neighbourCell.GridPosition));
+					//selfGridRect = self.GridRectAtPosition(HCCGridController.Instance.GridView.GridToWorldPos(neighbourCell.GridPosition));
+					selfGridRect = self.GridRectAtPoint(neighbourCell.GridPosition);
 					for (int q = selfGridRect.XMin; q <= selfGridRect.XMax; q++) {
 						for (int k = selfGridRect.ZMin; k <= selfGridRect.ZMax; k++) {
 							HCCCell cellData = _gridData.GetCell(q, k);
@@ -108,12 +170,13 @@ public class HCCPathfinder {
 					//}
 
 					float tentativeGScore = _gScore[currentCell.GridPosition.X, currentCell.GridPosition.Z] + HeuristicCost(currentCell.GridPosition, neighbourCell.GridPosition);
-					if (openSet.IndexOf(neighbourCell) == -1 || tentativeGScore < _gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z]) {
+					if (!neighbourCell.inOpenSet || tentativeGScore < _gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z]) {
 						_cameFrom[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = currentCell;
 						_gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = tentativeGScore;
 						_fScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] = _gScore[neighbourCell.GridPosition.X, neighbourCell.GridPosition.Z] + HeuristicCost(neighbourCell.GridPosition, end);
-						if (openSet.IndexOf(neighbourCell) == -1) {
-							openSet.Add(neighbourCell);
+						if (!neighbourCell.inOpenSet) {
+							_openSet.Add(neighbourCell);
+							neighbourCell.inOpenSet = true;
 						}
 					}
 				}
@@ -123,24 +186,25 @@ public class HCCPathfinder {
 		Cleanup();
 		return new List<HCCCell>();
 	}
-
+	
 	//working, simple
 	public List<HCCCell> FindPath(HCCGridPoint start, HCCGridPoint end, HCCGridObject[] excludedObjects) {
-		List<HCCCell> openSet = new List<HCCCell>() { _gridData.GetCell(start.X, start.Z) };
+		_openSet.Add(_gridData.GetCell(start.X, start.Z));
 		_gScore[start.X, start.Z] = 0f;
 		_fScore[start.X, start.Z] = _gScore[start.X, start.Z] + HeuristicCost(start, end);
 
 		HCCCell current;
-		while (openSet.Count > 0) {
-			int currentIndex = GetLowestFScoreIndex(openSet);
-			current = openSet[currentIndex];
+		while (_openSet.Length > 0) {
+			int currentIndex = GetLowestFScoreIndex(_openSet);
+			current = _openSet[currentIndex];
 			if (current.GridPosition.X == end.X && current.GridPosition.Z == end.Z) {
 				List<HCCCell> result = ReconstructPath(current.GridPosition);
 				Cleanup();
 				return result;
 			}
 
-			openSet.RemoveAt(currentIndex);
+			_openSet[currentIndex].inOpenSet = false;
+			_openSet.RemoveAt(currentIndex);
 			_closedSet[current.GridPosition.X, current.GridPosition.Z] = current;
 
 			for (int i = current.GridPosition.X - 1; i <= current.GridPosition.X + 1; i++) {
@@ -176,12 +240,13 @@ public class HCCPathfinder {
 					}
 
 					float tentativeGScore = _gScore[current.GridPosition.X, current.GridPosition.Z] + HeuristicCost(current.GridPosition, neighbour.GridPosition);
-					if (openSet.IndexOf(neighbour) == -1 || tentativeGScore < _gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z]) {
+					if (!neighbour.inOpenSet || tentativeGScore < _gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z]) {
 						_cameFrom[neighbour.GridPosition.X, neighbour.GridPosition.Z] = current;
 						_gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z] = tentativeGScore;
 						_fScore[neighbour.GridPosition.X, neighbour.GridPosition.Z] = _gScore[neighbour.GridPosition.X, neighbour.GridPosition.Z] + HeuristicCost(neighbour.GridPosition, end);
-						if (openSet.IndexOf(neighbour) == -1) {
-							openSet.Add(neighbour);
+						if (!neighbour.inOpenSet) {
+							_openSet.Add(neighbour);
+							neighbour.inOpenSet = true;
 						}
 					}
 				}
@@ -381,14 +446,21 @@ public class HCCPathfinder {
 		v2.x = x2;
 		v2.y = z2;
 
+
 		return Vector2.Distance(v1, v2);
 	}
 
-	private int GetLowestFScoreIndex(List<HCCCell> openSet) {
+	private int GetLowestFScoreIndex(OpenSet<HCCCell> openSet) {
+		HCCGridPoint gridPos;
+		float fScoreMin;
+
 		int index = 0;
-		for (int i = 1; i < openSet.Count; i++) {
-			if (_fScore[openSet[i].GridPosition.X, openSet[i].GridPosition.Z] < _fScore[openSet[index].GridPosition.X, openSet[index].GridPosition.Z]) {
+		fScoreMin = _fScore[openSet[index].GridPosition.X, openSet[index].GridPosition.Z];
+		for (int i = 1; i < openSet.Length; i++) {
+			gridPos = openSet[i].GridPosition;
+			if (_fScore[gridPos.X, gridPos.Z] < fScoreMin) {
 				index = i;
+				fScoreMin = _fScore[openSet[index].GridPosition.X, openSet[index].GridPosition.Z];
 			}
 		}
 		return index;
@@ -415,5 +487,10 @@ public class HCCPathfinder {
 				_fScore[i, j] = 0f;
 			}
 		}
+
+		for (int i = 0; i < _openSet.Length; i++) {
+			_openSet[i].inOpenSet = false;
+		}
+		_openSet.Clear();
 	}
 }

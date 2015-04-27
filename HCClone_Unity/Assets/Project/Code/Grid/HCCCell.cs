@@ -2,6 +2,8 @@
 using UnityEngine;
 
 public class HCCCell {
+	public bool inOpenSet = false;
+
 	public HCCGridPoint GridPosition { get; private set; }
 
 	public List<HCCGridObject> ObjectData { get; private set; }

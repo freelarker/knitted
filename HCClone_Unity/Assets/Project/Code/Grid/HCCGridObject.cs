@@ -38,13 +38,16 @@ public class HCCGridObject : MonoBehaviour {
 		get { return _tModelPosition.position.z + _zWorldSize * 0.5f; }
 	}
 	
-
 	public HCCGridRect GridRect {
 		get { return HCCGridView.Instance.WorldPosToGridRect(this); }
 	}
 
 	public HCCGridRect GridRectAtPosition(Vector3 worldPosition) {
 		return HCCGridView.Instance.WorldPosToGridRect(this, worldPosition);
+	}
+
+	public HCCGridRect GridRectAtPoint(HCCGridPoint gridPoint) {
+		return new HCCGridRect(gridPoint.X - _gridHalfSize.X, gridPoint.X + _gridHalfSize.X, gridPoint.Z - _gridHalfSize.Z, gridPoint.Z + _gridHalfSize.Z);
 	}
 
 	public HCCGridPoint GridPosition {
@@ -64,6 +67,7 @@ public class HCCGridObject : MonoBehaviour {
 	private Transform _cachedTransform = null;
 	private Vector3 _oldWorldPosition = Vector3.zero;
 	private HCCGridRect _oldGridRect = new HCCGridRect();
+	private HCCGridPoint _gridHalfSize;
 
 	public void Awake() {
 		Initialize();
@@ -91,6 +95,8 @@ public class HCCGridObject : MonoBehaviour {
 		Path = new List<HCCCell>();
 
 		_cachedTransform = transform;
+
+		_gridHalfSize = HCCGridController.Instance.GridView.GetGridSize(this);
 	}
 
 	private void Register() {

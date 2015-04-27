@@ -80,6 +80,10 @@ public class HCCGridView : MonoBehaviourResourceSingleton<HCCGridView> {
 		return new Vector3(_zeroPoint.x + xPos * _tileSize, _zeroPoint.y, _zeroPoint.z + zPos * _tileSize);
 	}
 
+	public HCCGridPoint GetGridSize(HCCGridObject obj) {
+		return new HCCGridPoint(Mathf.CeilToInt((obj.XWorldSize / _tileSize) * 0.5f), Mathf.CeilToInt((obj.ZWorldSize / _tileSize) * 0.5f));
+	}
+
 	#region drawing
 #if UNITY_EDITOR
 	private void DrawMap() {

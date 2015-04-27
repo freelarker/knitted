@@ -10,7 +10,7 @@ public class UnitPathfinding : MonoBehaviour {
 	[SerializeField]
 	private UnitModelView _model;
 
-	private int _searchesPerSecond = 2;
+	private float _searchesPerSecond = 1f;
 	private float _minDistanceToTargetUnit = 1f;
 	private float _speed = 1f;
 	private float _rotationSpeed = 5f;
@@ -38,6 +38,8 @@ public class UnitPathfinding : MonoBehaviour {
 
 	private ArrayRO<BaseUnitBehaviour> _possibleTargets = null;
 	private Action<BaseUnitBehaviour> _onTargetReached;
+
+	public int UnitNumber { get; set; }
 
 	public void Awake() {
 		if (_model == null) {
@@ -234,6 +236,14 @@ public class UnitPathfinding : MonoBehaviour {
 		CurrentState = EUnitMovementState.MoveToAttackPoint;
 
 		//start searching path to moving target unit
+		StartCoroutine(PrestartFindPath());
+	}
+
+	private IEnumerator PrestartFindPath() {
+		int delay = UnitNumber;
+		for (; delay >= 0; delay--) {
+			yield return null;
+		}
 		StartCoroutine(FindPathTimer());
 	}
 

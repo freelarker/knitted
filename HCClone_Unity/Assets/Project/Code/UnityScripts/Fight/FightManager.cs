@@ -210,10 +210,10 @@ public class FightManager : MonoBehaviour {
 			}
 		}
 
-		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, playerHeroSkills, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);
+		_graphics.AllyUnits[_graphics.AllyUnits.Length - 1].Setup(Global.Instance.Player.Heroes.Current, playerHeroSkills, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource, Global.Instance.CurrentMission.SelectedSoldiers.Length);
 		for(int i = 0; i < Global.Instance.CurrentMission.SelectedSoldiers.Length; i++) {
 			if (!Global.Instance.CurrentMission.SelectedSoldiers[i].IsDead) {
-				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], null, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource);	//TODO: setup units skills
+				_graphics.AllyUnits[i].Setup(Global.Instance.CurrentMission.SelectedSoldiers[i], null, GameConstants.Tags.UNIT_ALLY, _graphics.UnitUIResource, i);	//TODO: setup units skills
 
 				currentLoadPercentage += unitInitializationStep;
 				LoadingScreen.Instance.SetProgress(currentLoadPercentage);
@@ -226,9 +226,9 @@ public class FightManager : MonoBehaviour {
 		for (int i = 0; i < mapData.Units.Length; i++) {
 			bud = UnitsConfig.Instance.GetUnitData(mapData.Units[i]);
 			if (bud is BaseHeroData) {
-				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), null, GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy hero inventory, hero skills
+				_graphics.EnemyUnits[i].Setup(new BaseHero(bud as BaseHeroData, 0), null, GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource, i);	//TODO: setup enemy hero inventory, hero skills
 			} else {
-				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData, 1), null, GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource);	//TODO: setup enemy soldier upgrades, unit skills
+				_graphics.EnemyUnits[i].Setup(new BaseSoldier(bud as BaseSoldierData, 1), null, GameConstants.Tags.UNIT_ENEMY, _graphics.UnitUIResource, i);	//TODO: setup enemy soldier upgrades, unit skills
 			}
 
 			currentLoadPercentage += unitInitializationStep;

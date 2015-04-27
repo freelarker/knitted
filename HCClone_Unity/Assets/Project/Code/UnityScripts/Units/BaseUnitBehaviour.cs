@@ -110,7 +110,7 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		_ui = null;
 	}
 
-	public void Setup(BaseUnit unitData, Dictionary<ESkillKey, BaseUnitSkill> skills, string tag, GameObject uiResource) {
+	public void Setup(BaseUnit unitData, Dictionary<ESkillKey, BaseUnitSkill> skills, string tag, GameObject uiResource, int unitNumber) {
 		_unitData = unitData;
 		gameObject.tag = tag;
 		_isAlly = gameObject.CompareTag(GameConstants.Tags.UNIT_ALLY);
@@ -140,6 +140,8 @@ public class BaseUnitBehaviour : MonoBehaviour {
 		if (_isStarted) {
 			EventsAggregator.Units.Broadcast<BaseUnitBehaviour>(EUnitEvent.ReadyToFight, this);
 		}
+
+		_unitPathfinder.UnitNumber = unitNumber;
 	}
 
 	public void Stun(float duration) {

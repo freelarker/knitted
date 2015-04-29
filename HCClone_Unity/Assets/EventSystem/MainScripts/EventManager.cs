@@ -101,10 +101,7 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
 	//this object should be destroyed
 	public override bool SaveAllEvents		{ get { return saveAllEvents; } set { saveAllEvents = value; } }
 	public override bool HasPersistentEvents		{ get { return hasPersistentEvents; } }
-	
-	
-	
-	
+
 	//Used to initialize our static variables, called the first time a method/variable is accessed
 	public EventManager()
 	{
@@ -114,7 +111,11 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
 		hasPersistentEvents = false;
 		saveAllEvents = false;
 		persistentEvents = new HashSet<int>();
+#if UNITY_WEBPLAYER && !UNITY_EDITOR
+		ConvertEnumToInt = (TEventType t) => { return (int)(Enum.Parse(t.GetType(), Enum.GetName(t.GetType(), t))); };	//spike
+#else
 		ConvertEnumToInt = EnumConverterCreator.CreateFromEnumConverter<TEventType, int>();
+#endif
 		
 		//Get the max number of events
 		numOfEventsOfThisType = Enum.GetNames (typeof(TEventType)).Length;
@@ -122,10 +123,6 @@ public class EventManager<TEventType> : EventManager where TEventType : struct, 
 		//Create the delegate array to hold the events -- they are all initialized to null to begin with
 		eventHandlers = new Delegate[numOfEventsOfThisType];		
 	}
-	
-	
-	
-	
 	//Marks a certain message as permanent.
 	public void MarkEventAsPersistent(TEventType eventName) 
 	{
